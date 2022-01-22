@@ -1,3 +1,6 @@
+/*
+스키마
+*/
 CREATE SCHEMA `leather_homepage` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 use leather_homepage;
@@ -182,6 +185,9 @@ ALTER TABLE `PRODUCT_UPLOAD_FILE`
                                   `product_id` -- 상품 ID
                 );
 
+/*
+후기
+*/
 -- 후기
 ALTER TABLE `GUEST_BOOK`
     DROP PRIMARY KEY; -- 후기 기본키
@@ -212,7 +218,9 @@ ALTER TABLE `GUEST_BOOK`
 ALTER TABLE `GUEST_BOOK`
     AUTO_INCREMENT = 1;
 
-
+/*
+문의하기
+*/
 -- 문의하기
 ALTER TABLE `CONTACT_US`
     DROP PRIMARY KEY; -- 문의하기 기본키
@@ -245,6 +253,9 @@ ALTER TABLE `CONTACT_US`
 ALTER TABLE `CONTACT_US`
     AUTO_INCREMENT = 1;
 
+/*
+공지사항
+*/
 -- 공지사항
 ALTER TABLE `Notice`
     DROP FOREIGN KEY `FK_MEMBER_TO_Notice`; -- 사용자 -> 공지사항
