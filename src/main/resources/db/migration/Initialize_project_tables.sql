@@ -5,7 +5,8 @@ CREATE SCHEMA `leather_homepage` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 use leather_homepage;
 
-/*
+
+/***********************************************************************
 사용자
 */
 -- 사용자
@@ -17,7 +18,7 @@ DROP TABLE IF EXISTS `MEMBER` RESTRICT;
 
 -- 사용자
 CREATE TABLE `MEMBER` (
-                          `member_id`        INT          NOT NULL, -- 사용자 ID
+                          `id`        BIGINT    NOT NULL, -- 사용자 ID
                           `user_id`          VARCHAR(30)  NOT NULL, -- 아이디
                           `password`         VARCHAR(100) NOT NULL, -- 비밀번호
                           `name`             VARCHAR(30)  NOT NULL, -- 이름
@@ -31,16 +32,16 @@ CREATE TABLE `MEMBER` (
 ALTER TABLE `MEMBER`
     ADD CONSTRAINT `PK_MEMBER` -- 사용자 기본키
         PRIMARY KEY (
-                     `member_id` -- 사용자 ID
+                     `id` -- 사용자 ID
             );
 
 ALTER TABLE `MEMBER`
-    MODIFY COLUMN `member_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `MEMBER`
     AUTO_INCREMENT = 1;
 
-/*
+/***********************************************************************
 상품
 */
 -- 상품
@@ -60,7 +61,7 @@ DROP TABLE IF EXISTS `PRODUCT` RESTRICT;
 
 -- 상품
 CREATE TABLE `PRODUCT` (
-                           `product_id`         INT          NOT NULL, -- 상품 ID
+                           `id`         BIGINT          NOT NULL, -- 상품 ID
                            `category_id`        INT          NOT NULL, -- 카테고리 ID
                            `name`               VARCHAR(100) NOT NULL, -- 상품명
                            `contents`           VARCHAR(20000) NULL,     -- 상품설명
@@ -77,11 +78,11 @@ CREATE TABLE `PRODUCT` (
 ALTER TABLE `PRODUCT`
     ADD CONSTRAINT `PK_PRODUCT` -- 상품 기본키
         PRIMARY KEY (
-                     `product_id` -- 상품 ID
+                     `id` -- 상품 ID
             );
 
 ALTER TABLE `PRODUCT`
-    MODIFY COLUMN `product_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `PRODUCT`
     AUTO_INCREMENT = 1;
@@ -90,23 +91,23 @@ ALTER TABLE `PRODUCT`
 ALTER TABLE `PRODUCT`
     ADD CONSTRAINT `FK_PRODUCT_CATEGORY_TO_PRODUCT` -- 상품 카테고리 -> 상품
         FOREIGN KEY (
-                     `category_id` -- 카테고리 ID
+                     `id` -- 카테고리 ID
             )
             REFERENCES `PRODUCT_CATEGORY` ( -- 상품 카테고리
-                                           `category_id` -- 카테고리 ID
+                                           `id` -- 카테고리 ID
                 );
 
 -- 상품
 ALTER TABLE `PRODUCT`
     ADD CONSTRAINT `FK_MEMBER_TO_PRODUCT` -- 사용자 -> 상품
         FOREIGN KEY (
-                     `member_id` -- 사용자 ID
+                     `id` -- 사용자 ID
             )
             REFERENCES `MEMBER` ( -- 사용자
-                                 `member_id` -- 사용자 ID
+                                 `id` -- 사용자 ID
                 );
 
-/*
+/***********************************************************************
 상품 카테고리
 */
 -- 상품 카테고리
@@ -118,7 +119,7 @@ DROP TABLE IF EXISTS `PRODUCT_CATEGORY` RESTRICT;
 
 -- 상품 카테고리
 CREATE TABLE `PRODUCT_CATEGORY` (
-                                    `category_id`     INT         NOT NULL, -- 카테고리 ID
+                                    `id`     BIGINT         NOT NULL, -- 카테고리 ID
                                     `title`           VARCHAR(20) NOT NULL, -- 카테고리명
                                     `order_no`        INT         NULL,     -- 우선순위
                                     `category_use_yn` CHAR(1)     NULL     DEFAULT 'N' -- 사용여부
@@ -128,16 +129,16 @@ CREATE TABLE `PRODUCT_CATEGORY` (
 ALTER TABLE `PRODUCT_CATEGORY`
     ADD CONSTRAINT `PK_PRODUCT_CATEGORY` -- 상품 카테고리 기본키
         PRIMARY KEY (
-                     `category_id` -- 카테고리 ID
+                     `id` -- 카테고리 ID
             );
 
 ALTER TABLE `PRODUCT_CATEGORY`
-    MODIFY COLUMN `category_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `PRODUCT_CATEGORY`
     AUTO_INCREMENT = 1;
 
-/*
+/***********************************************************************
 상품 첨부 파일
 */
 -- 상품 첨부 파일
@@ -153,7 +154,7 @@ DROP TABLE IF EXISTS `PRODUCT_UPLOAD_FILE` RESTRICT;
 
 -- 상품 첨부 파일
 CREATE TABLE `PRODUCT_UPLOAD_FILE` (
-                                       `file_id`          INT          NOT NULL, -- 파일 ID
+                                       `id`          BIGINT          NOT NULL, -- 파일 ID
                                        `product_id`       INT          NOT NULL, -- 상품 ID
                                        `upload_file_name` VARCHAR(100) NOT NULL, -- 업로드 파일명
                                        `store_file_name`  VARCHAR(100) NOT NULL, -- 저장 파일명
@@ -166,11 +167,11 @@ CREATE TABLE `PRODUCT_UPLOAD_FILE` (
 ALTER TABLE `PRODUCT_UPLOAD_FILE`
     ADD CONSTRAINT `PK_PRODUCT_UPLOAD_FILE` -- 상품 첨부 파일 기본키
         PRIMARY KEY (
-                     `file_id` -- 파일 ID
+                     `id` -- 파일 ID
             );
 
 ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    MODIFY COLUMN `file_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `PRODUCT_UPLOAD_FILE`
     AUTO_INCREMENT = 1;
@@ -179,13 +180,13 @@ ALTER TABLE `PRODUCT_UPLOAD_FILE`
 ALTER TABLE `PRODUCT_UPLOAD_FILE`
     ADD CONSTRAINT `FK_PRODUCT_TO_PRODUCT_UPLOAD_FILE` -- 상품 -> 상품 첨부 파일
         FOREIGN KEY (
-                     `product_id` -- 상품 ID
+                     `id` -- 상품 ID
             )
             REFERENCES `PRODUCT` ( -- 상품
-                                  `product_id` -- 상품 ID
+                                  `id` -- 상품 ID
                 );
 
-/*
+/***********************************************************************
 후기
 */
 -- 후기
@@ -197,7 +198,7 @@ DROP TABLE IF EXISTS `GUEST_BOOK` RESTRICT;
 
 -- 후기
 CREATE TABLE `GUEST_BOOK` (
-                              `guest_book_id`    INT           NOT NULL, -- 후기 ID
+                              `id`    BIGINT           NOT NULL, -- 후기 ID
                               `name`             VARCHAR(30)   NOT NULL, -- 이름
                               `password`         VARCHAR(100)  NOT NULL, -- 비밀번호
                               `contents`         VARCHAR(5000) NOT NULL, -- 내용
@@ -209,16 +210,16 @@ CREATE TABLE `GUEST_BOOK` (
 ALTER TABLE `GUEST_BOOK`
     ADD CONSTRAINT `PK_GUEST_BOOK` -- 후기 기본키
         PRIMARY KEY (
-                     `guest_book_id` -- 후기 ID
+                     `id` -- 후기 ID
             );
 
 ALTER TABLE `GUEST_BOOK`
-    MODIFY COLUMN `guest_book_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `GUEST_BOOK`
     AUTO_INCREMENT = 1;
 
-/*
+/***********************************************************************
 문의하기
 */
 -- 문의하기
@@ -230,7 +231,7 @@ DROP TABLE IF EXISTS `CONTACT_US` RESTRICT;
 
 -- 문의하기
 CREATE TABLE `CONTACT_US` (
-                              `contact_us_id`    INT          NOT NULL, -- 문의하기 ID
+                              `id`    BIGINT          NOT NULL, -- 문의하기 ID
                               `name`             VARCHAR(30)  NOT NULL, -- 이름
                               `email`            VARCHAR(50)  NULL,     -- 이메일
                               `phone_number`     VARCHAR(20)  NOT NULL, -- 전화번호
@@ -244,16 +245,16 @@ CREATE TABLE `CONTACT_US` (
 ALTER TABLE `CONTACT_US`
     ADD CONSTRAINT `PK_CONTACT_US` -- 문의하기 기본키
         PRIMARY KEY (
-                     `contact_us_id` -- 문의하기 ID
+                     `id` -- 문의하기 ID
             );
 
 ALTER TABLE `CONTACT_US`
-    MODIFY COLUMN `contact_us_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `CONTACT_US`
     AUTO_INCREMENT = 1;
 
-/*
+/***********************************************************************
 공지사항
 */
 -- 공지사항
@@ -269,7 +270,7 @@ DROP TABLE IF EXISTS `Notice` RESTRICT;
 
 -- 공지사항
 CREATE TABLE `Notice` (
-                          `notice_id`        INT          NOT NULL, -- 공지사항 ID
+                          `id`        BIGINT          NOT NULL, -- 공지사항 ID
                           `title`            VARCHAR(100) NOT NULL, -- 제목
                           `contents`         VARCHAR(20000) NOT NULL, -- 내용
                           `hits`             INT          NOT NULL DEFAULT 0, -- 조회수
@@ -282,11 +283,11 @@ CREATE TABLE `Notice` (
 ALTER TABLE `Notice`
     ADD CONSTRAINT `PK_Notice` -- 공지사항 기본키
         PRIMARY KEY (
-                     `notice_id` -- 공지사항 ID
+                     `id` -- 공지사항 ID
             );
 
 ALTER TABLE `Notice`
-    MODIFY COLUMN `notice_id` INT NOT NULL AUTO_INCREMENT;
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `Notice`
     AUTO_INCREMENT = 1;
@@ -295,8 +296,8 @@ ALTER TABLE `Notice`
 ALTER TABLE `Notice`
     ADD CONSTRAINT `FK_MEMBER_TO_Notice` -- 사용자 -> 공지사항
         FOREIGN KEY (
-                     `member_id` -- 사용자 ID
+                     `id` -- 사용자 ID
             )
             REFERENCES `MEMBER` ( -- 사용자
-                                 `member_id` -- 사용자 ID
+                                 `id` -- 사용자 ID
                 );
