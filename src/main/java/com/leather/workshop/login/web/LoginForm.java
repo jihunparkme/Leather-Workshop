@@ -1,4 +1,4 @@
-package com.leather.workshop.login.controller;
+package com.leather.workshop.login.web;
 
 import lombok.Data;
 
