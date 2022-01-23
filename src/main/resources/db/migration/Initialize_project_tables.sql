@@ -1,291 +1,173 @@
-CREATE SCHEMA `leather_homepage` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-use leather_homepage;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-/*
-사용자
-*/
--- 사용자
-ALTER TABLE `MEMBER`
-    DROP PRIMARY KEY; -- 사용자 기본키
+-- -----------------------------------------------------
+-- Schema leather_workshop
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `leather_workshop` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+USE `leather_workshop` ;
 
--- 사용자
-DROP TABLE IF EXISTS `MEMBER` RESTRICT;
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`contact_us`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`contact_us` ;
 
--- 사용자
-CREATE TABLE `MEMBER` (
-                          `member_id`        INT          NOT NULL, -- 사용자 ID
-                          `user_id`          VARCHAR(30)  NOT NULL, -- 아이디
-                          `password`         VARCHAR(100) NOT NULL, -- 비밀번호
-                          `name`             VARCHAR(30)  NOT NULL, -- 이름
-                          `email`            VARCHAR(50)  NOT NULL, -- email
-                          `auth`             VARCHAR(10)  NOT NULL DEFAULT 'MEMBER', -- 권한
-                          `create_date_time` DATETIME     NOT NULL, -- 등록일
-                          `update_date_time` DATETIME     NULL      -- 수정일
-);
-
--- 사용자
-ALTER TABLE `MEMBER`
-    ADD CONSTRAINT `PK_MEMBER` -- 사용자 기본키
-        PRIMARY KEY (
-                     `member_id` -- 사용자 ID
-            );
-
-ALTER TABLE `MEMBER`
-    MODIFY COLUMN `member_id` INT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `MEMBER`
-    AUTO_INCREMENT = 1;
-
-/*
-상품
-*/
--- 상품
-ALTER TABLE `PRODUCT`
-    DROP FOREIGN KEY `FK_PRODUCT_CATEGORY_TO_PRODUCT`; -- 상품 카테고리 -> 상품
-
--- 상품
-ALTER TABLE `PRODUCT`
-    DROP FOREIGN KEY `FK_MEMBER_TO_PRODUCT`; -- 사용자 -> 상품
-
--- 상품
-ALTER TABLE `PRODUCT`
-    DROP PRIMARY KEY; -- 상품 기본키
-
--- 상품
-DROP TABLE IF EXISTS `PRODUCT` RESTRICT;
-
--- 상품
-CREATE TABLE `PRODUCT` (
-                           `product_id`         INT          NOT NULL, -- 상품 ID
-                           `category_id`        INT          NOT NULL, -- 카테고리 ID
-                           `name`               VARCHAR(100) NOT NULL, -- 상품명
-                           `contents`           VARCHAR(20000) NULL,     -- 상품설명
-                           `hits`               INT          NOT NULL DEFAULT 0, -- 조회수
-                           `delete_yn`          CHAR(1)      NOT NULL DEFAULT 'N', -- 삭제여부
-                           `delete_date_time`   DATETIME     NULL,     -- 삭제일
-                           `create_date_time`   DATETIME     NOT NULL, -- 등록일
-                           `member_id`          INT          NOT NULL, -- 사용자 ID
-                           `update_date_time`   DATETIME     NULL,     -- 수정일
-                           `update_member_name` VARCHAR(30)  NULL      -- 수정자
-);
-
--- 상품
-ALTER TABLE `PRODUCT`
-    ADD CONSTRAINT `PK_PRODUCT` -- 상품 기본키
-        PRIMARY KEY (
-                     `product_id` -- 상품 ID
-            );
-
-ALTER TABLE `PRODUCT`
-    MODIFY COLUMN `product_id` INT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `PRODUCT`
-    AUTO_INCREMENT = 1;
-
--- 상품
-ALTER TABLE `PRODUCT`
-    ADD CONSTRAINT `FK_PRODUCT_CATEGORY_TO_PRODUCT` -- 상품 카테고리 -> 상품
-        FOREIGN KEY (
-                     `category_id` -- 카테고리 ID
-            )
-            REFERENCES `PRODUCT_CATEGORY` ( -- 상품 카테고리
-                                           `category_id` -- 카테고리 ID
-                );
-
--- 상품
-ALTER TABLE `PRODUCT`
-    ADD CONSTRAINT `FK_MEMBER_TO_PRODUCT` -- 사용자 -> 상품
-        FOREIGN KEY (
-                     `member_id` -- 사용자 ID
-            )
-            REFERENCES `MEMBER` ( -- 사용자
-                                 `member_id` -- 사용자 ID
-                );
-
-/*
-상품 카테고리
-*/
--- 상품 카테고리
-ALTER TABLE `PRODUCT_CATEGORY`
-    DROP PRIMARY KEY; -- 상품 카테고리 기본키
-
--- 상품 카테고리
-DROP TABLE IF EXISTS `PRODUCT_CATEGORY` RESTRICT;
-
--- 상품 카테고리
-CREATE TABLE `PRODUCT_CATEGORY` (
-                                    `category_id`     INT         NOT NULL, -- 카테고리 ID
-                                    `title`           VARCHAR(20) NOT NULL, -- 카테고리명
-                                    `order_no`        INT         NULL,     -- 우선순위
-                                    `category_use_yn` CHAR(1)     NULL     DEFAULT 'N' -- 사용여부
-);
-
--- 상품 카테고리
-ALTER TABLE `PRODUCT_CATEGORY`
-    ADD CONSTRAINT `PK_PRODUCT_CATEGORY` -- 상품 카테고리 기본키
-        PRIMARY KEY (
-                     `category_id` -- 카테고리 ID
-            );
-
-ALTER TABLE `PRODUCT_CATEGORY`
-    MODIFY COLUMN `category_id` INT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `PRODUCT_CATEGORY`
-    AUTO_INCREMENT = 1;
-
-/*
-상품 첨부 파일
-*/
--- 상품 첨부 파일
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    DROP FOREIGN KEY `FK_PRODUCT_TO_PRODUCT_UPLOAD_FILE`; -- 상품 -> 상품 첨부 파일
-
--- 상품 첨부 파일
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    DROP PRIMARY KEY; -- 상품 첨부 파일 기본키
-
--- 상품 첨부 파일
-DROP TABLE IF EXISTS `PRODUCT_UPLOAD_FILE` RESTRICT;
-
--- 상품 첨부 파일
-CREATE TABLE `PRODUCT_UPLOAD_FILE` (
-                                       `file_id`          INT          NOT NULL, -- 파일 ID
-                                       `product_id`       INT          NOT NULL, -- 상품 ID
-                                       `upload_file_name` VARCHAR(100) NOT NULL, -- 업로드 파일명
-                                       `store_file_name`  VARCHAR(100) NOT NULL, -- 저장 파일명
-                                       `thumbnail_yn`     char(1)      NOT NULL DEFAULT 'N', -- 썸네일 여부
-                                       `create_date_time` DATETIME     NOT NULL, -- 등록일
-                                       `update_date_time` DATETIME     NULL      -- 수정일
-);
-
--- 상품 첨부 파일
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    ADD CONSTRAINT `PK_PRODUCT_UPLOAD_FILE` -- 상품 첨부 파일 기본키
-        PRIMARY KEY (
-                     `file_id` -- 파일 ID
-            );
-
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    MODIFY COLUMN `file_id` INT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    AUTO_INCREMENT = 1;
-
--- 상품 첨부 파일
-ALTER TABLE `PRODUCT_UPLOAD_FILE`
-    ADD CONSTRAINT `FK_PRODUCT_TO_PRODUCT_UPLOAD_FILE` -- 상품 -> 상품 첨부 파일
-        FOREIGN KEY (
-                     `product_id` -- 상품 ID
-            )
-            REFERENCES `PRODUCT` ( -- 상품
-                                  `product_id` -- 상품 ID
-                );
-
--- 후기
-ALTER TABLE `GUEST_BOOK`
-    DROP PRIMARY KEY; -- 후기 기본키
-
--- 후기
-DROP TABLE IF EXISTS `GUEST_BOOK` RESTRICT;
-
--- 후기
-CREATE TABLE `GUEST_BOOK` (
-                              `guest_book_id`    INT           NOT NULL, -- 후기 ID
-                              `name`             VARCHAR(30)   NOT NULL, -- 이름
-                              `password`         VARCHAR(100)  NOT NULL, -- 비밀번호
-                              `contents`         VARCHAR(5000) NOT NULL, -- 내용
-                              `create_date_time` DATETIME      NOT NULL, -- 등록일
-                              `update_date_time` DATETIME      NULL      -- 수정일
-);
-
--- 후기
-ALTER TABLE `GUEST_BOOK`
-    ADD CONSTRAINT `PK_GUEST_BOOK` -- 후기 기본키
-        PRIMARY KEY (
-                     `guest_book_id` -- 후기 ID
-            );
-
-ALTER TABLE `GUEST_BOOK`
-    MODIFY COLUMN `guest_book_id` INT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `GUEST_BOOK`
-    AUTO_INCREMENT = 1;
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`contact_us` (
+                                                               `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                               `name` VARCHAR(30) NOT NULL,
+                                                               `email` VARCHAR(50) NULL DEFAULT NULL,
+                                                               `phone_number` VARCHAR(20) NOT NULL,
+                                                               `title` VARCHAR(100) NOT NULL,
+                                                               `contents` VARCHAR(20000) NOT NULL,
+                                                               `create_date_time` DATETIME NOT NULL,
+                                                               `update_date_time` DATETIME NULL DEFAULT NULL,
+                                                               PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
 
 
--- 문의하기
-ALTER TABLE `CONTACT_US`
-    DROP PRIMARY KEY; -- 문의하기 기본키
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`guest_book`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`guest_book` ;
 
--- 문의하기
-DROP TABLE IF EXISTS `CONTACT_US` RESTRICT;
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`guest_book` (
+                                                               `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                               `name` VARCHAR(30) NOT NULL,
+                                                               `password` VARCHAR(100) NOT NULL,
+                                                               `contents` VARCHAR(5000) NOT NULL,
+                                                               `create_date_time` DATETIME NOT NULL,
+                                                               `update_date_time` DATETIME NULL DEFAULT NULL,
+                                                               PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
 
--- 문의하기
-CREATE TABLE `CONTACT_US` (
-                              `contact_us_id`    INT          NOT NULL, -- 문의하기 ID
-                              `name`             VARCHAR(30)  NOT NULL, -- 이름
-                              `email`            VARCHAR(50)  NULL,     -- 이메일
-                              `phone_number`     VARCHAR(20)  NOT NULL, -- 전화번호
-                              `title`            VARCHAR(100) NOT NULL, -- 제목
-                              `contents`         VARCHAR(20000) NOT NULL, -- 내용
-                              `create_date_time` DATETIME     NOT NULL, -- 등록일
-                              `update_date_time` DATETIME     NULL      -- 수정일
-);
 
--- 문의하기
-ALTER TABLE `CONTACT_US`
-    ADD CONSTRAINT `PK_CONTACT_US` -- 문의하기 기본키
-        PRIMARY KEY (
-                     `contact_us_id` -- 문의하기 ID
-            );
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`member`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`member` ;
 
-ALTER TABLE `CONTACT_US`
-    MODIFY COLUMN `contact_us_id` INT NOT NULL AUTO_INCREMENT;
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`member` (
+                                                           `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                           `user_id` VARCHAR(30) NOT NULL,
+                                                           `password` VARCHAR(100) NOT NULL,
+                                                           `name` VARCHAR(30) NOT NULL,
+                                                           `email` VARCHAR(50) NOT NULL,
+                                                           `auth` VARCHAR(10) NOT NULL DEFAULT 'MEMBER',
+                                                           `create_date_time` DATETIME NOT NULL,
+                                                           `update_date_time` DATETIME NULL,
+                                                           PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
 
-ALTER TABLE `CONTACT_US`
-    AUTO_INCREMENT = 1;
 
--- 공지사항
-ALTER TABLE `Notice`
-    DROP FOREIGN KEY `FK_MEMBER_TO_Notice`; -- 사용자 -> 공지사항
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`notice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`notice` ;
 
--- 공지사항
-ALTER TABLE `Notice`
-    DROP PRIMARY KEY; -- 공지사항 기본키
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`notice` (
+                                                           `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                           `member_id` BIGINT NOT NULL,
+                                                           `title` VARCHAR(100) NOT NULL,
+                                                           `contents` VARCHAR(20000) NOT NULL,
+                                                           `hits` BIGINT NOT NULL DEFAULT 0,
+                                                           `create_date_time` DATETIME NOT NULL,
+                                                           `update_date_time` DATETIME NULL,
+                                                           PRIMARY KEY (`id`),
+                                                           INDEX `fk_notice_member1_idx` (`member_id` ASC) VISIBLE,
+                                                           CONSTRAINT `fk_notice_member1`
+                                                               FOREIGN KEY (`member_id`)
+                                                                   REFERENCES `leather_workshop`.`member` (`id`)
+                                                                   ON DELETE NO ACTION
+                                                                   ON UPDATE NO ACTION)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
 
--- 공지사항
-DROP TABLE IF EXISTS `Notice` RESTRICT;
 
--- 공지사항
-CREATE TABLE `Notice` (
-                          `notice_id`        INT          NOT NULL, -- 공지사항 ID
-                          `title`            VARCHAR(100) NOT NULL, -- 제목
-                          `contents`         VARCHAR(20000) NOT NULL, -- 내용
-                          `hits`             INT          NOT NULL DEFAULT 0, -- 조회수
-                          `member_id`        INT          NOT NULL, -- 사용자 ID
-                          `create_date_time` DATETIME     NOT NULL, -- 등록일
-                          `update_date_time` DATETIME     NULL      -- 수정일
-);
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`product_category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`product_category` ;
 
--- 공지사항
-ALTER TABLE `Notice`
-    ADD CONSTRAINT `PK_Notice` -- 공지사항 기본키
-        PRIMARY KEY (
-                     `notice_id` -- 공지사항 ID
-            );
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`product_category` (
+                                                                     `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                                     `title` VARCHAR(20) NOT NULL,
+                                                                     `order_no` INT NULL DEFAULT NULL,
+                                                                     `category_use_yn` CHAR(1) NULL DEFAULT 'N',
+                                                                     PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
 
-ALTER TABLE `Notice`
-    MODIFY COLUMN `notice_id` INT NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `Notice`
-    AUTO_INCREMENT = 1;
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`product`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`product` ;
 
--- 공지사항
-ALTER TABLE `Notice`
-    ADD CONSTRAINT `FK_MEMBER_TO_Notice` -- 사용자 -> 공지사항
-        FOREIGN KEY (
-                     `member_id` -- 사용자 ID
-            )
-            REFERENCES `MEMBER` ( -- 사용자
-                                 `member_id` -- 사용자 ID
-                );
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`product` (
+                                                            `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                            `product_category_id` BIGINT NOT NULL,
+                                                            `name` VARCHAR(100) NOT NULL,
+                                                            `contents` VARCHAR(20000) NULL DEFAULT NULL,
+                                                            `hits` BIGINT NOT NULL DEFAULT 0,
+                                                            `delete_yn` CHAR(1) NOT NULL DEFAULT 'N',
+                                                            `delete_date_time` DATETIME NULL DEFAULT NULL,
+                                                            `create_date_time` DATETIME NOT NULL,
+                                                            `member_id` BIGINT NOT NULL,
+                                                            `update_date_time` DATETIME NULL DEFAULT NULL,
+                                                            `update_member_name` VARCHAR(30) NULL DEFAULT NULL,
+                                                            PRIMARY KEY (`id`),
+                                                            INDEX `fk_product_product_category_idx` (`product_category_id` ASC) VISIBLE,
+                                                            INDEX `fk_product_member1_idx` (`member_id` ASC) VISIBLE,
+                                                            CONSTRAINT `fk_product_product_category`
+                                                                FOREIGN KEY (`product_category_id`)
+                                                                    REFERENCES `leather_workshop`.`product_category` (`id`)
+                                                                    ON DELETE NO ACTION
+                                                                    ON UPDATE NO ACTION,
+                                                            CONSTRAINT `fk_product_member1`
+                                                                FOREIGN KEY (`member_id`)
+                                                                    REFERENCES `leather_workshop`.`member` (`id`)
+                                                                    ON DELETE NO ACTION
+                                                                    ON UPDATE NO ACTION)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `leather_workshop`.`product_upload_file`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `leather_workshop`.`product_upload_file` ;
+
+CREATE TABLE IF NOT EXISTS `leather_workshop`.`product_upload_file` (
+                                                                        `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                                        `product_id` BIGINT NOT NULL,
+                                                                        `upload_file_name` VARCHAR(100) NOT NULL,
+                                                                        `store_file_name` VARCHAR(100) NOT NULL,
+                                                                        `thumbnail_yn` CHAR(1) NOT NULL DEFAULT 'N',
+                                                                        `create_date_time` DATETIME NOT NULL,
+                                                                        `update_date_time` DATETIME NULL DEFAULT NULL,
+                                                                        INDEX `fk_product_upload_file_product1_idx` (`product_id` ASC) VISIBLE,
+                                                                        PRIMARY KEY (`id`),
+                                                                        CONSTRAINT `fk_product_upload_file_product1`
+                                                                            FOREIGN KEY (`product_id`)
+                                                                                REFERENCES `leather_workshop`.`product` (`id`)
+                                                                                ON DELETE NO ACTION
+                                                                                ON UPDATE NO ACTION)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_bin;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
