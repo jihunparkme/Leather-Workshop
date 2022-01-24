@@ -1,7 +1,7 @@
 package com.leather.workshop.notice.web;
 
 import com.leather.workshop.notice.service.NoticeService;
-import com.leather.workshop.notice.web.dto.NoticeSaveRequestDto;
+import com.leather.workshop.notice.web.dto.NoticeSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping("/add")
-    public String save(@RequestBody NoticeSaveRequestDto noticeSaveForm,
+    public String save(@RequestBody NoticeSaveForm noticeSaveForm,
                      HttpServletRequest request, HttpServletResponse response) {
 
         log.info("save form notice");
@@ -32,7 +32,7 @@ public class NoticeController {
 
     @ResponseBody
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Long saveApi(@RequestBody NoticeSaveRequestDto noticeSaveForm) {
+    public Long saveApi(@RequestBody NoticeSaveForm noticeSaveForm) {
 
         log.info("save api notice");
 

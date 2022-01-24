@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @NoArgsConstructor
-public class NoticeSaveRequestDto {
+public class NoticeSaveForm {
 
     private Long memberId;
     private String title;
