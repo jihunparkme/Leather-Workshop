@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Getter
 @NoArgsConstructor
 public class NoticeSaveForm {
@@ -17,6 +16,15 @@ public class NoticeSaveForm {
     private String contents;
     private Long hits;
     private LocalDateTime createDateTime;
+
+    @Builder
+    public NoticeSaveForm(Long memberId, String title, String contents, Long hits, LocalDateTime createDateTime) {
+        this.memberId = memberId;
+        this.title = title;
+        this.contents = contents;
+        this.hits = hits;
+        this.createDateTime = createDateTime;
+    }
 
     public Notice toEntity() {
         return Notice.builder()
