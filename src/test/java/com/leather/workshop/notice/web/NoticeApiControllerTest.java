@@ -2,7 +2,7 @@ package com.leather.workshop.notice.web;
 
 import com.leather.workshop.notice.domain.Notice;
 import com.leather.workshop.notice.domain.NoticeRepository;
-import com.leather.workshop.notice.web.dto.NoticeSaveForm;
+import com.leather.workshop.notice.web.dto.NoticeSaveRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ class NoticeApiControllerTest {
     @Test
     void 공지사항_등록_성공() {
         //gevin
-        NoticeSaveForm noticeSaveForm = NoticeSaveForm.builder()
+        NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
                 .memberId(1L)
                 .title(title)
                 .contents(contents)
@@ -48,10 +48,10 @@ class NoticeApiControllerTest {
                 .createDateTime(now)
                 .build();
 
-        String url = "http://localhost:" + port + "/notice/add";
+        String url = "http://localhost:" + port + "/notice";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, noticeSaveForm, Long.class);
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, noticeSaveRequest, Long.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

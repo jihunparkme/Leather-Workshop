@@ -1,7 +1,7 @@
 package com.leather.workshop.notice.web;
 
 import com.leather.workshop.notice.service.NoticeService;
-import com.leather.workshop.notice.web.dto.NoticeSaveForm;
+import com.leather.workshop.notice.web.dto.NoticeSaveRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,18 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller(value = "/notice")
+@Controller
 @RequestMapping(value = "/notice")
 public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @PostMapping("/add")
-    public String save(@RequestBody NoticeSaveForm noticeSaveForm,
+    @PostMapping("")
+    public String save(@RequestBody NoticeSaveRequest noticeSaveRequest,
                      HttpServletRequest request, HttpServletResponse response) {
 
         log.info("save form notice");
-        Long id = noticeService.save(noticeSaveForm);
+        Long id = noticeService.save(noticeSaveRequest);
 
         return "redirect:/notice/" + id;
     }

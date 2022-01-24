@@ -55,7 +55,7 @@ class NoticeRepositoryTest {
     void 공지사항_조회_실패() {
         assertThatThrownBy(() ->
                 noticeRepository.findById(10000L)
-                        .orElseThrow(() -> new NoticeNotFoundException("no notice id :" + 10000L)))
+                        .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
                 .isInstanceOf(NoticeNotFoundException.class);
     }
 }

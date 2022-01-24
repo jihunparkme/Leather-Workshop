@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class NoticeSaveForm {
+public class NoticeSaveRequest {
 
     private Long memberId;
     private String title;
@@ -18,7 +18,7 @@ public class NoticeSaveForm {
     private LocalDateTime createDateTime;
 
     @Builder
-    public NoticeSaveForm(Long memberId, String title, String contents, Long hits, LocalDateTime createDateTime) {
+    public NoticeSaveRequest(Long memberId, String title, String contents, Long hits, LocalDateTime createDateTime) {
         this.memberId = memberId;
         this.title = title;
         this.contents = contents;

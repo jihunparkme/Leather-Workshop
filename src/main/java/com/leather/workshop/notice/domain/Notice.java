@@ -39,4 +39,10 @@ public class Notice {
         this.hits = hits;
         this.createDateTime = createDateTime;
     }
+
+    public void update(String title, String contents, LocalDateTime updateDateTime) {
+        this.title = title;
+        this.contents = contents;
+        this.updateDateTime = updateDateTime;
+    }
 }
