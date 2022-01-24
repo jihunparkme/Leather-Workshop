@@ -29,7 +29,7 @@ class NoticeRepositoryTest {
     private LocalDateTime now = LocalDateTime.now();
 
     @Test
-    void 공지사항_조회_성공() {
+    void 공지사항_등록_조회_성공() {
         //given
         Notice saveNotice = noticeRepository.save(Notice.builder()
                 .memberId(1L)
