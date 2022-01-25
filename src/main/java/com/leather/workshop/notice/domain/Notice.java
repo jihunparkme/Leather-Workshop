@@ -27,6 +27,7 @@ public class Notice {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private Long hits;
 
+    @Column(nullable = false)
     private LocalDateTime createDateTime;
 
     private LocalDateTime updateDateTime;
