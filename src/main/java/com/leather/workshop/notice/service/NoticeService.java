@@ -21,8 +21,8 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Transactional
-    public Long save(NoticeSaveRequest noticeSaveRequestDto) {
-        return noticeRepository.save(noticeSaveRequestDto.toEntity()).getId();
+    public Long save(NoticeSaveRequest noticeSaveRequest) {
+        return noticeRepository.save(noticeSaveRequest.toEntity()).getId();
     }
 
     @Transactional

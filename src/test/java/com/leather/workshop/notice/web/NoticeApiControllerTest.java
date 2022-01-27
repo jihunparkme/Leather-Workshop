@@ -13,7 +13,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +37,6 @@ class NoticeApiControllerTest {
 
     private String title = "제목";
     private String contents = "내용";
-    private LocalDateTime now = LocalDateTime.now();
 
     @Test
     void 공지사항_등록_성공() {

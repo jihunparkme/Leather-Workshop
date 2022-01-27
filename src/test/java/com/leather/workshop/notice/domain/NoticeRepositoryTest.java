@@ -1,7 +1,6 @@
 package com.leather.workshop.notice.domain;
 
 import com.leather.workshop.exception.NoticeNotFoundException;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ class NoticeRepositoryTest {
 
     private String title = "제목";
     private String contents = "내용";
-    private LocalDateTime now = LocalDateTime.now();
 
     @Test
     void 공지사항_등록_조회_성공() {
