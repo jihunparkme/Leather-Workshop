@@ -1,5 +1,6 @@
 package com.leather.workshop.notice.web;
 
+import com.leather.workshop.exception.NoticeNotFoundException;
 import com.leather.workshop.notice.domain.Notice;
 import com.leather.workshop.notice.domain.NoticeRepository;
 import com.leather.workshop.notice.web.dto.NoticeSaveRequest;
@@ -15,9 +16,8 @@ import org.springframework.http.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class NoticeApiControllerTest {
@@ -117,31 +117,72 @@ class NoticeApiControllerTest {
     }
 
     @Test
-    void 공지사항_수정_실패() {
-
-    }
-
-    @Test
     void 공지사항_삭제_성공() {
+        //gevin
+        Notice save = noticeRepository.save(Notice.builder()
+                .memberId(1L)
+                .title(title)
+                .contents(contents)
+                .hits(0L)
+                .build());
 
-    }
+        //when
+        String url = "http://localhost:" + port + "/notice/" + save.getId();
+        restTemplate.delete(url);
 
-    @Test
-    void 공지사항_삭제_실패() {
-
+        //then
+        assertThatThrownBy(() ->
+                noticeRepository.findById(10000L)
+                        .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
+                .isInstanceOf(NoticeNotFoundException.class)
+                .hasMessageContaining("해당 공지사항이 없습니다.");
     }
 
     @Test
     void 공지사항_조회_성공() {
+        //gevin
+        Notice save = noticeRepository.save(Notice.builder()
+                .memberId(1L)
+                .title(title)
+                .contents(contents)
+                .hits(0L)
+                .build());
+
+        //when
+        String url = "http://localhost:" + port + "/notice/" + save.getId();
+        ResponseEntity<Notice> responseEntity = restTemplate.getForEntity(url, Notice.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getId()).isEqualTo(save.getId());
+        assertThat(responseEntity.getBody().getMemberId()).isEqualTo(save.getMemberId());
+        assertThat(responseEntity.getBody().getTitle()).isEqualTo(save.getTitle());
+        assertThat(responseEntity.getBody().getContents()).isEqualTo(save.getContents());
+        assertThat(responseEntity.getBody().getHits()).isEqualTo(save.getHits());
     }
 
     @Test
     void 공지사항_조회_실패() {
+        //when
+        String url = "http://localhost:" + port + "/notice/" + 1000;
+        ResponseEntity<Notice> responseEntity = restTemplate.getForEntity(url, Notice.class);
 
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     void 전체_공지사항_조회_성공() {
+        for (int i = 0; i < 5; i++) {
+            Notice save = noticeRepository.save(Notice.builder()
+                    .memberId(1L)
+                    .title(title)
+                    .contents(contents)
+                    .hits(0L)
+                    .build());
+        }
 
+        List<Notice> all = noticeRepository.findAll();
+        assertThat(all.size()).isEqualTo(5);
     }
 }

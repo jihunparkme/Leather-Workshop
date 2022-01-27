@@ -57,8 +57,4 @@ public class NoticeService {
                                                 .map(NoticeListResponse::new)
                                                 .collect(Collectors.toList());
     }
-
-
-
-
 }
