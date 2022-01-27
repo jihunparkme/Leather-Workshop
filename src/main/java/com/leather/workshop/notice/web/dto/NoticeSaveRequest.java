@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class NoticeSaveRequest {
@@ -15,15 +13,13 @@ public class NoticeSaveRequest {
     private String title;
     private String contents;
     private Long hits;
-    private LocalDateTime createDateTime;
 
     @Builder
-    public NoticeSaveRequest(Long memberId, String title, String contents, Long hits, LocalDateTime createDateTime) {
+    public NoticeSaveRequest(Long memberId, String title, String contents, Long hits) {
         this.memberId = memberId;
         this.title = title;
         this.contents = contents;
         this.hits = hits;
-        this.createDateTime = createDateTime;
     }
 
     public Notice toEntity() {
@@ -32,7 +28,6 @@ public class NoticeSaveRequest {
                 .title(title)
                 .contents(contents)
                 .hits(hits)
-                .createDateTime(createDateTime)
                 .build();
     }
 }

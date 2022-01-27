@@ -30,7 +30,7 @@ public class NoticeService {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
-        notice.update(noticeUpdateRequest.getTitle(), noticeUpdateRequest.getContents(), noticeUpdateRequest.getUpdateDateTime());
+        notice.update(noticeUpdateRequest.getTitle(), noticeUpdateRequest.getContents());
 
         return id;
     }

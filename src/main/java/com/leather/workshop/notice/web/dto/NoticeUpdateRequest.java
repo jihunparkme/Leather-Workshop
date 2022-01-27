@@ -4,20 +4,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class NoticeUpdateRequest {
 
     private String title;
     private String contents;
-    private LocalDateTime updateDateTime;
 
     @Builder
-    public NoticeUpdateRequest(String title, String contents, LocalDateTime updateDateTime) {
+    public NoticeUpdateRequest(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.updateDateTime = updateDateTime;
     }
 }

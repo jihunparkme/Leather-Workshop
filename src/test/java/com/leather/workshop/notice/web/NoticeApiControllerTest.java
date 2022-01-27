@@ -48,7 +48,6 @@ class NoticeApiControllerTest {
                 .title(title)
                 .contents(contents)
                 .hits(0L)
-                .createDateTime(now)
                 .build();
 
         String url = "http://localhost:" + port + "/notice";
@@ -72,7 +71,6 @@ class NoticeApiControllerTest {
                 .memberId(1L)
                 .contents(contents)
                 .hits(0L)
-                .createDateTime(now)
                 .build();
 
         String url = "http://localhost:" + port + "/notice";
@@ -92,7 +90,6 @@ class NoticeApiControllerTest {
                 .title(title)
                 .contents(contents)
                 .hits(0L)
-                .createDateTime(now)
                 .build());
 
         Long updateId = saveNotice.getId();
@@ -102,7 +99,6 @@ class NoticeApiControllerTest {
         NoticeUpdateRequest requestUpdateNotice = NoticeUpdateRequest.builder()
                 .title(expectedTitle)
                 .contents(expectedContents)
-                .updateDateTime(LocalDateTime.now())
                 .build();
 
         //when

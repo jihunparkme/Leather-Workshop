@@ -1,6 +1,7 @@
 package com.leather.workshop.notice.domain;
 
 import com.leather.workshop.exception.NoticeNotFoundException;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -36,7 +38,6 @@ class NoticeRepositoryTest {
                 .title(title)
                 .contents(contents)
                 .hits(0L)
-                .createDateTime(now)
                 .build());
 
         //when
@@ -48,7 +49,6 @@ class NoticeRepositoryTest {
         assertThat(notice.getTitle()).isEqualTo(title);
         assertThat(notice.getContents()).isEqualTo(contents);
         assertThat(notice.getHits()).isEqualTo(0L);
-        assertThat(notice.getCreateDateTime()).isEqualTo(now);
     }
 
     @Test
@@ -57,5 +57,27 @@ class NoticeRepositoryTest {
                 noticeRepository.findById(10000L)
                         .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
                 .isInstanceOf(NoticeNotFoundException.class);
+    }
+
+    @Test
+    void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.now();
+        noticeRepository.save(Notice.builder()
+                .memberId(1L)
+                .title(title)
+                .contents(contents)
+                .hits(0L)
+                .build());
+
+        //when
+        List<Notice> noticeList = noticeRepository.findAll();
+
+        //then
+        Notice notice = noticeList.get(0);
+
+        System.out.println("CreateDateTime = " + notice.getCreateDateTime() + ", UpdateDateTime" + notice.getUpdateDateTime());
+        assertThat(notice.getCreateDateTime()).isAfter(now);
+        assertThat(notice.getUpdateDateTime()).isAfter(now);
     }
 }

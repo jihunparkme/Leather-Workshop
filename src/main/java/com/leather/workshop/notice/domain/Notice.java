@@ -1,16 +1,16 @@
 package com.leather.workshop.notice.domain;
 
+import com.leather.workshop.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class Notice {
+public class Notice extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +27,16 @@ public class Notice {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private Long hits;
 
-    @Column(nullable = false)
-    private LocalDateTime createDateTime;
-
-    private LocalDateTime updateDateTime;
-
     @Builder
-    public Notice(Long memberId, String title, String contents, Long hits, LocalDateTime createDateTime) {
+    public Notice(Long memberId, String title, String contents, Long hits) {
         this.memberId = memberId;
         this.title = title;
         this.contents = contents;
         this.hits = hits;
-        this.createDateTime = createDateTime;
     }
 
-    public void update(String title, String contents, LocalDateTime updateDateTime) {
+    public void update(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.updateDateTime = updateDateTime;
     }
 }
