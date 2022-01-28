@@ -60,7 +60,7 @@ class NoticeRepositoryTest {
     @Test
     void BaseTimeEntity_등록() {
         //given
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2022, 01, 27, 0,0,0);
         noticeRepository.save(Notice.builder()
                 .memberId(1L)
                 .title(title)
