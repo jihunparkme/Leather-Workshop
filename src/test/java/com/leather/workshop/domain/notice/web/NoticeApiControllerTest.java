@@ -166,7 +166,7 @@ class NoticeApiControllerTest {
         ResponseEntity<Notice> responseEntity = restTemplate.getForEntity(url, Notice.class);
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
