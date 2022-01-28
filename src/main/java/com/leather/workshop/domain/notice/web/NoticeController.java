@@ -21,7 +21,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String view() {
         return "notice/list";
     }

@@ -42,7 +42,7 @@ public class NoticeApiController {
         return noticeService.findById(id);
     }
 
-    @GetMapping("/list")
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<NoticeListResponse> findAll() {
         return noticeService.findAllDesc();
     }
