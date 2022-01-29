@@ -20,8 +20,9 @@ public class NoticeController {
     @GetMapping("")
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "page", required = false, defaultValue = "5") Integer size,
+            @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
             Model model) {
+
         Page<Notice> noticeListPage = noticeService.findAllSortByIdDescPaging(page, size);
 
         model.addAttribute("noticeListPage", noticeListPage);

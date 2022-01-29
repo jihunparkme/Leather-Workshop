@@ -4,7 +4,7 @@ $(function() {
 
 function searchNoticeList(page, size) {
     if (page == undefined) {
-        page = 1;
+        page = 0;
     }
     if (size == undefined) {
         size = 5;
