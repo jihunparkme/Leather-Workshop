@@ -7,7 +7,12 @@ import com.leather.workshop.domain.notice.web.dto.response.NoticeListResponse;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Getter
 @Service
 public class NoticeService {
 
@@ -56,5 +62,11 @@ public class NoticeService {
         return noticeRepository.findAllDesc().stream()
                                                 .map(NoticeListResponse::new)
                                                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Notice> findAllSortByIdDescPaging(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return noticeRepository.findAll(pageable);
     }
 }
