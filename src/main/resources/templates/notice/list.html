@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/common/head :: head"></div>
+<body>
+  <div th:replace="/common/header :: header"></div>
+  <main id="main">
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Notice</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Notice</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="entries">
+            <article class="entry">
+              <h2 class="entry-title">
+                <a href="view.html">Nisi magni odit consequatur autem nulla dolorem</a>
+              </h2>
+              <div class="entry-content">
+                <div class="read-more">
+                  <a href="view.html">Read More</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div th:replace="/common/footer :: footer"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div th:replace="/common/commonjs"></div>
+</body>
+</html>
