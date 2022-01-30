@@ -1,6 +1,9 @@
 $(function() {
-
 });
+
+function btnPageNumber(_this) {
+    searchNoticeList($(_this).text() - 1)
+}
 
 function searchNoticeList(page, size) {
     if (page == undefined) {

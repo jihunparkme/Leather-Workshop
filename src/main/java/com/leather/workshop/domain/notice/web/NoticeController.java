@@ -26,6 +26,8 @@ public class NoticeController {
         Page<Notice> noticeListPage = noticeService.findAllSortByIdDescPaging(page, size);
 
         model.addAttribute("noticeListPage", noticeListPage);
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
         return "notice/notice-list";
     }
 

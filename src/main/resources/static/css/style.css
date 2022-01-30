@@ -1423,7 +1423,7 @@ section {
 
 .blog .entry {
   padding: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -1450,7 +1450,6 @@ section {
 }
 
 .blog .entry .entry-meta {
-  margin-bottom: 15px;
   color: #c1c8d0;
 }
 
