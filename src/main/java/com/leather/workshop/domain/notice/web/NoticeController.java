@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -57,7 +58,8 @@ public class NoticeController {
     @PostMapping("/{id}/edit")
     public String edit(@PathVariable Long id,
                        @Validated @ModelAttribute("notice") NoticeUpdateRequest form,
-                       BindingResult bindingResult) {
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -65,7 +67,8 @@ public class NoticeController {
         }
 
         noticeService.update(id, form);
+        redirectAttributes.addAttribute("status", true);
 
-        return "redirect:/notice/" + id;
+        return "redirect:/notice/{id}";
     }
 }

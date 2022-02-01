@@ -2526,3 +2526,10 @@ section {
   border-color: #dc3545;
   color: #dc3545;
 }
+
+.save-success {
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-color: #0e5ff1;
+  color: #0e5ff1;
+}

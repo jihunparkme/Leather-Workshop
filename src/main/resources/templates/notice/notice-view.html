@@ -23,6 +23,10 @@
           <div class="entries">
             <article class="entry entry-single">
 
+              <div th:if="${param.status}" class="save-success">
+                저장이 완료되었습니다.
+              </div>
+
               <h2 class="entry-view-title">
                 <p>[(${notice.title})]</p>
               </h2>
