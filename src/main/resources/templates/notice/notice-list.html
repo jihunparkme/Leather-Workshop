@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/common/head :: head"></div>
+<body>
+  <div th:replace="/common/header :: header"></div>
+  <main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Notice</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Notice</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <form name="form" id="form" th:action="@{/notice}" method="get">
+      <input type="hidden" id="page" name="page" value="0"/>
+    </form>
+
+    <section id="notice" class="notice">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <h5 style="margin-bottom: 30px;">Total : [(${noticeListPage.totalElements})]</h5>
+
+          <div class="entries">
+            <tr th:if="${noticeListPage.totalElements} == 0">
+              <article class="entry">
+                <h2 class="entry-title">
+                  <a>등록된 공지사항이 없습니다.</a>
+                </h2>
+              </article>
+            </tr>
+
+            <tr th:each="notice, status : ${noticeListPage.content}" th:unless="${#lists.isEmpty(noticeListPage.content)}">
+              <article class="entry">
+                <h2 class="entry-title" style="margin-bottom: 10px">
+                  <a th:href="@{/notice/{param1}(param1=${notice.id})}">[(${notice.title})]</a>
+                </h2>
+                <div class="entry-meta">
+                  <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i>[(${#temporals.format(notice.createDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                    <li class="d-flex align-items-center"><i class="bi bi-eye"></i>[(${notice.hits})]</li>
+                  </ul>
+                </div>
+              </article>
+            </tr>
+
+            <div style="margin-top: 60px;" class="notice-pagination">
+              <ul class="justify-content-center">
+                <div th:each="num : ${#numbers.sequence(0, noticeListPage.getTotalPages() - 1)}">
+                  <li th:if="${page == num}" class="active"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
+                  <li th:unless="${page == num}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
+                  </li>
+                </div>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="/common/footer :: footer"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div th:replace="/common/commonjs"></div>
+  <script type="text/javascript" th:src="@{/js/notice/notice.js}"></script>
+</body>
+</html>

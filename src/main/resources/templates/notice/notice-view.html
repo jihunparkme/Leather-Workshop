@@ -4,33 +4,46 @@
 <body>
   <div th:replace="/common/header :: header"></div>
   <main id="main">
+
     <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
-
         <div class="d-flex justify-content-between align-items-center">
           <h2>Notice</h2>
           <ol>
             <li><a href="/">Home</a></li>
-            <li>Notice</li>
+            <li><a href="/notice">Notice</a></li>
           </ol>
         </div>
-
       </div>
     </section>
 
-    <section id="blog" class="blog">
+    <section id="notice" class="notice">
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="entries">
-            <article class="entry">
-              <h2 class="entry-title">
-                <a href="view.html">Nisi magni odit consequatur autem nulla dolorem</a>
+            <article class="entry entry-single">
+
+              <h2 class="entry-view-title">
+                <p>[(${notice.title})]</p>
               </h2>
-              <div class="entry-content">
-                <div class="read-more">
-                  <a href="view.html">Read More</a>
-                </div>
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i>[(${#temporals.format(notice.createDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                  <li class="d-flex align-items-center"><i class="bi bi-eye"></i>[(${notice.hits})]</li>
+                </ul>
               </div>
+
+              <div class="entry-content">
+                <p>[(${notice.contents})]</p>
+              </div>
+
+              <div class="entry-footer">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                  <li><a href="/notice">Notice</a></li>
+                </ul>
+              </div>
+
             </article>
           </div>
         </div>

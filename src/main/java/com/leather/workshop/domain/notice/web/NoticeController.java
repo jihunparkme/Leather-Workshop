@@ -1,17 +1,13 @@
 package com.leather.workshop.domain.notice.web;
 
+import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.service.NoticeService;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,18 +17,33 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/list")
-    public String view() {
-        return "notice/list";
+    @GetMapping("")
+    public String list(
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
+            Model model) {
+
+        Page<Notice> noticeListPage = noticeService.findAllSortByIdDescPaging(page, size);
+
+        model.addAttribute("noticeListPage", noticeListPage);
+        model.addAttribute("page", page);
+        return "notice/notice-list";
     }
 
-    @PostMapping("")
-    public String save(@RequestBody NoticeSaveRequest noticeSaveRequest,
-                     HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("{id}")
+    public String view(@PathVariable Long id, Model model) {
 
-        log.info("save form notice");
-        Long id = noticeService.save(noticeSaveRequest);
-
-        return "redirect:/notice/" + id;
+        model.addAttribute("notice", noticeService.findById(id));
+        return "notice/notice-view";
     }
+
+//    @PostMapping("/save")
+//    public String save(@RequestBody NoticeSaveRequest noticeSaveRequest,
+//                     HttpServletRequest request, HttpServletResponse response) {
+//
+//        log.info("save form notice");
+//        Long id = noticeService.save(noticeSaveRequest);
+//
+//        return "redirect:/notice/notice-view/" + id;
+//    }
 }
