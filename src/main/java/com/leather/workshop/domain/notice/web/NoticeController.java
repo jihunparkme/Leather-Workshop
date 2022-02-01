@@ -5,6 +5,7 @@ import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
+import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,7 +43,20 @@ public class NoticeController {
     }
 
     @GetMapping("{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@PathVariable Long id, Model model,
+                       @SessionAttribute(name = SessionConst.VIEW_NOTICE, required = false) String viewNotice,
+                       HttpServletRequest request) throws UnknownHostException {
+
+        if (viewNotice == null) {
+            Notice notice = noticeService.getNoticeRepository().findById(id).get();
+            notice.countHits();
+            noticeService.getNoticeRepository().save(notice);
+        }
+
+        HttpSession session = request.getSession();
+        String clientIp = Inet4Address.getLocalHost().getHostAddress();
+        session.setAttribute(SessionConst.VIEW_NOTICE, id + "/" + clientIp);
+        session.setMaxInactiveInterval(300);
 
         model.addAttribute("notice", noticeService.findById(id));
         return "notice/notice-view";

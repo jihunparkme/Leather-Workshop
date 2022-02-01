@@ -39,4 +39,8 @@ public class Notice extends BaseTimeEntity {
         this.title = title;
         this.contents = contents;
     }
+
+    public void countHits() {
+        this.hits += 1;
+    }
 }
