@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/common/head :: head"></div>
+<body>
+<div th:replace="/common/header :: header"></div>
+<main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Notice</h2>
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/notice">Notice</a></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="notice" class="notice">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="entries">
+                    <article class="entry entry-single">
+                        <form th:action="edit" th:object="${notice}" method="post">
+                            <h2 class="entry-view-title">
+                                <label for="title" th:text="Title">title</label>
+                            </h2>
+                            <input type="text" id="title" name="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목을 입력하세요.">
+                            <div class="field-error" th:errors="*{title}">
+                                title error
+                            </div>
+
+                            <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
+                                <label for="title" th:text="Contents">contents</label>
+                            </div>
+                            <textarea type="text" id="contents" name="contents" th:field="*{contents}" th:errorclass="field-error" class="form-control" placeholder="내용을 입력하세요."></textarea>
+                            <div class="field-error" th:errors="*{contents}">
+                                contents error
+                            </div>
+
+                            <div class="entry-footer">
+                                <i class="bi bi-folder"></i>
+                                <ul class="cats">
+                                    <li><a href="/notice">Notice</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="entry-button">
+                                <div>
+                                    <button type="submit" class="btn btn-outline-success">수정</button>
+                                    <button type="button" th:onclick="cancel()" class="btn btn-outline-danger">취소</button>
+                                </div>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<div th:replace="/common/footer :: footer"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="/common/commonjs"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function cancel() {
+    location.href = "/notice/" + ([[${notice.id}]]);
+}
+/*]]>*/
+</script>
+</body>
+</html>
