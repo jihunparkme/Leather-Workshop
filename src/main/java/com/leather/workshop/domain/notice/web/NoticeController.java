@@ -2,6 +2,7 @@ package com.leather.workshop.domain.notice.web;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.service.NoticeService;
+import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,25 @@ public class NoticeController {
 
         model.addAttribute("notice", new NoticeResponse());
         return "notice/notice-add";
+    }
+
+    @PostMapping("/add")
+    public String edit(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "notice/notice-add";
+        }
+
+        form.setMemberId(1L);
+        form.setHits(0L);
+        Long id = noticeService.save(form);
+        redirectAttributes.addAttribute("id", id);
+        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/notice/{id}";
     }
 
     @GetMapping("/{id}/edit")

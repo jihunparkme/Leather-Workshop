@@ -24,7 +24,7 @@ public class Notice extends BaseTimeEntity {
     @Column(length = 20000, nullable = false)
     private String contents;
 
-    @Column(nullable = false, columnDefinition = "integer default 0")
+    @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long hits;
 
     @Builder
