@@ -47,15 +47,15 @@ public class NoticeController {
                        @SessionAttribute(name = SessionConst.VIEW_NOTICE, required = false) String viewNotice,
                        HttpServletRequest request) throws UnknownHostException {
 
-        if (viewNotice == null) {
+        String sessionValue = id + "/" + Inet4Address.getLocalHost().getHostAddress();
+        if (viewNotice == null || !sessionValue.equals(viewNotice)) {
             Notice notice = noticeService.getNoticeRepository().findById(id).get();
             notice.countHits();
             noticeService.getNoticeRepository().save(notice);
         }
 
         HttpSession session = request.getSession();
-        String clientIp = Inet4Address.getLocalHost().getHostAddress();
-        session.setAttribute(SessionConst.VIEW_NOTICE, id + "/" + clientIp);
+        session.setAttribute(SessionConst.VIEW_NOTICE, sessionValue);
         session.setMaxInactiveInterval(300);
 
         model.addAttribute("notice", noticeService.findById(id));
