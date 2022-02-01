@@ -2,16 +2,25 @@ package com.leather.workshop.domain.notice.web.dto.request;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+
+@Data
 @NoArgsConstructor
 public class NoticeSaveRequest {
 
     private Long memberId;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String contents;
+
+    @Column(columnDefinition = "BIGINT default 0")
     private Long hits;
 
     @Builder

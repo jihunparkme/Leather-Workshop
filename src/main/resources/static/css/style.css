@@ -1506,6 +1506,16 @@ section {
   border-radius: 4px;
 }
 
+.notice .entry .entry-content .read-more button {
+  display: inline-block;
+  background: #5D432C;
+  color: #fff;
+  padding: 6px 18px;
+  transition: 0.3s;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
 .notice .entry .entry-content .read-more a:hover {
   background: #df3740;
 }
@@ -1544,6 +1554,14 @@ section {
   background-color: #556270;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.notice .entry .entry-button {
+  padding-bottom: 50px
+}
+
+.notice .entry .entry-button div{
+  float: right
 }
 
 .notice .entry .entry-footer {
@@ -2499,4 +2517,19 @@ section {
 
 #footer .credits a:hover {
   color: white;
+}
+
+/*--------------------------------------------------------------
+# Custom
+--------------------------------------------------------------*/
+.field-error {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.save-success {
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-color: #0e5ff1;
+  color: #0e5ff1;
 }

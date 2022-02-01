@@ -24,7 +24,7 @@ public class Notice extends BaseTimeEntity {
     @Column(length = 20000, nullable = false)
     private String contents;
 
-    @Column(nullable = false, columnDefinition = "integer default 0")
+    @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long hits;
 
     @Builder
@@ -38,5 +38,9 @@ public class Notice extends BaseTimeEntity {
     public void update(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public void countHits() {
+        this.hits += 1;
     }
 }

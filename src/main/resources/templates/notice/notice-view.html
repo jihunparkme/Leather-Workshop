@@ -23,6 +23,10 @@
           <div class="entries">
             <article class="entry entry-single">
 
+              <div th:if="${param.status}" class="save-success">
+                저장이 완료되었습니다.
+              </div>
+
               <h2 class="entry-view-title">
                 <p>[(${notice.title})]</p>
               </h2>
@@ -44,6 +48,13 @@
                 </ul>
               </div>
 
+              <div class="entry-button">
+                <div>
+                  <button th:onclick="edit()" class="btn btn-outline-success">수정</button>
+                  <button th:onclick="|location.href='@{/notice}'|" class="btn btn-outline-dark">목록</button>
+                </div>
+              </div>
+
             </article>
           </div>
         </div>
@@ -53,5 +64,12 @@
   <div th:replace="/common/footer :: footer"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div th:replace="/common/commonjs"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function edit() {
+  location.href = "/notice/" + [[${notice.id}]] + "/edit";
+}
+/*]]>*/
+</script>
 </body>
 </html>
