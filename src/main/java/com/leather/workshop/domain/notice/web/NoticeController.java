@@ -30,6 +30,13 @@ public class NoticeController {
         return "notice/notice-list";
     }
 
+    @GetMapping("{id}")
+    public String view(@PathVariable Long id, Model model) {
+
+        model.addAttribute("notice", noticeService.findById(id));
+        return "notice/notice-view";
+    }
+
 //    @PostMapping("/save")
 //    public String save(@RequestBody NoticeSaveRequest noticeSaveRequest,
 //                     HttpServletRequest request, HttpServletResponse response) {
