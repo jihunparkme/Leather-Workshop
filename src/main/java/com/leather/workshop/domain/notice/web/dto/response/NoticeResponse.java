@@ -2,10 +2,12 @@ package com.leather.workshop.domain.notice.web.dto.response;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class NoticeResponse {
 
     private Long id;

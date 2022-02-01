@@ -3,6 +3,7 @@ package com.leather.workshop.domain.notice.web;
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,7 @@ public class NoticeController {
     @GetMapping("/add")
     public String add(Model model) {
 
-        model.addAttribute("notice", new Notice());
+        model.addAttribute("notice", new NoticeResponse());
         return "notice/notice-add";
     }
 

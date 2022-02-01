@@ -24,9 +24,10 @@
                     <article class="entry entry-single">
                         <form th:action="edit" th:object="${notice}" method="post">
                             <input type="hidden" th:field="*{id}">
-                            <h2 class="entry-view-title">
-                                <label for="title" th:text="Title">title</label>
-                            </h2>
+                            <h2 class="entry-view-title">공지사항 수정</h2>
+                            <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
+                                <label for="title" th:text="Title">Title</label>
+                            </div>
                             <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목을 입력하세요.">
                             <div class="field-error" th:errors="*{title}">
                                 title error
