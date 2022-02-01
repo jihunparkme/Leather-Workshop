@@ -18,7 +18,6 @@
 
     <form name="form" id="form" th:action="@{/notice}" method="get">
       <input type="hidden" id="page" name="page" value="0"/>
-      <input type="hidden" id="size" name="size" value="5"/>
     </form>
 
     <section id="blog" class="blog">
@@ -56,7 +55,7 @@
 
             <div style="margin-top: 60px;" class="blog-pagination">
               <ul class="justify-content-center">
-                <div th:each="num : ${#numbers.sequence(0, noticeListPage.totalElements / size)}">
+                <div th:each="num : ${#numbers.sequence(0, noticeListPage.getTotalPages() - 1)}">
                   <li th:if="${page == num}" class="active"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
                   <li th:unless="${page == num}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
                   </li>

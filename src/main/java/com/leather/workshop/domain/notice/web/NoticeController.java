@@ -27,7 +27,6 @@ public class NoticeController {
 
         model.addAttribute("noticeListPage", noticeListPage);
         model.addAttribute("page", page);
-        model.addAttribute("size", size);
         return "notice/notice-list";
     }
 
