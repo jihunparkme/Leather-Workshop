@@ -50,8 +50,9 @@
 
                             <div class="entry-button">
                                 <div>
-                                    <button type="submit" class="btn btn-outline-success">수정</button>
-                                    <button type="button" th:onclick="cancel()" class="btn btn-outline-danger">취소</button>
+                                    <button type="submit" class="btn btn-outline-primary">수정</button>
+                                    <button type="button" th:onclick="fnCancel()" class="btn btn-outline-secondary">취소</button>
+                                    <button type="button" th:onclick="fnDelete()" class="btn btn-outline-danger">삭제</button>
                                 </div>
                             </div>
                         </form>
@@ -77,8 +78,24 @@ $(function() {
     });
 });
 
-function cancel() {
+function fnCancel() {
     location.href = "/notice/" + [[${notice.id}]];
+}
+
+function fnDelete() {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: "/notice/" + [[${notice.id}]],
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+        }).done(function() {
+            alert('공지사항이 삭제되었습니다.');
+            window.location.href = '/notice';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    }
 }
 /*]]>*/
 </script>

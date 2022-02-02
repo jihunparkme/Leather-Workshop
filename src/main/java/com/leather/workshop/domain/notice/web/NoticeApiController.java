@@ -31,7 +31,7 @@ public class NoticeApiController {
         return noticeService.update(id, noticeUpdateRequest);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Long delete(@PathVariable Long id) {
         noticeService.delete(id);
         return id;
