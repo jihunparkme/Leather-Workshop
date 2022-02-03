@@ -27,8 +27,8 @@
 
 - [x] Thymleaf
   - [x] 템플릿 레이아웃 적용
-- [ ] Controller
-  - [ ] API 용과 View Resolver 용 분리. (accept 로 구분)
+- [x] Controller
+  - [x] API 용과 View Resolver 용 분리. (accept 로 구분)
 - [ ] Exception
   - [ ] 서블릿 예외 처리
   - [ ] 스프링 부트 오류 페이지
@@ -102,6 +102,22 @@
 문의가 접수되면 메일/카카오톡으로 안내.
 
 ## Notice
+
+- List/View/Add/Edit
+  - [x] List
+  - [x] View
+    - [x] 조회수 중복 방지
+  - [x] Add
+    - [ ] 등록 시 사용자 key id 도 함께 저장되도록
+  - [x] Edit
+  - [x] ckeditor 적용
+- 관리자만 등록/수정할 수 있도록 로그인 및 권한 설정
+  - [ ] 등록하기 버튼
+  - [ ] 수정하기 버튼
+  - [ ] 등록 화면 이동
+  - [ ] 수정 화면 이동
+  - [ ] 등록하기 controller
+  - [ ] 수정하기 controller
 
 ## About
 
