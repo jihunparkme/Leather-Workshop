@@ -70,7 +70,7 @@ public class NoticeController {
     }
 
     @PostMapping("/add")
-    public String edit(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
+    public String add(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
                        BindingResult bindingResult,
                        RedirectAttributes redirectAttributes) {
 
