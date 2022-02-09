@@ -1,7 +1,6 @@
 package com.leather.workshop.global.config.security;
 
 import com.leather.workshop.domain.login.domain.Role;
-import com.leather.workshop.domain.login.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
