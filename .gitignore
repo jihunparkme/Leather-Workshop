@@ -38,4 +38,5 @@ out/
 
 ### Custom ###
 application-oauth.properties
+application-db.properties
 /erd
