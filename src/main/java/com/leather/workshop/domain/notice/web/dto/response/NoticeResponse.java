@@ -24,7 +24,7 @@ public class NoticeResponse {
         this.title = notice.getTitle();
         this.contents = notice.getContents();
         this.hits = notice.getHits();
-        this.createDateTime = notice.getCreateDateTime();
-        this.updateDateTime = notice.getUpdateDateTime();
+        this.createDateTime = notice.getCreatedDateTime();
+        this.updateDateTime = notice.getModifiedDateTime();
     }
 }

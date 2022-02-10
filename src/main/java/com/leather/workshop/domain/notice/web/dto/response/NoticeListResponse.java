@@ -21,7 +21,7 @@ public class NoticeListResponse {
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.hits = entity.getHits();
-        this.createDateTime = entity.getCreateDateTime();
-        this.updateDateTime = entity.getUpdateDateTime();
+        this.createDateTime = entity.getCreatedDateTime();
+        this.updateDateTime = entity.getModifiedDateTime();
     }
 }
