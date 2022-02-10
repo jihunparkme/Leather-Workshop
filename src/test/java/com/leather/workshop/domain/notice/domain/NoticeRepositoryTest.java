@@ -74,8 +74,8 @@ class NoticeRepositoryTest {
         //then
         Notice notice = noticeList.get(0);
 
-        System.out.println("CreateDateTime = " + notice.getCreateDateTime() + ", UpdateDateTime" + notice.getUpdateDateTime());
-        assertThat(notice.getCreateDateTime()).isAfter(now);
-        assertThat(notice.getUpdateDateTime()).isAfter(now);
+        System.out.println("CreateDateTime = " + notice.getCreatedDateTime() + ", UpdateDateTime" + notice.getModifiedDateTime());
+        assertThat(notice.getCreatedDateTime()).isAfter(now);
+        assertThat(notice.getModifiedDateTime()).isAfter(now);
     }
 }
