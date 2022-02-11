@@ -38,6 +38,7 @@ out/
 
 ### Custom ###
 .DS_Store
-application-oauth.properties
-application-db.properties
+application-oauth.yml
+application-devdb.yml
+application-proddb.yml
 /erd
