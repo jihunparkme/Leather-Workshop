@@ -16,7 +16,7 @@
                 <li><a href="/notice">Notice</a></li>
                 <li><a href="/review">Review</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
-                <li><a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/info}">내정보</a></li>
+                <li><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/info}">내정보</a></li>
                 <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">관리자</a></li>
                 <li><a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="getstarted">Login</a></li>
                 <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
