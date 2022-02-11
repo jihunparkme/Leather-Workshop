@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable() //h2-console 사용을 위한 disable 처리
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/img/**", "/js/**", "/vendor/**", "/h2-console/**").permitAll()
+                    .antMatchers("/", "/css/**", "/img/**", "/js/**", "/vendor/**", "/notice/**","/h2-console/**").permitAll()
                     //ADMIN
                     .antMatchers("**/add", "**/edit").hasRole(Role.ADMIN.name())
                     .antMatchers(HttpMethod.POST, "/notice/**").hasRole(Role.ADMIN.name())
