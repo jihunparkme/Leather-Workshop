@@ -32,7 +32,7 @@ class NoticeRepositoryTest {
     void 공지사항_등록_조회_성공() {
         //given
         Notice saveNotice = noticeRepository.save(Notice.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)
@@ -43,7 +43,7 @@ class NoticeRepositoryTest {
                 .orElseThrow(RuntimeException::new);
 
         //then
-        assertThat(notice.getMemberId()).isEqualTo(1L);
+        assertThat(notice.getUserId()).isEqualTo(1L);
         assertThat(notice.getTitle()).isEqualTo(title);
         assertThat(notice.getContents()).isEqualTo(contents);
         assertThat(notice.getHits()).isEqualTo(0L);
@@ -62,7 +62,7 @@ class NoticeRepositoryTest {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 01, 27, 0,0,0);
         noticeRepository.save(Notice.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)

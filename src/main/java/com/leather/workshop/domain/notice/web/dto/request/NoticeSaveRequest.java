@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class NoticeSaveRequest {
 
-    private Long memberId;
+    private Long userId;
 
     @NotBlank
     private String title;
@@ -24,8 +24,8 @@ public class NoticeSaveRequest {
     private Long hits;
 
     @Builder
-    public NoticeSaveRequest(Long memberId, String title, String contents, Long hits) {
-        this.memberId = memberId;
+    public NoticeSaveRequest(Long userId, String title, String contents, Long hits) {
+        this.userId = userId;
         this.title = title;
         this.contents = contents;
         this.hits = hits;
@@ -33,7 +33,7 @@ public class NoticeSaveRequest {
 
     public Notice toEntity() {
         return Notice.builder()
-                .memberId(memberId)
+                .userId(userId)
                 .title(title)
                 .contents(contents)
                 .hits(hits)
