@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class NoticeResponse {
 
     private Long id;
-    private Long memberId;
+    private Long userId;
     private String title;
     private String contents;
     private Long hits;
@@ -20,11 +20,11 @@ public class NoticeResponse {
 
     public NoticeResponse(Notice notice) {
         this.id = notice.getId();
-        this.memberId = notice.getMemberId();
+        this.userId = notice.getUserId();
         this.title = notice.getTitle();
         this.contents = notice.getContents();
         this.hits = notice.getHits();
-        this.createDateTime = notice.getCreateDateTime();
-        this.updateDateTime = notice.getUpdateDateTime();
+        this.createDateTime = notice.getCreatedDateTime();
+        this.updateDateTime = notice.getModifiedDateTime();
     }
 }

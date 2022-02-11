@@ -16,7 +16,7 @@ public class Notice extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long memberId;
+    private Long userId;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -28,8 +28,8 @@ public class Notice extends BaseTimeEntity {
     private Long hits;
 
     @Builder
-    public Notice(Long memberId, String title, String contents, Long hits) {
-        this.memberId = memberId;
+    public Notice(Long userId, String title, String contents, Long hits) {
+        this.userId = userId;
         this.title = title;
         this.contents = contents;
         this.hits = hits;

@@ -1,7 +1,6 @@
 package com.leather.workshop.global.config.security;
 
 import com.leather.workshop.domain.login.domain.Role;
-import com.leather.workshop.domain.login.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable() //h2-console 사용을 위한 disable 처리
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/img/**", "/js/**", "/vendor/**", "/h2-console/**").permitAll()
+                    .antMatchers("/", "/css/**", "/img/**", "/js/**", "/vendor/**", "/notice/**","/h2-console/**").permitAll()
                     //ADMIN
                     .antMatchers("**/add", "**/edit").hasRole(Role.ADMIN.name())
                     .antMatchers(HttpMethod.POST, "/notice/**").hasRole(Role.ADMIN.name())

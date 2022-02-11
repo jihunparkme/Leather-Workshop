@@ -79,7 +79,7 @@ public class NoticeController {
             return "notice/notice-add";
         }
 
-        form.setMemberId(1L);
+        form.setUserId(1L);
         form.setHits(0L);
         Long id = noticeService.save(form);
         redirectAttributes.addAttribute("id", id);

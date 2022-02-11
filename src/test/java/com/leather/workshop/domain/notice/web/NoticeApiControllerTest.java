@@ -42,7 +42,7 @@ class NoticeApiControllerTest {
     void 공지사항_등록_성공() {
         //gevin
         NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)
@@ -66,7 +66,7 @@ class NoticeApiControllerTest {
     void 공지사항_등록_실패_제목_누락() {
         //gevin
         NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
-                .memberId(1L)
+                .userId(1L)
                 .contents(contents)
                 .hits(0L)
                 .build();
@@ -84,7 +84,7 @@ class NoticeApiControllerTest {
     void 공지사항_수정_성공() {
         //given
         Notice saveNotice = noticeRepository.save(Notice.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)
@@ -118,7 +118,7 @@ class NoticeApiControllerTest {
     void 공지사항_삭제_성공() {
         //gevin
         Notice save = noticeRepository.save(Notice.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)
@@ -140,7 +140,7 @@ class NoticeApiControllerTest {
     void 공지사항_조회_성공() {
         //gevin
         Notice save = noticeRepository.save(Notice.builder()
-                .memberId(1L)
+                .userId(1L)
                 .title(title)
                 .contents(contents)
                 .hits(0L)
@@ -153,7 +153,7 @@ class NoticeApiControllerTest {
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getId()).isEqualTo(save.getId());
-        assertThat(responseEntity.getBody().getMemberId()).isEqualTo(save.getMemberId());
+        assertThat(responseEntity.getBody().getUserId()).isEqualTo(save.getUserId());
         assertThat(responseEntity.getBody().getTitle()).isEqualTo(save.getTitle());
         assertThat(responseEntity.getBody().getContents()).isEqualTo(save.getContents());
         assertThat(responseEntity.getBody().getHits()).isEqualTo(save.getHits());
@@ -173,7 +173,7 @@ class NoticeApiControllerTest {
     void 전체_공지사항_조회_성공() {
         for (int i = 0; i < 5; i++) {
             Notice save = noticeRepository.save(Notice.builder()
-                    .memberId(1L)
+                    .userId(1L)
                     .title(title)
                     .contents(contents)
                     .hits(0L)

@@ -37,5 +37,8 @@ out/
 .vscode/
 
 ### Custom ###
-application-oauth.properties
+.DS_Store
+application-oauth.yml
+application-devdb.yml
+application-proddb.yml
 /erd
