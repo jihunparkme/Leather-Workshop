@@ -25,6 +25,8 @@ spring:
     console:
       enabled: 'true'
   devtools:
+    restart:
+      enabled: true
     livereload:
       enabled: 'true'
   messages:
