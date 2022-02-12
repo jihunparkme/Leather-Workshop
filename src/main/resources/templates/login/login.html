@@ -1,48 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link th:href="@{/css/login/login.css}" rel="stylesheet"/>
+    <title>로그인</title>
 </head>
+<div th:replace="/common/head :: head"></div>
+<link th:href="@{/css/login/login.css}" rel="stylesheet"/>
 <body>
-<div class="container right-panel-active">
-    <!-- Sign Up -->
-    <div class="container__form container--signup">
-        <form th:action="@{/signup}" method="post" class="form" id="form1">
-            <h2 class="form__title">Sign Up</h2>
-            <input type="email" name="email" placeholder="Email" class="input" />
-            <input type="text" name="name" placeholder="name" class="input" />
-            <input type="password" name="password" placeholder="Password" class="input" />
-            <button class="btn" type="submit">Sign Up</button>
-        </form>
-    </div>
+<div th:replace="/common/header :: header"></div>
 
-    <!-- Sign In -->
-    <div class="container__form container--signin">
-        <form th:action="@{/user/login}" method="post" class="form" id="form2">
-            <h2 class="form__title">Sign In</h2>
-<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-            <p style="color:red;" th:if="${loginError}" class="error">Wrong Email or password</p>
-            <input type="email" placeholder="Email" class="input" name="username"/>
-            <input type="password" placeholder="Password" class="input" name="password"/>
-            <a href="#" class="link">Forgot your password?</a>
-            <button class="btn" type="submit">Sign In</button>
-        </form>
-    </div>
-
-    <!-- Overlay -->
-    <div class="container__overlay">
-        <div class="overlay">
-            <div class="overlay__panel overlay--left">
-                <button class="btn" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay__panel overlay--right">
-                <button class="btn" id="signUp">Sign Up</button>
+<main class="container-login">
+    <div class="block-top"></div>
+    <div class="login-box">
+        <div class="login-row">
+            <div class="login-col">
+                <div class="login-card" style="width: 100%; border-radius: 15px;">
+                    <div class="login-card-body">
+                        <div class="login-card-content">
+                            <h1>로그인</h1>
+                            <h2>간편하게 로그인하고<br>서비스를 이용하세요.</h2>
+                            <ul>
+                                <li>
+                                    <div class="naver">
+                                        <img width="24" height="24" th:src="@{/img/login/naver-logo.png}" alt="naver_logo">
+                                        <span>네이버로 시작하기</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="kakao">
+                                        <img width="24" height="24" th:src="@{/img/login/kakao-logo.png}" alt="kakao_logo">
+                                        <span>카카오로 시작하기</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="google">
+                                        <img width="24" height="24" th:src="@{/img/login/google-logo.png}" alt="google_logo">
+                                        <span>구글로 시작하기</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript" th:src="@{/js/login/login.js}"></script>
+</main>
+
+<div th:replace="/common/footer :: footer"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<div th:replace="/common/commonjs"></div>
+<!--  <script type="text/javascript" th:src="@{/js/login/login.js}"></script>-->
 </body>
 </html>
