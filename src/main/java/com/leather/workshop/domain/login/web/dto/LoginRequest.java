@@ -1,11 +1,11 @@
-package com.leather.workshop.domain.login.web;
+package com.leather.workshop.domain.login.web.dto;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class LoginForm {
+public class LoginRequest {
 
     @NotEmpty
     private String userId;

@@ -15,8 +15,8 @@ public class NoticeResponse {
     private String title;
     private String contents;
     private Long hits;
-    private LocalDateTime createDateTime;
-    private LocalDateTime updateDateTime;
+    private LocalDateTime createdDateTime;
+    private LocalDateTime modifiedDateTime;
 
     public NoticeResponse(Notice notice) {
         this.id = notice.getId();
@@ -24,7 +24,7 @@ public class NoticeResponse {
         this.title = notice.getTitle();
         this.contents = notice.getContents();
         this.hits = notice.getHits();
-        this.createDateTime = notice.getCreatedDateTime();
-        this.updateDateTime = notice.getModifiedDateTime();
+        this.createdDateTime = notice.getCreatedDateTime();
+        this.modifiedDateTime = notice.getModifiedDateTime();
     }
 }

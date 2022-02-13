@@ -1,0 +1,21 @@
+spring:
+  config:
+    activate:
+      on-profile: develop
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    cache: 'false'
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: 'true'
+  messages:
+    basename: messages,errors

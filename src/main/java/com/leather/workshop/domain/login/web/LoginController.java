@@ -2,13 +2,12 @@ package com.leather.workshop.domain.login.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
-        return "login/loginForm";
+    @GetMapping("/login/user")
+    public String login() {
+        return "login/login";
     }
 }

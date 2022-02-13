@@ -1,7 +1,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
-        <h1 class="logo me-auto"><a href="/">Sailor</a></h1>
+        <h1 class="logo me-auto"><a href="/">Com'e</a></h1>
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a href="/" class="active">Home</a></li>
@@ -13,13 +13,23 @@
                     </ul>
                 </li>
                 <li><a href="/product">Product</a></li>
-                <li><a href="/notice">Notice</a></li>
+                <li><a href="/notice">공지사항</a></li>
                 <li><a href="/review">Review</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
-                <li><a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/info}">내정보</a></li>
-                <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">관리자</a></li>
-                <li><a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="getstarted">Login</a></li>
-                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+                <div th:if="${user == null}">
+                    <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
+                </div>
+                <div th:if="${user != null}">
+                    <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li th:if="${user.role.name eq 'ADMIN'}">
+                                <a th:href="@{/admin}">관리자</a>
+                            </li>
+                            <li><a th:href="@{/info}">내정보</a></li>
+                            <li><a th:href="@{/logout}">Logout</a></li>
+                        </ul>
+                    </li>
+                </div>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>

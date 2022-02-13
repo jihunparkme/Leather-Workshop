@@ -1,13 +1,9 @@
-const signInBtn = document.getElementById("signIn");
-const signUpBtn = document.getElementById("signUp");
-const container = document.querySelector(".container");
-
-signInBtn.addEventListener("click", () => {
-    container.classList.remove("right-panel-active");
+$(function() {
+    $('.google').click(function () {
+       loginGoogle();
+    });
 });
 
-signUpBtn.addEventListener("click", () => {
-    container.classList.add("right-panel-active");
-});
-
-document.getElementById("signIn").click();
+function loginGoogle() {
+    location.href = "/oauth2/authorization/google"
+}
