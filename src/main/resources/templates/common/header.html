@@ -16,10 +16,20 @@
                 <li><a href="/notice">공지사항</a></li>
                 <li><a href="/review">Review</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
-                <li><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/info}">내정보</a></li>
-                <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">관리자</a></li>
-                <li><a sec:authorize="isAnonymous()" th:href="@{/login/user}" class="getstarted">로그인</a></li>
-                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+                <div th:if="${user == null}">
+                    <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
+                </div>
+                <div th:if="${user != null}">
+                    <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li th:if="${user.role.name eq 'ADMIN'}">
+                                <a th:href="@{/admin}">관리자</a>
+                            </li>
+                            <li><a th:href="@{/info}">내정보</a></li>
+                            <li><a th:href="@{/logout}">Logout</a></li>
+                        </ul>
+                    </li>
+                </div>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
