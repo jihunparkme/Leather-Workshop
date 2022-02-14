@@ -16,13 +16,13 @@
                 <li><a href="/notice">공지사항</a></li>
                 <li><a href="/review">Review</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
-                <div th:if="${user == null}">
+                <div th:if="${session.user == null}">
                     <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
                 </div>
-                <div th:if="${user != null}">
+                <div th:if="${session.user != null}">
                     <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li th:if="${user.role.name eq 'ADMIN'}">
+                            <li th:if="${session.user.role.name eq 'ADMIN'}">
                                 <a th:href="@{/admin}">관리자</a>
                             </li>
                             <li><a th:href="@{/info}">내정보</a></li>
