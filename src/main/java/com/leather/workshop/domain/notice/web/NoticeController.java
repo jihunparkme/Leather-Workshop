@@ -5,6 +5,8 @@ import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
+import com.leather.workshop.global.config.security.LoginUser;
+import com.leather.workshop.global.config.security.dto.SessionUser;
 import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +35,14 @@ public class NoticeController {
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
+            @LoginUser SessionUser user,
             Model model) {
 
         Page<Notice> noticeListPage = noticeService.findAllSortByIdDescPaging(page, size);
 
         model.addAttribute("noticeListPage", noticeListPage);
         model.addAttribute("page", page);
+        model.addAttribute("user", user);
         return "notice/notice-list";
     }
 

@@ -1,5 +1,6 @@
 package com.leather.workshop.domain.Index.web;
 
+import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,8 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
-
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user);
-        }
+    public String index(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("user", user);
 
         return "index";
     }

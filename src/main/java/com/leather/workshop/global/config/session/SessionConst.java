@@ -1,6 +1,6 @@
 package com.leather.workshop.global.config.session;
 
 public interface SessionConst {
-    String LOGIN_MEMBER = "loginMember";
+    String LOGIN_USER = "user";
     String VIEW_NOTICE = "viewNotice";
 }
