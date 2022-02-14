@@ -2,6 +2,8 @@ spring:
   config:
     activate:
       on-profile: production
+  session:
+    store-type: jdbc
   jpa:
     properties:
       hibernate:
