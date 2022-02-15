@@ -29,8 +29,6 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    private final ClientIpAddressService clientIpAddressService;
-
     @GetMapping("")
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
@@ -49,7 +47,7 @@ public class NoticeController {
                        @SessionAttribute(name = SessionConst.VIEW_NOTICE, required = false) String viewNotice,
                        HttpServletRequest request) throws UnknownHostException {
 
-        String sessionValue = id + "/" + clientIpAddressService.getClientIP(request);
+        String sessionValue = id + "/" + ClientIpAddressService.getClientIP(request);
         if (viewNotice == null || !sessionValue.equals(viewNotice)) {
             Notice notice = noticeService.getNoticeRepository().findById(id).get();
             notice.countHits();
