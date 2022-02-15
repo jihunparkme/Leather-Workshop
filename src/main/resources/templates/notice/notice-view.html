@@ -3,13 +3,13 @@
 <div th:replace="/notice/head :: head"></div>
 <div th:replace="/common/head :: head"></div>
 <body>
-  <div th:replace="/common/header :: header"></div>
+  <div th:replace="/common/header :: header('notice')"></div>
   <main id="main">
 
     <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Notice</h2>
+          <h2><a href="/notice">Notice</a></h2>
           <ol>
             <li><a href="/">Home</a></li>
             <li><a href="/notice">Notice</a></li>

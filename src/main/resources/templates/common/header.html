@@ -1,10 +1,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<header id="header" class="fixed-top d-flex align-items-center">
+<header th:fragment="header (title)" id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
         <h1 class="logo me-auto"><a href="/">Com'e</a></h1>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/" th:classappend="${title eq 'home' ? 'active' : ''}">Home</a></li>
                 <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="/about">About</a></li>
@@ -12,10 +12,10 @@
                         <li><a href="/testimonials">Testimonials</a></li>
                     </ul>
                 </li>
-                <li><a href="/product">Product</a></li>
-                <li><a href="/notice">공지사항</a></li>
-                <li><a href="/review">Review</a></li>
-                <li><a href="/contact-us">Contact Us</a></li>
+                <li><a href="/product" th:classappend="${title eq 'product' ? 'active' : ''}">Product</a></li>
+                <li><a href="/notice" th:classappend="${title eq 'notice' ? 'active' : ''}">공지사항</a></li>
+                <li><a href="/review" th:classappend="${title eq 'review' ? 'active' : ''}">Review</a></li>
+                <li><a href="/contact-us" th:classappend="${title eq 'contact-us' ? 'active' : ''}">Contact Us</a></li>
                 <div th:if="${session.user == null}">
                     <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
                 </div>
