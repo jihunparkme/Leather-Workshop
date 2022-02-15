@@ -10,6 +10,7 @@ import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,6 +64,7 @@ public class NoticeController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(Model model) {
 
         model.addAttribute("notice", new NoticeResponse());
@@ -70,6 +72,7 @@ public class NoticeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
                        BindingResult bindingResult,
                        RedirectAttributes redirectAttributes) {
@@ -89,6 +92,7 @@ public class NoticeController {
     }
 
     @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String edit(@PathVariable Long id, Model model) {
 
         model.addAttribute("notice", noticeService.findById(id));
@@ -96,6 +100,7 @@ public class NoticeController {
     }
 
     @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String edit(@PathVariable Long id,
                        @Validated @ModelAttribute("notice") NoticeUpdateRequest form,
                        BindingResult bindingResult,
