@@ -2,6 +2,8 @@ spring:
   config:
     activate:
       on-profile: test
+  session:
+    store-type: jdbc
   sql:
     init:
       schema-locations: classpath:db/sql/schema-h2.sql

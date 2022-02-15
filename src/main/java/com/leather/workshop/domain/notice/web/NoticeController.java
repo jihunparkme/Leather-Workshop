@@ -5,10 +5,12 @@ import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
+import com.leather.workshop.global.common.util.service.ClientIpAddressService;
 import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 @Slf4j
@@ -47,7 +48,7 @@ public class NoticeController {
                        @SessionAttribute(name = SessionConst.VIEW_NOTICE, required = false) String viewNotice,
                        HttpServletRequest request) throws UnknownHostException {
 
-        String sessionValue = id + "/" + Inet4Address.getLocalHost().getHostAddress();
+        String sessionValue = id + "/" + ClientIpAddressService.getClientIP(request);
         if (viewNotice == null || !sessionValue.equals(viewNotice)) {
             Notice notice = noticeService.getNoticeRepository().findById(id).get();
             notice.countHits();
@@ -63,6 +64,7 @@ public class NoticeController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(Model model) {
 
         model.addAttribute("notice", new NoticeResponse());
@@ -70,6 +72,7 @@ public class NoticeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
                        BindingResult bindingResult,
                        RedirectAttributes redirectAttributes) {
@@ -89,6 +92,7 @@ public class NoticeController {
     }
 
     @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String edit(@PathVariable Long id, Model model) {
 
         model.addAttribute("notice", noticeService.findById(id));
@@ -96,6 +100,7 @@ public class NoticeController {
     }
 
     @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String edit(@PathVariable Long id,
                        @Validated @ModelAttribute("notice") NoticeUpdateRequest form,
                        BindingResult bindingResult,

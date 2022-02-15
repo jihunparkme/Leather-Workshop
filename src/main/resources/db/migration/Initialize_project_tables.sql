@@ -8,11 +8,10 @@ DROP TABLE IF EXISTS `USER` RESTRICT;
 -- 사용자
 CREATE TABLE `USER` (
                         `id`                 BIGINT       NOT NULL, -- 사용자 ID
-                        `user_id`            VARCHAR(30)  NOT NULL, -- 아이디
-                        `password`           VARCHAR(100) NOT NULL, -- 비밀번호
                         `name`               VARCHAR(30)  NOT NULL, -- 이름
                         `email`              VARCHAR(50)  NOT NULL, -- email
-                        `auth`               VARCHAR(10)  NOT NULL, -- 권한
+                        `picture`            VARCHAR(255)  NOT NULL, -- picture
+                        `role`               VARCHAR(10)  NOT NULL, -- 권한
                         `created_date_time`  DATETIME     NOT NULL, -- 등록일
                         `modified_date_time` DATETIME     NULL      -- 수정일
 );
