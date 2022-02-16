@@ -1,22 +1,31 @@
 package com.leather.workshop.domain.notice.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leather.workshop.domain.notice.exception.NoticeNotFoundException;
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.domain.NoticeRepository;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class NoticeApiControllerTest {
@@ -25,10 +34,23 @@ class NoticeApiControllerTest {
     int port;
 
     @Autowired
+    WebApplicationContext context;
+
+    MockMvc mvc;
+
+    @Autowired
     TestRestTemplate restTemplate;
 
     @Autowired
     NoticeRepository noticeRepository;
+
+    @BeforeEach
+    void setUp() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @AfterEach
     void clear() {
@@ -39,7 +61,8 @@ class NoticeApiControllerTest {
     private String contents = "내용";
 
     @Test
-    void 공지사항_등록_성공() {
+    @WithMockUser(roles = "ADMIN")
+    void 공지사항_등록_성공() throws Exception {
         //gevin
         NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
                 .userId(1L)
@@ -51,37 +74,20 @@ class NoticeApiControllerTest {
         String url = "http://localhost:" + port + "/notice";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, noticeSaveRequest, Long.class);
+        mvc.perform(post(url)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new ObjectMapper().writeValueAsString(noticeSaveRequest)))
+                    .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
         List<Notice> all = noticeRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContents()).isEqualTo(contents);
+        assertThat(all.get(all.size()-1).getTitle()).isEqualTo(title);
+        assertThat(all.get(all.size()-1).getContents()).isEqualTo(contents);
     }
 
     @Test
-    void 공지사항_등록_실패_제목_누락() {
-        //gevin
-        NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
-                .userId(1L)
-                .contents(contents)
-                .hits(0L)
-                .build();
-
-        String url = "http://localhost:" + port + "/notice";
-
-        //when
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, noticeSaveRequest, String.class);
-
-        //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @Test
-    void 공지사항_수정_성공() {
+    @WithMockUser(roles = "ADMIN")
+    void 공지사항_수정_성공() throws Exception {
         //given
         Notice saveNotice = noticeRepository.save(Notice.builder()
                 .userId(1L)
@@ -103,19 +109,20 @@ class NoticeApiControllerTest {
         String url = "http://localhost:" + port + "/notice/" + updateId;
         HttpEntity<NoticeUpdateRequest> requestEntity = new HttpEntity<>(requestUpdateNotice);
 
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        mvc.perform(put(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestUpdateNotice)))
+                .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
-        List<Notice> all = noticeRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
-        assertThat(all.get(0).getContents()).isEqualTo(expectedContents);
+        Notice notice = noticeRepository.findById(updateId).get();
+        assertThat(notice.getTitle()).isEqualTo(expectedTitle);
+        assertThat(notice.getContents()).isEqualTo(expectedContents);
     }
 
     @Test
-    void 공지사항_삭제_성공() {
+    @WithMockUser(roles = "ADMIN")
+    void 공지사항_삭제_성공() throws Exception {
         //gevin
         Notice save = noticeRepository.save(Notice.builder()
                 .userId(1L)
@@ -126,11 +133,13 @@ class NoticeApiControllerTest {
 
         //when
         String url = "http://localhost:" + port + "/notice/" + save.getId();
-        restTemplate.delete(url);
+        mvc.perform(delete(url)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
         //then
         assertThatThrownBy(() ->
-                noticeRepository.findById(10000L)
+                noticeRepository.findById(save.getId())
                         .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
                 .isInstanceOf(NoticeNotFoundException.class)
                 .hasMessageContaining("해당 공지사항이 없습니다.");
