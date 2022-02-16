@@ -60,7 +60,7 @@ class NoticeRepositoryTest {
     @Test
     void BaseTimeEntity_등록() {
         //given
-        LocalDateTime now = LocalDateTime.of(2022, 01, 27, 0,0,0);
+        LocalDateTime now = LocalDateTime.of(2022, 02, 16, 0,0,0);
         noticeRepository.save(Notice.builder()
                 .userId(1L)
                 .title(title)
@@ -75,7 +75,6 @@ class NoticeRepositoryTest {
         Notice notice = noticeList.get(0);
 
         System.out.println("CreatedDateTime = " + notice.getCreatedDateTime() + ", ModifiedDateTime" + notice.getModifiedDateTime());
-        assertThat(notice.getCreatedDateTime()).isAfter(now);
-        assertThat(notice.getModifiedDateTime()).isAfter(now);
+        assertThat(notice.getCreatedDateTime()).isBefore(now);
     }
 }

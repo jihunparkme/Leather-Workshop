@@ -1,5 +1,8 @@
 -- 공지사항
-CREATE TABLE `Notice` (
+DROP TABLE IF EXISTS `NOTICE` RESTRICT;
+
+-- 공지사항
+CREATE TABLE `NOTICE` (
                           `id`                 BIGINT         NOT NULL, -- 공지사항 ID
                           `title`              VARCHAR(100)   NOT NULL, -- 제목
                           `contents`           VARCHAR(20000) NOT NULL, -- 내용
@@ -10,18 +13,22 @@ CREATE TABLE `Notice` (
 );
 
 -- 공지사항
-ALTER TABLE `Notice`
-    ADD CONSTRAINT `PK_Notice` -- 공지사항 기본키
+ALTER TABLE `NOTICE`
+    ADD CONSTRAINT `PK_NOTICE` -- 공지사항 기본키
         PRIMARY KEY (
                      `id` -- 공지사항 ID
             );
 
-ALTER TABLE `Notice`
+ALTER TABLE `NOTICE`
     MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `Notice`
+ALTER TABLE `NOTICE`
     AUTO_INCREMENT = 1;
 
+
+
+-- 공지사항
+DROP TABLE IF EXISTS `USER` RESTRICT;
 
 -- 사용자
 CREATE TABLE `USER` (

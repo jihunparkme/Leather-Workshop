@@ -34,18 +34,18 @@ ALTER TABLE `USER`
 
 
 -- 공지사항
-ALTER TABLE `Notice`
-DROP FOREIGN KEY `FK_USER_TO_Notice`; -- 사용자 -> 공지사항
+ALTER TABLE `NOTICE`
+DROP FOREIGN KEY `FK_USER_TO_NOTICE`; -- 사용자 -> 공지사항
 
 -- 공지사항
-ALTER TABLE `Notice`
+ALTER TABLE `NOTICE`
 DROP PRIMARY KEY; -- 공지사항 기본키
 
 -- 공지사항
-DROP TABLE IF EXISTS `Notice` RESTRICT;
+DROP TABLE IF EXISTS `NOTICE` RESTRICT;
 
 -- 공지사항
-CREATE TABLE `Notice` (
+CREATE TABLE `NOTICE` (
                           `id`                 BIGINT         NOT NULL, -- 공지사항 ID
                           `title`              VARCHAR(100)   NOT NULL, -- 제목
                           `contents`           VARCHAR(20000) NOT NULL, -- 내용
@@ -56,21 +56,21 @@ CREATE TABLE `Notice` (
 );
 
 -- 공지사항
-ALTER TABLE `Notice`
-    ADD CONSTRAINT `PK_Notice` -- 공지사항 기본키
+ALTER TABLE `NOTICE`
+    ADD CONSTRAINT `PK_NOTICE` -- 공지사항 기본키
         PRIMARY KEY (
                      `id` -- 공지사항 ID
             );
 
-ALTER TABLE `Notice`
+ALTER TABLE `NOTICE`
     MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `Notice`
+ALTER TABLE `NOTICE`
     AUTO_INCREMENT = 1;
 
 -- 공지사항
-ALTER TABLE `Notice`
-    ADD CONSTRAINT `FK_USER_TO_Notice` -- 사용자 -> 공지사항
+ALTER TABLE `NOTICE`
+    ADD CONSTRAINT `FK_USER_TO_NOTICE` -- 사용자 -> 공지사항
         FOREIGN KEY (
                      `user_id` -- 사용자 ID
             )

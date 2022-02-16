@@ -33,3 +33,7 @@ values (PARSEDATETIME('2022-01-11 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내�
 
 insert into notice (created_date_time, modified_date_time, contents, hits, user_Id, title)
 values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내용이요12', 55, 1L, '제목이요12');
+
+
+insert into user (name, email, picture, role, created_date_time)
+values ('Aaron', 'plk4623@naver.com', 'https://ssl.pstatic.net/static/pwe/address/img_profile.png', 'ADMIN', PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
