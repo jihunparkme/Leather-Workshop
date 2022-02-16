@@ -1,27 +1,39 @@
 package com.leather.workshop.domain.notice.web;
 
-import com.leather.workshop.domain.notice.domain.NoticeRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(
-    properties = {"spring.config.location=classpath:application-test.properties"}
+    properties = {"spring.config.location=classpath:application.yml"}
 )
 @AutoConfigureMockMvc
 public class NoticeControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    NoticeRepository noticeRepository;
+    WebApplicationContext context;
+
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     private String title = "제목";
     private String contents = "내용";
@@ -49,6 +61,7 @@ public class NoticeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_등록_페이지_이동() throws Exception {
         ResultActions perform = mockMvc.perform(get("/notice/add"));
 
@@ -58,6 +71,7 @@ public class NoticeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_등록_성공() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/add")
@@ -71,6 +85,7 @@ public class NoticeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_등록_불가() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/add")
@@ -83,6 +98,7 @@ public class NoticeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_수정_페이지_이동() throws Exception {
 
         ResultActions perform = mockMvc.perform(get("/notice/1/edit"));
@@ -94,19 +110,21 @@ public class NoticeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_수정_성공() throws Exception {
 
-        ResultActions perform = mockMvc.perform(post("/notice/1/edit")
+        ResultActions perform = mockMvc.perform(post("/notice/2/edit")
                 .param("title", title)
                 .param("contents", contents));
 
         perform
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/notice/{id}"))
-                .andExpect(redirectedUrl("/notice/1?status=true"));
+                .andExpect(redirectedUrl("/notice/2?status=true"));
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 공지사항_수정_불가() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/1/edit")
@@ -116,5 +134,17 @@ public class NoticeControllerTest {
         perform
                 .andExpect(status().isOk())
                 .andExpect(view().name("notice/notice-edit"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void 공지사항_삭제_성공() throws Exception {
+
+        ResultActions perform = mockMvc.perform(post("/notice/1/delete"));
+
+        perform
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/notice"))
+                .andExpect(redirectedUrl("/notice"));
     }
 }
