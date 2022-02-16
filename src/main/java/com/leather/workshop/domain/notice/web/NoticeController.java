@@ -116,4 +116,12 @@ public class NoticeController {
 
         return "redirect:/notice/{id}";
     }
+
+    @PostMapping("/{id}/delete")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String delete(@PathVariable Long id) {
+
+        noticeService.delete(id);
+        return "redirect:/notice";
+    }
 }
