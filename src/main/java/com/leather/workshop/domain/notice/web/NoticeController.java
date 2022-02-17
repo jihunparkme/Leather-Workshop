@@ -6,6 +6,8 @@ import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
 import com.leather.workshop.global.common.util.service.ClientIpAddressService;
+import com.leather.workshop.global.config.security.LoginUser;
+import com.leather.workshop.global.config.security.dto.SessionUser;
 import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,15 +76,16 @@ public class NoticeController {
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
-                       BindingResult bindingResult,
-                       RedirectAttributes redirectAttributes) {
+                      BindingResult bindingResult,
+                      @LoginUser SessionUser user,
+                      RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "notice/notice-add";
         }
 
-        form.setUserId(1L);
+        form.setUserId(user.getId());
         form.setHits(0L);
         Long id = noticeService.save(form);
         redirectAttributes.addAttribute("id", id);
