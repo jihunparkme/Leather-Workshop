@@ -49,7 +49,7 @@
                                 </ul>
                             </div>
 
-                            <div class="entry-button">
+                            <div th:if="${(session.user != null) and (session.user.role.name eq 'ADMIN')}" class="entry-button">
                                 <div>
                                     <button type="submit" class="btn btn-outline-primary">수정</button>
                                     <button type="button" th:onclick="fnCancel()" class="btn btn-outline-secondary">취소</button>

@@ -51,7 +51,7 @@
 
               <div class="entry-button">
                 <div>
-                  <button th:onclick="edit()" class="btn btn-outline-success">수정</button>
+                  <button th:if="${(session.user != null) and (session.user.role.name eq 'ADMIN')}" th:onclick="edit()" class="btn btn-outline-success">수정</button>
                   <button th:onclick="|location.href='@{/notice}'|" class="btn btn-outline-dark">목록</button>
                 </div>
               </div>
