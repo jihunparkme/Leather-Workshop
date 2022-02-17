@@ -23,7 +23,7 @@
 
 ---
 
-**적용 기능**
+**공통 기능**
 
 - [x] Thymleaf
   - [x] 템플릿 레이아웃 적용
@@ -32,44 +32,77 @@
 - [ ] Exception
   - [ ] 서블릿 예외 처리
   - [ ] 스프링 부트 오류 페이지
+    - [ ] org.springframework.security.access.AccessDeniedException: 접근이 거부되었습니다.
+    - [ ] 기본 오류 페이지
   - [ ] API 예외 처리
 - [ ] 로그인
   - [ ] 스프링 인터셉터 (로그인 세션 체크)
-  - [ ] 쿠키에 아이디 저장
 - [ ] Data Validation
   - [ ] 타입 에러 메시지 생성
   - [ ] Bean Validation
-- [ ] 파일 업로드
 
 ---
 
+## ETC
+
+- [ ] 권한에 따른 접근 제어 확인
+  - [ ] 인증. 스프링 인터셉터 활용? [참고](https://github.com/jihunparkme/Inflearn_Spring_MVC_Part-2/blob/7fc7ecec6ae9167352f2d14894216037d96c8c7e/login/src/main/java/hello/login/WebConfig.java)
+- [ ] 반영 시 SecuriyConfig configure 에서 h2-console 관련 설정 해제
+
+## Notice
+
+- List/View/Add/Edit
+  - [x] List
+    - [x] 등록 버튼은 관리자에게만 표시 (세션 로그인 정보 활용)
+  - [x] View
+    - [x] 세션을 활용한 조회수 중복 방지 noticeId/ip
+    - [x] 수정 버튼은 관리자에게만 표시
+  - [x] Add
+    - [ ] 등록 시 사용자 key id 도 함께 저장되도록
+    - [x] 저장 버튼은 관리자에게만 표시
+  - [x] Edit
+    - [x] 수정/삭제 버튼은 관리자에게만 표시
+- [x] 관리자만 등록/수정/삭제 할 수 있도록 Controller 로그인 및 권한 설정
+- [ ] 로그인 완료 후 이전 페이지로
+
 ## Member
 
-- [ ] Login `POST`
+- [ ] OAuth2
+  - [x] [구글](https://console.developers.google.com/)로 로그인
+    - [API Docs]
+  - [x] [네이버](https://developers.naver.com/apps/)로 로그인
+    - [API Docs](https://developers.naver.com/docs/login/api/api.md)
+  - [x] [카카오](https://developers.kakao.com/)로 로그인
+    - [API Docs](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+  - [ ] View (개인정보 확인) `POST`
+    - [ ] 접근 시 로그인 세션 체크
+    - [ ] 정보 표시를 아이디와 이미지로
+  - [ ] 관리자 회원 관리
+    - [ ] 회원 관리(권한 수정/삭제)
+  - [ ] 접근 거부 페이지
+  - [ ] 메뉴 이동 시 로그인 유지 확인
+  - [ ] 배포 시 (구글, 네이버, 카카오)
+    - [ ] open api 서비스 URL 환경 수정
+    - [ ] application-aouth.yml redirect-uri 수정
+    - [ ] 사업자 정보 등록
 
+```text
+Pending
+
+- [ ] Login `POST`
   - [ ] 아이디 저장 기능(쿠키)
   - [ ] setMaxInactiveInterval > 세션 설정(24시간)
   - [ ] 아이디 찾기(가입 시 작성한 이메일 입력 시 아이디 앞부분 보여주기)
   - [ ] 비밀번호 찾기 (가입 시 입력 이메일로 임시 PW 전송 및 DB는 임시 PW 로 수정)
   - [ ] admin 로그인 및 권한 관련 (Spring Security)
-  - [ ] 카카오로 시작하기 기능
 
 - [ ] Sign in `POST`
   - [ ] 비밀번호 숫자/영문 포함 10자 이상
-- [ ] View (개인정보 확인) `POST`
-  - [ ] 접근 시 로그인 세션 체크
-- [ ] Edit (개인정보 변경) `POST`
 
+- [ ] Edit (개인정보 변경) `POST`
   - [ ] 접근 시 로그인 세션 체크
   - [ ] 저장 시 현재 비밀번호 확인 (본인 확인 목적)
-
-- [ ] 관리자 전용 페이지
-
-  - [ ] 상품 등록/수정/삭제
-  - [ ] 후기 삭제
-  - [ ] ~~회원 관리(수정/삭제)~~
-
-- [ ] 반영 시 SecuriyConfig configure 에서 h2-console 관련 설정 해제
+```
 
 ## Product
 
@@ -96,31 +129,22 @@
 - Edit 버튼
   - 접근 시 작성한 비밀번호 입력
   - admin 권한의 경우 바로 접근
+- test code
+  ```java
+  @WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
+  ```
 
 방명록 남기면 관리자에게 메일/카카오톡 알림
+
 
 ## Contact Us
 
 문의하기
 문의가 접수되면 메일/카카오톡으로 안내.
-
-## Notice
-
-- List/View/Add/Edit
-  - [x] List
-  - [x] View
-    - [x] 조회수 중복 방지
-  - [x] Add
-    - [ ] 등록 시 사용자 key id 도 함께 저장되도록
-  - [x] Edit
-  - [x] ckeditor 적용
-- 관리자만 등록/수정할 수 있도록 로그인 및 권한 설정
-  - [ ] 등록하기 버튼
-  - [ ] 수정하기 버튼
-  - [ ] 등록 화면 이동
-  - [ ] 수정 화면 이동
-  - [ ] 등록하기 controller
-  - [ ] 수정하기 controller
 
 ## About
 

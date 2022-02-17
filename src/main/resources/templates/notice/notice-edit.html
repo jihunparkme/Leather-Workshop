@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<div th:replace="/notice/head :: head"></div>
+<head><title>공지사항</title></head>
 <div th:replace="/common/head :: head"></div>
 <body>
 <div th:replace="/common/header :: header('notice')"></div>
@@ -49,7 +47,7 @@
                                 </ul>
                             </div>
 
-                            <div class="entry-button">
+                            <div sec:authorize="hasRole('ROLE_ADMIN')" class="entry-button">
                                 <div>
                                     <button type="submit" class="btn btn-outline-primary">수정</button>
                                     <button type="button" th:onclick="fnCancel()" class="btn btn-outline-secondary">취소</button>

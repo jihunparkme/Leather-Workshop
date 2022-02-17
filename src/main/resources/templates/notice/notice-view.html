@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<div th:replace="/notice/head :: head"></div>
+<head><title>공지사항</title></head>
 <div th:replace="/common/head :: head"></div>
 <body>
   <div th:replace="/common/header :: header('notice')"></div>
@@ -51,7 +49,7 @@
 
               <div class="entry-button">
                 <div>
-                  <button th:onclick="edit()" class="btn btn-outline-success">수정</button>
+                  <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="edit()" class="btn btn-outline-success">수정</button>
                   <button th:onclick="|location.href='@{/notice}'|" class="btn btn-outline-dark">목록</button>
                 </div>
               </div>

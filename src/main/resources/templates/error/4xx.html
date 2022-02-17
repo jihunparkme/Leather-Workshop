@@ -1,0 +1,49 @@
+<head><title>Com'e</title></head>
+<div th:replace="/common/head :: head"></div>
+<link th:href="@{/css/error/error-4xx.css}" rel="stylesheet"/>
+<div th:replace="/common/header :: header('home')"></div>
+<body>
+<div class="error">
+    <span>Page not found</span>
+    <span>404</span>
+    <span>해당 페이지가 존재하지 않습니다.</span>
+    <span><a href="javascript:history.back();">이전 페이지로</a></span>
+</div>
+<div class="sun"></div>
+<div class="clouds">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<div class="birds"></div>
+<div class="sea">
+    <div class="wave w-1"></div>
+    <div class="wave w-2"></div>
+    <div class="fish"><span></span><span></span><span></span>
+    </div>
+</div>
+<div class="bottom">
+    <div class="grass"><span> </span><span> </span><span> </span>
+    </div>
+    <div class="grass"><span> </span><span> </span><span> </span>
+    </div>
+    <div class="grass"><span> </span><span> </span><span> </span>
+    </div>
+    <div class="grass"><span> </span><span> </span><span> </span>
+    </div>
+    <div class="circle"><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="circle"><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="circle"><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="circle"><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="grass_tw"></div>
+    <div class="grass_tw"></div>
+    <div class="grass_tw"></div>
+</div>
+<div th:replace="/common/commonjs"></div>
+</body>
+</html>
+<!-- Reference : https://codepen.io/andrejsharapov/pen/aXpqQB -->
