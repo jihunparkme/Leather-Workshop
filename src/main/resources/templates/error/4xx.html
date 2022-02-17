@@ -1,13 +1,13 @@
 <head><title>Com'e</title></head>
 <div th:replace="/common/head :: head"></div>
-<link th:href="@{/css/error/error.css}" rel="stylesheet"/>
+<link th:href="@{/css/error/error-4xx.css}" rel="stylesheet"/>
 <div th:replace="/common/header :: header('home')"></div>
 <body>
 <div class="error">
     <span>Page not found</span>
     <span>404</span>
     <span>해당 페이지가 존재하지 않습니다.</span>
-    <span><a href="/">메인으로 이동</a></span>
+    <span><a href="javascript:history.back();">이전 페이지로</a></span>
 </div>
 <div class="sun"></div>
 <div class="clouds">
