@@ -67,12 +67,12 @@ h1, h2, h3, h4, h5, h6 {
   background: white;
   transition: all 0.5s;
   z-index: 997;
-  padding: 20px 0;
+  padding: 7px 0;
 }
 
 #header.header-scrolled {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-  padding: 12px 0;
+  padding: 3px 0;
 }
 
 #header.header-inner-pages {
@@ -2547,4 +2547,35 @@ section {
   font-weight: bold;
   border-color: #0e5ff1;
   color: #0e5ff1;
+}
+
+.login-picture {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #272b41;
+  font-size: 15px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum","tnum";
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  background: #ccc;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 50%;
+}
+
+.login-picture > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

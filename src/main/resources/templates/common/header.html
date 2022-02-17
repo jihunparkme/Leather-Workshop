@@ -19,7 +19,12 @@
                     <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
                 </div>
                 <div sec:authorize="isAuthenticated()">
-                    <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+                    <li class="dropdown">
+                        <a href="#">
+                            <span>[[${session.user.name}]]</span>
+                            <i class="bi bi-chevron-down"></i>
+                            <span class="login-picture"><img th:src="${session.user.picture}"></span>
+                        </a>
                         <ul>
                             <li sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a th:href="@{/admin}">관리자</a>
