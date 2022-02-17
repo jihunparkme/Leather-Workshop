@@ -2374,7 +2374,7 @@ section {
 
 #footer .footer-top {
   background: #515d6a;
-  padding: 60px 0 30px 0;
+  padding: 20px 0 0px 0;
 }
 
 #footer .footer-top .footer-info {
@@ -2382,7 +2382,7 @@ section {
 }
 
 #footer .footer-top .footer-info h3 {
-  font-size: 24px;
+  font-size: 30px;
   margin: 0 0 20px 0;
   padding: 2px 0 2px 0;
   line-height: 1;
