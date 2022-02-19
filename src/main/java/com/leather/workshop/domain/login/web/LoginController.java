@@ -42,7 +42,7 @@ public class LoginController {
                                                   @RequestBody HashMap<String, Object> map,
                                                   Model model) {
 
-        BasicResponse basicResponse = new BasicResponse();
+        BasicResponse basicResponse;
         String email = (String) map.get("email");
         Optional<User> optUser = loginService.getUserRepository().findByEmail(email);
         if (optUser.isPresent()) {
