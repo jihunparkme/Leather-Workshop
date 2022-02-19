@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
-                    <div class="review-item">
-                        <h3>닉네임</h3>
+                    <div class="review-item mt-4">
+                        <h3>[(${review.user.name})]</h3>
                         <p>
                             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                             [(${review.contents})]

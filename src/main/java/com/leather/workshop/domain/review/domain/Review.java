@@ -1,5 +1,6 @@
 package com.leather.workshop.domain.review.domain;
 
+import com.leather.workshop.domain.login.domain.User;
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,14 +17,16 @@ public class Review extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(length = 20000, nullable = false)
     private String contents;
 
     @Builder
-    public Review(Long userId, String contents) {
-        this.userId = userId;
+    public Review(User user, String contents) {
+        this.user = user;
         this.contents = contents;
     }
 
