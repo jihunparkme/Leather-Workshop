@@ -92,7 +92,7 @@ function fnDelete() {
             alert('공지사항이 삭제되었습니다.');
             window.location.href = '/notice';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert('공지사항 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
         });
     }
 }
