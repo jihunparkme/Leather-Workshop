@@ -75,3 +75,13 @@
     color: #fff;
     background: #e1444d;
 }
+
+.line {
+    border-top: 2px solid rgb(244, 244, 244);
+    margin: 30px 0px;
+}
+
+.btn-text {
+    color: rgb(170, 170, 170);
+    margin-left: 9px;
+}

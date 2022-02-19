@@ -42,6 +42,8 @@
                                         <span>확인</span>
                                     </button>
                                 </div>
+                                <div class="line"></div>
+                                <a class="btn-text" id="btn-withdraw" href= "javascript:void(0);">회원탈퇴</a>
                             </div>
                         </div>
                     </div>
@@ -58,6 +60,25 @@
 $(function() {
     $('#btn-check').click(function () {
         window.history.back();
+    });
+
+    $('#btn-withdraw').click(function () {
+        if (confirm("정말로 탈퇴하시겠습니까?")) {
+            $.ajax({
+                type: 'POST',
+                url: "/mypage/withdraw",
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"email": $('#email').val()}),
+                accept: "application/json"
+            }).done(function(result) {
+                alert(result['message']);
+                window.location.href = '/logout';
+            }).fail(function (error) {
+                alert("회원 탈퇴를 실패하였습니다.\n관리자에게 문의해 주세요.");
+                console.log(JSON.stringify(error));
+            });
+        }
     });
 });
 /*]]>*/
