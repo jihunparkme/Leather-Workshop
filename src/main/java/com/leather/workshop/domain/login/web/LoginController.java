@@ -53,6 +53,8 @@ public class LoginController {
                                         .result(Collections.emptyList())
                                         .count(1)
                                         .build();
+
+            loginService.getUserRepository().delete(optUser.get());
         } else {
             basicResponse = BasicResponse.builder()
                                         .code(HttpStatus.NOT_FOUND.value())
@@ -63,7 +65,6 @@ public class LoginController {
                                         .build();
         }
 
-        loginService.getUserRepository().delete(optUser.get());
         return new ResponseEntity<>(basicResponse, basicResponse.getHttpStatus());
     }
 }

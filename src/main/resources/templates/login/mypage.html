@@ -75,8 +75,7 @@ $(function() {
                 alert(result['message']);
                 window.location.href = '/logout';
             }).fail(function (error) {
-                alert("회원 탈퇴를 실패하였습니다.\n관리자에게 문의해 주세요.");
-                console.log(JSON.stringify(error));
+                alert("회원 탈퇴를 실패하였습니다. 관리자에게 문의해 주세요.\n(" + error['responseJSON']['message'] + ")");
             });
         }
     });
