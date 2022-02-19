@@ -217,6 +217,10 @@ ALTER TABLE `PRODUCT`
                 );
 -----------------------------------------------------------------------
 -- 후기
+
+ALTER TABLE `REVIEW`
+DROP FOREIGN KEY `FK_USER_TO_REVIEW`; -- 사용자 -> 후기
+
 ALTER TABLE `REVIEW`
 DROP PRIMARY KEY; -- 후기 기본키
 
