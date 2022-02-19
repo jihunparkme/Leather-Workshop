@@ -217,34 +217,42 @@ ALTER TABLE `PRODUCT`
                 );
 -----------------------------------------------------------------------
 -- 후기
-ALTER TABLE `GUEST_BOOK`
+ALTER TABLE `REVIEW`
 DROP PRIMARY KEY; -- 후기 기본키
 
 -- 후기
-DROP TABLE IF EXISTS `GUEST_BOOK` RESTRICT;
+DROP TABLE IF EXISTS `REVIEW` RESTRICT;
 
 -- 후기
-CREATE TABLE `GUEST_BOOK` (
+CREATE TABLE `REVIEW` (
                               `id`                 BIGINT        NOT NULL, -- 후기 ID
-                              `name`               VARCHAR(30)   NOT NULL, -- 이름
-                              `password`           VARCHAR(100)  NOT NULL, -- 비밀번호
+                              `user_id`            BIGINT       NOT NULL, -- 사용자 ID
                               `contents`           VARCHAR(5000) NOT NULL, -- 내용
                               `created_date_time`  DATETIME      NOT NULL, -- 등록일
                               `modified_date_time` DATETIME      NULL      -- 수정일
 );
 
 -- 후기
-ALTER TABLE `GUEST_BOOK`
-    ADD CONSTRAINT `PK_GUEST_BOOK` -- 후기 기본키
+ALTER TABLE `REVIEW`
+    ADD CONSTRAINT `PK_REVIEW` -- 후기 기본키
         PRIMARY KEY (
                      `id` -- 후기 ID
             );
 
-ALTER TABLE `GUEST_BOOK`
+ALTER TABLE `REVIEW`
     MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `GUEST_BOOK`
+ALTER TABLE `REVIEW`
     AUTO_INCREMENT = 1;
+
+ALTER TABLE `REVIEW`
+    ADD CONSTRAINT `FK_USER_TO_REVIEW` -- 사용자 -> 상품
+        FOREIGN KEY (
+                     `user_id` -- 사용자 ID
+            )
+            REFERENCES `USER` ( -- 사용자
+                               `id` -- 사용자 ID
+                );
 -----------------------------------------------------------------------
 -- 문의하기
 ALTER TABLE `CONTACT_US`

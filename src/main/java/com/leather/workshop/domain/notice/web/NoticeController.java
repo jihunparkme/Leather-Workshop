@@ -85,7 +85,6 @@ public class NoticeController {
             return "notice/notice-add";
         }
 
-        form.setUserId(user.getId());
         form.setHits(0L);
         Long id = noticeService.save(form);
         redirectAttributes.addAttribute("id", id);

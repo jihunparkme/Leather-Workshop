@@ -1,10 +1,15 @@
 package com.leather.workshop.domain.notice.web;
 
+import com.leather.workshop.domain.login.domain.Role;
+import com.leather.workshop.domain.login.domain.User;
+import com.leather.workshop.global.config.security.dto.SessionUser;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -27,12 +32,29 @@ public class NoticeControllerTest {
     @Autowired
     WebApplicationContext context;
 
+    MockHttpSession session;
+
+    User user = User.builder()
+            .name("Aaron")
+            .email("jihunpark.tech@gmail.com")
+            .picture("")
+            .role(Role.ADMIN)
+            .build();
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
+        session = new MockHttpSession();
+        session.setAttribute("user", new SessionUser(user));
+    }
+
+    @AfterEach
+    void clean() {
+        session.clearAttributes();
     }
 
     private String title = "제목";
@@ -63,7 +85,8 @@ public class NoticeControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     public void 공지사항_등록_페이지_이동() throws Exception {
-        ResultActions perform = mockMvc.perform(get("/notice/add"));
+        ResultActions perform = mockMvc.perform(get("/notice/add")
+                                        .session(session));
 
         perform
                 .andExpect(status().isOk())
@@ -75,6 +98,7 @@ public class NoticeControllerTest {
     public void 공지사항_등록_성공() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/add")
+                                .param("userId", "1")
                                 .param("title", title)
                                 .param("contents", contents));
 
@@ -89,8 +113,10 @@ public class NoticeControllerTest {
     public void 공지사항_등록_불가() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/add")
+                .session(session)
                 .param("title", title)
-                .param("contents", ""));
+                .param("contents", "")
+                .param("session.user.name", "test"));
 
         perform
                 .andExpect(status().isOk())
@@ -101,7 +127,8 @@ public class NoticeControllerTest {
     @WithMockUser(roles = "ADMIN")
     public void 공지사항_수정_페이지_이동() throws Exception {
 
-        ResultActions perform = mockMvc.perform(get("/notice/1/edit"));
+        ResultActions perform = mockMvc.perform(get("/notice/1/edit")
+                                        .session(session));
 
         perform
                 .andExpect(status().isOk())
@@ -128,6 +155,7 @@ public class NoticeControllerTest {
     public void 공지사항_수정_불가() throws Exception {
 
         ResultActions perform = mockMvc.perform(post("/notice/1/edit")
+                .session(session)
                 .param("title", title)
                 .param("contents", ""));
 
