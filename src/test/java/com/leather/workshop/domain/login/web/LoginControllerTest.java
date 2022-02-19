@@ -49,7 +49,7 @@ class LoginControllerTest {
         String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
-        data.addProperty("email", "plk4623@naver.com");
+        data.addProperty("email", "ccc@naver.com");
 
         //when
         mvc.perform(post(url)
@@ -61,7 +61,7 @@ class LoginControllerTest {
     @Test
     @WithMockUser(roles = "USER")
     void 사용자_탈퇴_실패() throws Exception {
-        String url = "http://localhost:" + port + "/mypage/wi가thdraw";
+        String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
         data.addProperty("email", "abc@naver.com");
