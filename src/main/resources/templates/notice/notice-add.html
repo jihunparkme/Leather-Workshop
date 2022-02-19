@@ -22,6 +22,7 @@
                 <div class="entries">
                     <article class="entry entry-single">
                         <form th:action="add" th:object="${notice}" method="post">
+                            <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
                             <h2 class="entry-view-title">공지사항 등록</h2>
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="title" th:text="Title">Title</label>
