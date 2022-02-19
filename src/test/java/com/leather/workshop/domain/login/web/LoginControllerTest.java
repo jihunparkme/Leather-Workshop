@@ -64,7 +64,7 @@ class LoginControllerTest {
         String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
-        data.addProperty("email", "abc@naver.com");
+        data.addProperty("email", "ccc@naver.com");
 
         //when
         mvc.perform(post(url)
