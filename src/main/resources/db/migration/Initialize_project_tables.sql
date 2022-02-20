@@ -256,7 +256,8 @@ ALTER TABLE `REVIEW`
             )
             REFERENCES `USER` ( -- 사용자
                                `id` -- 사용자 ID
-                );
+                )
+            ON DELETE NO ACTION ON UPDATE NO ACTION;
 -----------------------------------------------------------------------
 -- 문의하기
 ALTER TABLE `CONTACT_US`

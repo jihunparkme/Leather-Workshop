@@ -55,7 +55,7 @@ class LoginControllerTest {
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.valueOf(data)))
-                .andExpect(status().isOk());
+                        .andExpect(status().isOk());
     }
 
     @Test
@@ -64,12 +64,12 @@ class LoginControllerTest {
         String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
-        data.addProperty("email", "ccc@naver.com");
+        data.addProperty("email", "zzz@naver.com");
 
         //when
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.valueOf(data)))
-                .andExpect(status().isNotFound());
+                        .andExpect(status().isNotFound());
     }
 }

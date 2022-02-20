@@ -1,11 +1,13 @@
 package com.leather.workshop.domain.login.domain;
 
+import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,6 +30,9 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public List<Review> reviewList;
 
     @Builder
     public User(String name, String email, String picture, Role role) {
