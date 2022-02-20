@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    @Query("SELECT n FROM Notice n ORDER BY n.id DESC")
+    @Query("SELECT DISTINCT n FROM Notice n ORDER BY n.id DESC")
     List<Notice> findAllDesc();
 }
