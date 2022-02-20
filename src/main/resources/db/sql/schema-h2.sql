@@ -84,17 +84,3 @@ ALTER TABLE `USER`
 
 ALTER TABLE `USER`
     AUTO_INCREMENT = 1;
-
-
-
-
-
-ALTER TABLE `REVIEW`
-    ADD CONSTRAINT `FK_USER_TO_REVIEW` -- 사용자 -> 상품
-        FOREIGN KEY (
-                     `user_id` -- 사용자 ID
-            )
-            REFERENCES `USER` ( -- 사용자
-                               `id` -- 사용자 ID
-                )
-            ON DELETE NO ACTION ON UPDATE NO ACTION;
