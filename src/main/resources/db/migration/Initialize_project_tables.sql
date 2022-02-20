@@ -30,7 +30,7 @@ ALTER TABLE `USER`
     AUTO_INCREMENT = 1;
 
 
------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 
 
 -- 공지사항
@@ -68,18 +68,54 @@ ALTER TABLE `NOTICE`
 ALTER TABLE `NOTICE`
     AUTO_INCREMENT = 1;
 
--- 공지사항
-ALTER TABLE `NOTICE`
-    ADD CONSTRAINT `FK_USER_TO_NOTICE` -- 사용자 -> 공지사항
-        FOREIGN KEY (
-                     `user_id` -- 사용자 ID
-            )
-            REFERENCES `USER` ( -- 사용자
-                               `id` -- 사용자 ID
-                );
+
+-----------------------------------------------------------------------------------------------------------------
+-- 후기
+
+ALTER TABLE `REVIEW`
+DROP FOREIGN KEY `FK_USER_TO_REVIEW`; -- 사용자 -> 후기
+
+ALTER TABLE `REVIEW`
+DROP PRIMARY KEY; -- 후기 기본키
+
+-- 후기
+DROP TABLE IF EXISTS `REVIEW` RESTRICT;
+
+-- 후기
+CREATE TABLE `REVIEW` (
+                          `id`                 BIGINT        NOT NULL, -- 후기 ID
+                          `user_id`            BIGINT       NOT NULL, -- 사용자 ID
+                          `contents`           VARCHAR(5000) NOT NULL, -- 내용
+                          `created_date_time`  DATETIME      NOT NULL, -- 등록일
+                          `modified_date_time` DATETIME      NULL      -- 수정일
+);
+
+-- 후기
+ALTER TABLE `REVIEW`
+    ADD CONSTRAINT `PK_REVIEW` -- 후기 기본키
+        PRIMARY KEY (
+                     `id` -- 후기 ID
+            );
+
+ALTER TABLE `REVIEW`
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `REVIEW`
+    AUTO_INCREMENT = 1;
 
 
------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 -- 상품 첨부 파일
 ALTER TABLE `PRODUCT_UPLOAD_FILE`
 DROP FOREIGN KEY `FK_PRODUCT_TO_PRODUCT_UPLOAD_FILE`; -- 상품 -> 상품 첨부 파일
@@ -123,7 +159,8 @@ ALTER TABLE `PRODUCT_UPLOAD_FILE`
             )
             REFERENCES `PRODUCT` ( -- 상품
                                   `id` -- 상품 ID
-                );
+                )
+            ON DELETE NO ACTION ON UPDATE NO ACTION;
 -----------------------------------------------------------------------
 -- 상품 카테고리
 ALTER TABLE `PRODUCT_CATEGORY`
@@ -204,7 +241,8 @@ ALTER TABLE `PRODUCT`
             )
             REFERENCES `PRODUCT_CATEGORY` ( -- 상품 카테고리
                                            `id` -- 카테고리 ID
-                );
+                )
+            ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- 상품
 ALTER TABLE `PRODUCT`
@@ -214,50 +252,9 @@ ALTER TABLE `PRODUCT`
             )
             REFERENCES `USER` ( -- 사용자
                                `id` -- 사용자 ID
-                );
------------------------------------------------------------------------
--- 후기
-
-ALTER TABLE `REVIEW`
-DROP FOREIGN KEY `FK_USER_TO_REVIEW`; -- 사용자 -> 후기
-
-ALTER TABLE `REVIEW`
-DROP PRIMARY KEY; -- 후기 기본키
-
--- 후기
-DROP TABLE IF EXISTS `REVIEW` RESTRICT;
-
--- 후기
-CREATE TABLE `REVIEW` (
-                              `id`                 BIGINT        NOT NULL, -- 후기 ID
-                              `user_id`            BIGINT       NOT NULL, -- 사용자 ID
-                              `contents`           VARCHAR(5000) NOT NULL, -- 내용
-                              `created_date_time`  DATETIME      NOT NULL, -- 등록일
-                              `modified_date_time` DATETIME      NULL      -- 수정일
-);
-
--- 후기
-ALTER TABLE `REVIEW`
-    ADD CONSTRAINT `PK_REVIEW` -- 후기 기본키
-        PRIMARY KEY (
-                     `id` -- 후기 ID
-            );
-
-ALTER TABLE `REVIEW`
-    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `REVIEW`
-    AUTO_INCREMENT = 1;
-
-ALTER TABLE `REVIEW`
-    ADD CONSTRAINT `FK_USER_TO_REVIEW` -- 사용자 -> 상품
-        FOREIGN KEY (
-                     `user_id` -- 사용자 ID
-            )
-            REFERENCES `USER` ( -- 사용자
-                               `id` -- 사용자 ID
                 )
             ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 -----------------------------------------------------------------------
 -- 문의하기
 ALTER TABLE `CONTACT_US`
