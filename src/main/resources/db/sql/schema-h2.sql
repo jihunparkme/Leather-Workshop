@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `REVIEW` RESTRICT;
 -- 후기
 CREATE TABLE `REVIEW` (
                           `id`                 BIGINT        NOT NULL, -- 후기 ID
-                          `user_id`            BIGINT       NOT NULL, -- 사용자 ID
+                          `user_id`            BIGINT       NULL, -- 사용자 ID
                           `contents`           VARCHAR(5000) NOT NULL, -- 내용
                           `created_date_time`  DATETIME      NOT NULL, -- 등록일
                           `modified_date_time` DATETIME      NULL      -- 수정일
@@ -55,6 +55,9 @@ ALTER TABLE `REVIEW`
 
 ALTER TABLE `REVIEW`
     AUTO_INCREMENT = 1;
+
+
+
 
 
 
@@ -84,3 +87,14 @@ ALTER TABLE `USER`
 
 ALTER TABLE `USER`
     AUTO_INCREMENT = 1;
+
+
+ALTER TABLE `REVIEW`
+    ADD CONSTRAINT `FK_USER_TO_REVIEW` -- 사용자 -> 상품
+        FOREIGN KEY (
+                     `user_id` -- 사용자 ID
+            )
+            REFERENCES `USER` ( -- 사용자
+                               `id` -- 사용자 ID
+                )
+            ON DELETE SET NULL ON UPDATE NO ACTION;
