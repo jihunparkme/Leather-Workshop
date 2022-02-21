@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `REVIEW` RESTRICT;
 CREATE TABLE `REVIEW` (
                           `id`                 BIGINT        NOT NULL, -- 후기 ID
                           `user_id`            BIGINT       NULL, -- 사용자 ID
+                          `nickname`           VARCHAR(30)  NULL, -- 이름
                           `contents`           VARCHAR(5000) NOT NULL, -- 내용
                           `created_date_time`  DATETIME      NOT NULL, -- 등록일
                           `modified_date_time` DATETIME      NULL      -- 수정일
