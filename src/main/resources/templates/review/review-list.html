@@ -1,7 +1,7 @@
-<head><title>Com'e | 리뷰</title></head>
+<head xmlns="http://www.w3.org/1999/html"><title>Com'e | 리뷰</title></head>
 <div th:replace="/common/head :: head"></div>
 <body>
-<div th:replace="/common/header :: header('notice')"></div>
+<div th:replace="/common/header :: header('review')"></div>
 <main id="main">
 
     <section id="breadcrumbs" class="breadcrumbs">
@@ -40,10 +40,11 @@
 
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
                     <div class="review-item mt-4">
-                        <h3>[(${review.user.name})]</h3>
+                        <h3 th:if="${review.user ne null}">[(${review.user.name})]</h3>
+                        <h3 th:if="${review.user eq null}">[(${review.nickname})]</h3>
                         <p>
                             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            [(${review.contents})]
+                            <span style="white-space:pre;">[[${review.contents}]]</span>
                             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                         </p>
                     </div>

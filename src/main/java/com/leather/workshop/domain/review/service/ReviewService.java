@@ -1,5 +1,7 @@
 package com.leather.workshop.domain.review.service;
 
+import com.leather.workshop.domain.login.domain.User;
+import com.leather.workshop.domain.login.domain.UserRepository;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.domain.ReviewRepository;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
@@ -21,6 +23,34 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+
+    private final UserRepository userRepository;
+
+    @Transactional
+    public void save(ReviewDto.Request request) {
+        User user = userRepository.findById(request.getUserId()).get();
+        request.setNickname(user.getName());
+
+        reviewRepository.save(request.toEntity(user));
+    }
+
+//    @Transactional
+//    public Long update(Long id, NoticeUpdateRequest noticeUpdateRequest) {
+//        Notice notice = noticeRepository.findById(id)
+//                .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + id));
+//
+//        notice.update(noticeUpdateRequest.getTitle(), noticeUpdateRequest.getContents());
+//
+//        return id;
+//    }
+//
+//    @Transactional
+//    public void delete(Long id) {
+//        Notice posts = noticeRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 없습니다. id=" + id));
+//
+//        noticeRepository.delete(posts);
+//    }
 
     @Transactional(readOnly = true)
     public List<ReviewDto.Response> findAllDesc() {
