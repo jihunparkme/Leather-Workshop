@@ -1,6 +1,6 @@
 package com.leather.workshop.domain.notice.domain;
 
-import com.leather.workshop.domain.notice.exception.NoticeNotFoundException;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,8 @@ class NoticeRepositoryTest {
     void 공지사항_조회_실패() {
         assertThatThrownBy(() ->
                 noticeRepository.findById(10000L)
-                        .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
-                .isInstanceOf(NoticeNotFoundException.class);
+                        .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test

@@ -1,7 +1,8 @@
-<head><title>Com'e | 리뷰</title></head>
+<head xmlns="http://www.w3.org/1999/html"><title>Com'e | 리뷰</title></head>
 <div th:replace="/common/head :: head"></div>
+<link th:href="@{/css/review/review.css}" rel="stylesheet"/>
 <body>
-<div th:replace="/common/header :: header('notice')"></div>
+<div th:replace="/common/header :: header('review')"></div>
 <main id="main">
 
     <section id="breadcrumbs" class="breadcrumbs">
@@ -40,13 +41,28 @@
 
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
                     <div class="review-item mt-4">
-                        <h3>[(${review.user.name})]</h3>
+                        <div style="display: inline">
+                            <h3 th:text="${review?.user?.name} ?: ${review.nickname}" style="display: inline;"></h3>
+                        </div>
+                        <div sec:authorize="isAuthenticated()" style="display: inline; float: right">
+                            <div th:if="${review.nickname eq session.user.name} or ${#strings.equals(session.user.role, 'ADMIN')}" class="entry-button">
+                                <button type="submit" th:onclick="'btnEdit(' + ${review.id} + ')'" class="btn btn-outline-primary">수정</button>
+                            </div>
+                        </div>
                         <p>
                             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            [(${review.contents})]
+                            <span style="white-space:pre;">[[${review.contents}]]</span>
                             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                         </p>
                     </div>
+                </div>
+
+                <div style="margin-top: 60px;" class="review-pagination">
+                    <ul class="justify-content-center">
+                        <div th:each="num : ${#numbers.sequence(0, reviewListPage.getTotalPages() - 1)}">
+                            <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
+                        </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -58,5 +74,6 @@
   <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
+<script type="text/javascript" th:src="@{/js/review/review.js}"></script>
 </body>
 </html>

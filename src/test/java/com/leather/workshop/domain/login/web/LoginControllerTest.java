@@ -49,27 +49,27 @@ class LoginControllerTest {
         String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
-        data.addProperty("email", "plk4623@naver.com");
+        data.addProperty("email", "ccc@naver.com");
 
         //when
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.valueOf(data)))
-                .andExpect(status().isOk());
+                        .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(roles = "USER")
     void 사용자_탈퇴_실패() throws Exception {
-        String url = "http://localhost:" + port + "/mypage/wi가thdraw";
+        String url = "http://localhost:" + port + "/mypage/withdraw";
 
         JsonObject data = new JsonObject();
-        data.addProperty("email", "abc@naver.com");
+        data.addProperty("email", "zzz@naver.com");
 
         //when
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.valueOf(data)))
-                .andExpect(status().isNotFound());
+                        .andExpect(status().isNotFound());
     }
 }

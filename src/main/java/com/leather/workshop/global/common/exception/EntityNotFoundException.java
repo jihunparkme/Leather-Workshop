@@ -1,11 +1,11 @@
-package com.leather.workshop.domain.notice.exception;
+package com.leather.workshop.global.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class NoticeNotFoundException extends IllegalArgumentException {
-    public NoticeNotFoundException(String message) {
+public class EntityNotFoundException extends IllegalArgumentException {
+    public EntityNotFoundException(String message) {
         super(message);
     }
 }

@@ -28,7 +28,41 @@ ALTER TABLE `NOTICE`
 
 
 
--- 사용자
+
+
+
+-- 후기
+DROP TABLE IF EXISTS `REVIEW` RESTRICT;
+
+-- 후기
+CREATE TABLE `REVIEW` (
+                          `id`                 BIGINT        NOT NULL, -- 후기 ID
+                          `user_id`            BIGINT       NULL, -- 사용자 ID
+                          `nickname`           VARCHAR(30)  NULL, -- 이름
+                          `contents`           VARCHAR(5000) NOT NULL, -- 내용
+                          `created_date_time`  DATETIME      NOT NULL, -- 등록일
+                          `modified_date_time` DATETIME      NULL      -- 수정일
+);
+
+-- 후기
+ALTER TABLE `REVIEW`
+    ADD CONSTRAINT `PK_REVIEW` -- 후기 기본키
+        PRIMARY KEY (
+                     `id` -- 후기 ID
+            );
+
+ALTER TABLE `REVIEW`
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `REVIEW`
+    AUTO_INCREMENT = 1;
+
+
+
+
+
+
+
 DROP TABLE IF EXISTS `USER` RESTRICT;
 
 -- 사용자
@@ -56,34 +90,6 @@ ALTER TABLE `USER`
     AUTO_INCREMENT = 1;
 
 
-
-
-
--- 후기
-DROP TABLE IF EXISTS `REVIEW` RESTRICT;
-
--- 후기
-CREATE TABLE `REVIEW` (
-                          `id`                 BIGINT        NOT NULL, -- 후기 ID
-                          `user_id`            BIGINT       NOT NULL, -- 사용자 ID
-                          `contents`           VARCHAR(5000) NOT NULL, -- 내용
-                          `created_date_time`  DATETIME      NOT NULL, -- 등록일
-                          `modified_date_time` DATETIME      NULL      -- 수정일
-);
-
--- 후기
-ALTER TABLE `REVIEW`
-    ADD CONSTRAINT `PK_REVIEW` -- 후기 기본키
-        PRIMARY KEY (
-                     `id` -- 후기 ID
-            );
-
-ALTER TABLE `REVIEW`
-    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `REVIEW`
-    AUTO_INCREMENT = 1;
-
 ALTER TABLE `REVIEW`
     ADD CONSTRAINT `FK_USER_TO_REVIEW` -- 사용자 -> 상품
         FOREIGN KEY (
@@ -91,4 +97,5 @@ ALTER TABLE `REVIEW`
             )
             REFERENCES `USER` ( -- 사용자
                                `id` -- 사용자 ID
-                );
+                )
+            ON DELETE SET NULL ON UPDATE NO ACTION;

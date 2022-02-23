@@ -18,15 +18,19 @@ public class Review extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @Column
+    private String nickname;
 
     @Column(length = 20000, nullable = false)
     private String contents;
 
     @Builder
-    public Review(User user, String contents) {
+    public Review(User user, String nickname, String contents) {
         this.user = user;
+        this.nickname = nickname;
         this.contents = contents;
     }
 

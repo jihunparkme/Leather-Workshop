@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("SELECT r FROM Review r ORDER BY r.id DESC")
+    @Query("SELECT DISTINCT r FROM Review r ORDER BY r.id DESC")
     List<Review> findAllDesc();
 }
