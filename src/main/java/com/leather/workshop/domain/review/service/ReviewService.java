@@ -5,6 +5,7 @@ import com.leather.workshop.domain.login.domain.UserRepository;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.domain.ReviewRepository;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,16 +35,14 @@ public class ReviewService {
         reviewRepository.save(request.toEntity(user));
     }
 
-//    @Transactional
-//    public Long update(Long id, NoticeUpdateRequest noticeUpdateRequest) {
-//        Notice notice = noticeRepository.findById(id)
-//                .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + id));
-//
-//        notice.update(noticeUpdateRequest.getTitle(), noticeUpdateRequest.getContents());
-//
-//        return id;
-//    }
-//
+    @Transactional
+    public void update(Long id, ReviewDto.Request request) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰입니다. id=" + id));
+
+        review.update(request.getContents());
+    }
+
 //    @Transactional
 //    public void delete(Long id) {
 //        Notice posts = noticeRepository.findById(id)
@@ -51,6 +50,14 @@ public class ReviewService {
 //
 //        noticeRepository.delete(posts);
 //    }
+
+    @Transactional(readOnly = true)
+    public ReviewDto.Response findById(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰입니다. id=" + id));
+
+        return new ReviewDto.Response(review);
+    }
 
     @Transactional(readOnly = true)
     public List<ReviewDto.Response> findAllDesc() {

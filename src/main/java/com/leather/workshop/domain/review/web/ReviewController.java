@@ -58,34 +58,32 @@ public class ReviewController {
         return "redirect:/review";
     }
 
-//    @GetMapping("/{id}/edit")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//    public String edit(@PathVariable Long id, Model model) {
-//
-//        model.addAttribute("notice", noticeService.findById(id));
-//        return "notice/notice-edit";
-//    }
-//
-//    @PostMapping("/{id}/edit")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//    public String edit(@PathVariable Long id,
-//                       @Validated @ModelAttribute("notice") NoticeUpdateRequest form,
-//                       BindingResult bindingResult,
-//                       RedirectAttributes redirectAttributes) {
-//
-//        if (bindingResult.hasErrors()) {
-//            log.info("errors={}", bindingResult);
-//            return "notice/notice-edit";
-//        }
-//
-//        noticeService.update(id, form);
-//        redirectAttributes.addAttribute("status", true);
-//
-//        return "redirect:/notice/{id}";
-//    }
-//
+    @GetMapping("/{id}/edit")
+    @PreAuthorize("isAuthenticated()")
+    public String edit(@PathVariable Long id, Model model) {
+
+        model.addAttribute("review", reviewService.findById(id));
+        return "/review/review-edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    @PreAuthorize("isAuthenticated()")
+    public String edit(@PathVariable Long id,
+                       @Validated @ModelAttribute("review") ReviewDto.Request form,
+                       BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "/review/review-edit";
+        }
+
+        reviewService.update(id, form);
+
+        return "redirect:/review";
+    }
+
 //    @PostMapping("/{id}/delete")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("isAuthenticated()")
 //    public String delete(@PathVariable Long id) {
 //
 //        noticeService.delete(id);
