@@ -60,9 +60,7 @@
                 <div style="margin-top: 60px;" class="review-pagination">
                     <ul class="justify-content-center">
                         <div th:each="num : ${#numbers.sequence(0, reviewListPage.getTotalPages() - 1)}">
-                            <li th:if="${page == num}" class="active"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
-                            <li th:unless="${page == num}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
-                            </li>
+                            <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
                         </div>
                     </ul>
                 </div>
