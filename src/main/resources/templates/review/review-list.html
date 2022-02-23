@@ -1,5 +1,6 @@
 <head xmlns="http://www.w3.org/1999/html"><title>Com'e | 리뷰</title></head>
 <div th:replace="/common/head :: head"></div>
+<link th:href="@{/css/review/review.css}" rel="stylesheet"/>
 <body>
 <div th:replace="/common/header :: header('review')"></div>
 <main id="main">
@@ -41,8 +42,7 @@
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
                     <div class="review-item mt-4">
                         <div style="display: inline">
-                            <h3 th:if="${review.user eq null}" style="display: inline">[(${review.nickname})]</h3>
-                            <h3 th:unless="${review.user eq null}" style="display: inline">[(${review.user.name})]</h3>
+                            <h3 th:text="${review?.user?.name} ?: ${review.nickname}"></h3>
                         </div>
                         <div sec:authorize="isAuthenticated()" style="display: inline; float: right">
                             <div th:if="${review.nickname eq session.user.name} or ${#strings.equals(session.user.role, 'ADMIN')}" class="entry-button">
@@ -56,6 +56,16 @@
                         </p>
                     </div>
                 </div>
+
+                <div style="margin-top: 60px;" class="review-pagination">
+                    <ul class="justify-content-center">
+                        <div th:each="num : ${#numbers.sequence(0, reviewListPage.getTotalPages() - 1)}">
+                            <li th:if="${page == num}" class="active"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
+                            <li th:unless="${page == num}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -66,5 +76,6 @@
   <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
+<script type="text/javascript" th:src="@{/js/review/review.js}"></script>
 </body>
 </html>
