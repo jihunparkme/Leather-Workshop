@@ -1,11 +1,11 @@
 package com.leather.workshop.domain.notice.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leather.workshop.domain.notice.exception.NoticeNotFoundException;
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.domain.NoticeRepository;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -140,8 +140,8 @@ class NoticeApiControllerTest {
         //then
         assertThatThrownBy(() ->
                 noticeRepository.findById(save.getId())
-                        .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
-                .isInstanceOf(NoticeNotFoundException.class)
+                        .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + 10000L)))
+                .isInstanceOf(EntityNotFoundException.class)
                 .hasMessageContaining("해당 공지사항이 없습니다.");
     }
 

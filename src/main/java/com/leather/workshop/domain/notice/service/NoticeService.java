@@ -1,12 +1,12 @@
 package com.leather.workshop.domain.notice.service;
 
-import com.leather.workshop.domain.notice.exception.NoticeNotFoundException;
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.domain.NoticeRepository;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeListResponse;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,7 +34,7 @@ public class NoticeService {
     @Transactional
     public Long update(Long id, NoticeUpdateRequest noticeUpdateRequest) {
         Notice notice = noticeRepository.findById(id)
-                .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + id));
+                .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
         notice.update(noticeUpdateRequest.getTitle(), noticeUpdateRequest.getContents());
 
@@ -44,7 +44,7 @@ public class NoticeService {
     @Transactional
     public void delete(Long id) {
         Notice posts = noticeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 없습니다. id=" + id));
+                .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
         noticeRepository.delete(posts);
     }
@@ -52,7 +52,7 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public NoticeResponse findById(Long id) {
         Notice notice = noticeRepository.findById(id)
-                .orElseThrow(() -> new NoticeNotFoundException("해당 공지사항이 없습니다. id=" + id));
+                .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
         return new NoticeResponse(notice);
     }
