@@ -27,7 +27,7 @@
                     <article class="entry entry-single">
                         <form th:action="add" th:object="${review}" method="post">
                             <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
-                            <h2 class="entry-view-title">방명록 등록</h2>
+                            <h2 class="entry-view-title">방명록 수정</h2>
                             <textarea type="text" id="contents" th:field="*{contents}" th:errorclass="field-error" class="form-control autosize" onkeydown="resize(this)" onkeyup="resize(this)" placeholder="내용을 입력하세요."></textarea>
                             <div class="field-error" th:errors="*{contents}">
                                 contents error
@@ -42,8 +42,9 @@
 
                             <div class="entry-button">
                                 <div sec:authorize="isAuthenticated()">
-                                    <button type="submit" class="btn btn-outline-primary">등록</button>
-                                    <button type="button" th:onclick="|location.href='@{/review}'|" class="btn btn-outline-secondary">취소</button>
+                                    <button type="submit" class="btn btn-outline-primary">수정</button>
+                                    <button type="button" th:onclick="fnDelete()" class="btn btn-outline-danger">삭제</button>
+                                    <button type="button" th:onclick="|location.href='javascript:history.back();'|" class="btn btn-outline-secondary">취소</button>
                                 </div>
                             </div>
                         </form>

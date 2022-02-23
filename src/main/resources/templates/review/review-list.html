@@ -42,11 +42,11 @@
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
                     <div class="review-item mt-4">
                         <div style="display: inline">
-                            <h3 th:text="${review?.user?.name} ?: ${review.nickname}"></h3>
+                            <h3 th:text="${review?.user?.name} ?: ${review.nickname}" style="display: inline;"></h3>
                         </div>
                         <div sec:authorize="isAuthenticated()" style="display: inline; float: right">
                             <div th:if="${review.nickname eq session.user.name} or ${#strings.equals(session.user.role, 'ADMIN')}" class="entry-button">
-                                <button type="submit" class="btn btn-outline-primary">수정</button>
+                                <button type="submit" th:onclick="'btnEdit(' + ${review.id} + ')'" class="btn btn-outline-primary">수정</button>
                             </div>
                         </div>
                         <p>

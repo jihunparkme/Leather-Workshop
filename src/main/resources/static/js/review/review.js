@@ -13,3 +13,7 @@ function searchReviewList(page) {
     $("#page").val(page);
     $("#form").submit();
 }
+
+function btnEdit(id) {
+    location.href = "/review/" + id + "/edit";
+}
