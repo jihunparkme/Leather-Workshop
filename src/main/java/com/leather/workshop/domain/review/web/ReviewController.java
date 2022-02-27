@@ -3,6 +3,9 @@ package com.leather.workshop.domain.review.web;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.service.ReviewService;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.util.web.dto.AlertMessage;
+import com.leather.workshop.global.config.security.LoginUser;
+import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -61,9 +64,17 @@ public class ReviewController {
 
     @GetMapping("/{id}/edit")
     @PreAuthorize("isAuthenticated()")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable Long id,
+                       @LoginUser SessionUser user,
+                       Model model) {
 
-        model.addAttribute("review", reviewService.findById(id));
+        ReviewDto.Response review = reviewService.findById(id);
+        if (review.getUserId() != user.getId()) {
+            model.addAttribute("error", new AlertMessage("접근 권한이 없습니다."));
+            return "/common/util/message-redirect";
+        }
+
+        model.addAttribute("review", review);
         return "/review/review-edit";
     }
 
@@ -71,7 +82,14 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     public String edit(@PathVariable Long id,
                        @Validated @ModelAttribute("review") ReviewDto.Request form,
-                       BindingResult bindingResult) {
+                       @LoginUser SessionUser user,
+                       BindingResult bindingResult,
+                       Model model) {
+
+        if (form.getUserId() != user.getId()) {
+            model.addAttribute("error", new AlertMessage("접근 권한이 없습니다."));
+            return "/common/util/message-redirect";
+        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -86,7 +104,14 @@ public class ReviewController {
     @ResponseBody
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("isAuthenticated()")
-    public Long delete(@PathVariable Long id) {
+    public Object delete(@PathVariable Long id,
+                       @LoginUser SessionUser user) {
+
+        ReviewDto.Response review = reviewService.findById(id);
+
+        if (review.getUserId() != user.getId()) {
+           return new AlertMessage("접근 권한이 없습니다.");
+        }
 
         reviewService.delete(id);
         return id;

@@ -16,6 +16,7 @@ public class ReviewDto {
     @NoArgsConstructor
     public static class Response {
         private Long id;
+        private Long userId;
         private String userName;
         private String contents;
         private LocalDateTime createdDateTime;
@@ -23,6 +24,7 @@ public class ReviewDto {
 
         public Response(Review entity) {
             this.id = entity.getId();
+            this.userId = entity.getUser().getId();
             this.userName = entity.getUser().getName();
             this.contents = entity.getContents();
             this.createdDateTime = entity.getCreatedDateTime();

@@ -1,0 +1,14 @@
+<head><title>Com'e</title></head>
+<div th:replace="/common/head :: head"></div>
+<body>
+<div th:replace="/common/header :: header('')"></div>
+<head>
+    <script>
+        top.alert("[[${error.message}]]");
+    </script>
+    <script>
+        window.history.back();
+    </script>
+</head>
+</body>
+</html>
