@@ -50,8 +50,8 @@
                             <div sec:authorize="hasRole('ROLE_ADMIN')" class="entry-button">
                                 <div>
                                     <button type="submit" class="btn btn-outline-primary">수정</button>
-                                    <button type="button" th:onclick="fnDelete()" class="btn btn-outline-danger">삭제</button>
-                                    <button type="button" th:onclick="fnCancel()" class="btn btn-outline-secondary">취소</button>
+                                    <button type="button" th:onclick="'fnDelete(' + *{id} + ')'" class="btn btn-outline-danger">삭제</button>
+                                    <button type="button" th:onclick="'fnCancel(' + *{id} + ')'" class="btn btn-outline-secondary">취소</button>
                                 </div>
                             </div>
                         </form>
@@ -65,7 +65,8 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <div th:replace="/common/commonjs"></div>
 <script type="text/javascript" th:src="@{/js/ckeditor/ckeditor.js}"></script>
-<script th:inline="javascript">
+<script type="text/javascript" th:src="@{/js/notice/notice.js}"></script>
+<script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 $(function() {
     CKEDITOR.replace('contents',{
@@ -76,26 +77,6 @@ $(function() {
         language : "ko"
     });
 });
-
-function fnCancel() {
-    location.href = "/notice/" + [[${notice.id}]];
-}
-
-function fnDelete() {
-    if (confirm("정말로 삭제하시겠습니까?")) {
-        $.ajax({
-            type: 'DELETE',
-            url: "/notice/" + [[${notice.id}]],
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8'
-        }).done(function() {
-            alert('공지사항이 삭제되었습니다.');
-            window.location.href = '/notice';
-        }).fail(function (error) {
-            alert('공지사항 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
-        });
-    }
-}
 /*]]>*/
 </script>
 </body>
