@@ -3,6 +3,7 @@ package com.leather.workshop.domain.review.web;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.service.ReviewService;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.util.service.CheckAuthorityService;
 import com.leather.workshop.global.common.util.web.dto.AlertMessage;
 import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
+
+    private final CheckAuthorityService checkAuthorityService;
 
     @GetMapping("")
     public String list(
@@ -69,8 +72,7 @@ public class ReviewController {
                        Model model) {
 
         ReviewDto.Response review = reviewService.findById(id);
-        if (review.getUserId() != user.getId()) {
-            model.addAttribute("error", new AlertMessage("접근 권한이 없습니다."));
+        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId(), model)) {
             return "/common/util/message-redirect";
         }
 
@@ -86,8 +88,7 @@ public class ReviewController {
                        BindingResult bindingResult,
                        Model model) {
 
-        if (form.getUserId() != user.getId()) {
-            model.addAttribute("error", new AlertMessage("접근 권한이 없습니다."));
+        if (checkAuthorityService.isNotSameUserId(form.getUserId(), user.getId(), model)) {
             return "/common/util/message-redirect";
         }
 
@@ -105,11 +106,11 @@ public class ReviewController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("isAuthenticated()")
     public Object delete(@PathVariable Long id,
-                       @LoginUser SessionUser user) {
+                         @LoginUser SessionUser user) {
 
         ReviewDto.Response review = reviewService.findById(id);
 
-        if (review.getUserId() != user.getId()) {
+        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId())) {
            return new AlertMessage("접근 권한이 없습니다.");
         }
 
