@@ -43,7 +43,7 @@
                             <div class="entry-button">
                                 <div sec:authorize="isAuthenticated()">
                                     <button type="submit" class="btn btn-outline-primary">수정</button>
-                                    <button type="button" th:onclick="fnDelete()" class="btn btn-outline-danger">삭제</button>
+                                    <button type="button" th:onclick="'fnDelete(' + *{id} + ')'" class="btn btn-outline-danger">삭제</button>
                                     <button type="button" th:onclick="|location.href='javascript:history.back();'|" class="btn btn-outline-secondary">취소</button>
                                 </div>
                             </div>
@@ -60,13 +60,6 @@
   <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
-<script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-    function resize(obj) {
-        obj.style.height = "1px";
-        obj.style.height = (12+obj.scrollHeight)+"px";
-    }
-    /*]]>*/
-</script>
+<script type="text/javascript" th:src="@{/js/review/review.js}"></script>
 </body>
 </html>

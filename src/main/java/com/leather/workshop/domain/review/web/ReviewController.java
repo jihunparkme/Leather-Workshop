@@ -6,6 +6,7 @@ import com.leather.workshop.domain.review.web.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,11 +83,12 @@ public class ReviewController {
         return "redirect:/review";
     }
 
-//    @PostMapping("/{id}/delete")
-//    @PreAuthorize("isAuthenticated()")
-//    public String delete(@PathVariable Long id) {
-//
-//        noticeService.delete(id);
-//        return "redirect:/notice";
-//    }
+    @ResponseBody
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
+    public Long delete(@PathVariable Long id) {
+
+        reviewService.delete(id);
+        return id;
+    }
 }
