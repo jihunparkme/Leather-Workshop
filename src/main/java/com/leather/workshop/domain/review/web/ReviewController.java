@@ -3,9 +3,14 @@ package com.leather.workshop.domain.review.web;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.service.ReviewService;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.util.service.CheckAuthorityService;
+import com.leather.workshop.global.common.util.web.dto.AlertMessage;
+import com.leather.workshop.global.config.security.LoginUser;
+import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
+
+    private final CheckAuthorityService checkAuthorityService;
 
     @GetMapping("")
     public String list(
@@ -60,9 +67,16 @@ public class ReviewController {
 
     @GetMapping("/{id}/edit")
     @PreAuthorize("isAuthenticated()")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable Long id,
+                       @LoginUser SessionUser user,
+                       Model model) {
 
-        model.addAttribute("review", reviewService.findById(id));
+        ReviewDto.Response review = reviewService.findById(id);
+        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId(), model)) {
+            return "/common/util/message-redirect";
+        }
+
+        model.addAttribute("review", review);
         return "/review/review-edit";
     }
 
@@ -70,7 +84,13 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     public String edit(@PathVariable Long id,
                        @Validated @ModelAttribute("review") ReviewDto.Request form,
-                       BindingResult bindingResult) {
+                       @LoginUser SessionUser user,
+                       BindingResult bindingResult,
+                       Model model) {
+
+        if (checkAuthorityService.isNotSameUserId(form.getUserId(), user.getId(), model)) {
+            return "/common/util/message-redirect";
+        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -82,11 +102,19 @@ public class ReviewController {
         return "redirect:/review";
     }
 
-//    @PostMapping("/{id}/delete")
-//    @PreAuthorize("isAuthenticated()")
-//    public String delete(@PathVariable Long id) {
-//
-//        noticeService.delete(id);
-//        return "redirect:/notice";
-//    }
+    @ResponseBody
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
+    public Object delete(@PathVariable Long id,
+                         @LoginUser SessionUser user) {
+
+        ReviewDto.Response review = reviewService.findById(id);
+
+        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId())) {
+           return new AlertMessage("접근 권한이 없습니다.");
+        }
+
+        reviewService.delete(id);
+        return id;
+    }
 }

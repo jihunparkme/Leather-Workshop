@@ -59,13 +59,6 @@
   <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
-<script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-    function resize(obj) {
-        obj.style.height = "1px";
-        obj.style.height = (12+obj.scrollHeight)+"px";
-    }
-    /*]]>*/
-</script>
+<script type="text/javascript" th:src="@{/js/review/review.js}"></script>
 </body>
 </html>

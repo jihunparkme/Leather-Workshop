@@ -4,6 +4,7 @@ import com.leather.workshop.domain.login.domain.Role;
 import com.leather.workshop.domain.login.domain.User;
 import com.leather.workshop.domain.review.domain.ReviewRepository;
 import com.leather.workshop.domain.review.service.ReviewService;
+import com.leather.workshop.global.common.util.service.CheckAuthorityService;
 import com.leather.workshop.global.config.security.SecurityConfig;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import org.junit.jupiter.api.AfterEach;
@@ -36,6 +37,9 @@ class ReviewControllerTestTemp {
 
     @MockBean
     ReviewService reviewService;
+
+    @MockBean
+    CheckAuthorityService checkAuthorityService;
 
     @MockBean
     ReviewRepository reviewRepository;

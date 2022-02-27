@@ -43,13 +43,13 @@ public class ReviewService {
         review.update(request.getContents());
     }
 
-//    @Transactional
-//    public void delete(Long id) {
-//        Notice posts = noticeRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 없습니다. id=" + id));
-//
-//        noticeRepository.delete(posts);
-//    }
+    @Transactional
+    public void delete(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰입니다. id=" + id));
+
+        reviewRepository.delete(review);
+    }
 
     @Transactional(readOnly = true)
     public ReviewDto.Response findById(Long id) {

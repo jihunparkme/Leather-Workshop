@@ -17,3 +17,24 @@ function searchReviewList(page) {
 function btnEdit(id) {
     location.href = "/review/" + id + "/edit";
 }
+
+function resize(obj) {
+    obj.style.height = "1px";
+    obj.style.height = (12+obj.scrollHeight)+"px";
+}
+
+function fnDelete(id) {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: "/review/" + id,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+        }).done(function() {
+            alert('후기가 삭제되었습니다.');
+            window.location.href = '/review';
+        }).fail(function (error) {
+            alert('후기 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
+        });
+    }
+}
