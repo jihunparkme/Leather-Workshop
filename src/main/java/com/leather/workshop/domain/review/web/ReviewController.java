@@ -3,14 +3,16 @@ package com.leather.workshop.domain.review.web;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.service.ReviewService;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.response.BasicResponse;
 import com.leather.workshop.global.common.util.service.CheckAuthorityService;
-import com.leather.workshop.global.common.util.web.dto.AlertMessage;
 import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +74,7 @@ public class ReviewController {
                        Model model) {
 
         ReviewDto.Response review = reviewService.findById(id);
-        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId(), model)) {
+        if (checkAuthorityService.isNotSameUserIdAndIsNotAdmin(review.getUserId(), user, model)) {
             return "/common/util/message-redirect";
         }
 
@@ -88,7 +90,7 @@ public class ReviewController {
                        BindingResult bindingResult,
                        Model model) {
 
-        if (checkAuthorityService.isNotSameUserId(form.getUserId(), user.getId(), model)) {
+        if (checkAuthorityService.isNotSameUserIdAndIsNotAdmin(form.getUserId(), user, model)) {
             return "/common/util/message-redirect";
         }
 
@@ -105,16 +107,26 @@ public class ReviewController {
     @ResponseBody
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("isAuthenticated()")
-    public Object delete(@PathVariable Long id,
-                         @LoginUser SessionUser user) {
+    public ResponseEntity<BasicResponse> delete(@PathVariable Long id,
+                                                @LoginUser SessionUser user) {
 
         ReviewDto.Response review = reviewService.findById(id);
+        BasicResponse basicResponse;
 
-        if (checkAuthorityService.isNotSameUserId(review.getUserId(), user.getId())) {
-           return new AlertMessage("접근 권한이 없습니다.");
+        if (checkAuthorityService.isNotSameUserIdAndIsNotAdmin(review.getUserId(), user)) {
+            basicResponse = BasicResponse.builder()
+                                        .code(HttpStatus.FORBIDDEN.value())
+                                        .httpStatus(HttpStatus.FORBIDDEN)
+                                        .message("접근 권한이 없습니다.").build();
+        } else {
+            reviewService.delete(id);
+
+            basicResponse = BasicResponse.builder()
+                                        .code(HttpStatus.OK.value())
+                                        .httpStatus(HttpStatus.OK)
+                                        .message("후기가 삭제되었습니다.").build();
         }
 
-        reviewService.delete(id);
-        return id;
+        return new ResponseEntity<>(basicResponse, basicResponse.getHttpStatus());
     }
 }
