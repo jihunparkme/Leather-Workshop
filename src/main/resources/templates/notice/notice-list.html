@@ -38,7 +38,7 @@
             </tr>
 
             <tr th:each="notice, status : ${noticeListPage.content}" th:unless="${#lists.isEmpty(noticeListPage.content)}">
-              <article class="entry">
+              <article class="entry" th:onclick="'location.href=\'' + @{/notice/{id}(id=${notice.id})} + '\''">
                 <h2 class="entry-title" style="margin-bottom: 10px">
                   <a th:href="@{/notice/{id}(id=${notice.id})}">[(${notice.title})]</a>
                 </h2>
