@@ -1,7 +1,6 @@
 package com.leather.workshop.global.common.util.service;
 
 import com.leather.workshop.global.common.domain.MailTo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,11 @@ public class MailUtilService {
     @Value("${admin.mail.address}")
     private String adminAddress;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+
+    public MailUtilService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     public void sendMail(MailTo mailTo) {
 
