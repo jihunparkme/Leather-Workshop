@@ -13,7 +13,7 @@
                 </li>
                 <li><a href="/product" th:classappend="${title eq 'product' ? 'active' : ''}">Product</a></li>
                 <li><a href="/notice" th:classappend="${title eq 'notice' ? 'active' : ''}">공지사항</a></li>
-                <li><a href="/review" th:classappend="${title eq 'review' ? 'active' : ''}">방명록</a></li>
+                <li><a href="/review" th:classappend="${title eq 'review' ? 'active' : ''}">리뷰</a></li>
                 <li><a href="/contact-us" th:classappend="${title eq 'contact-us' ? 'active' : ''}">Contact Us</a></li>
                 <div sec:authorize="isAnonymous()">
                     <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
