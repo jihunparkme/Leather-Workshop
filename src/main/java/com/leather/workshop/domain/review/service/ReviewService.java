@@ -5,7 +5,9 @@ import com.leather.workshop.domain.login.domain.UserRepository;
 import com.leather.workshop.domain.review.domain.Review;
 import com.leather.workshop.domain.review.domain.ReviewRepository;
 import com.leather.workshop.domain.review.web.dto.ReviewDto;
+import com.leather.workshop.global.common.domain.MailTo;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
+import com.leather.workshop.global.common.util.service.MailUtilService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,12 +30,15 @@ public class ReviewService {
 
     private final UserRepository userRepository;
 
+    private final MailUtilService mailUtilService;
+
     @Transactional
     public void save(ReviewDto.Request request) {
         User user = userRepository.findById(request.getUserId()).get();
         request.setNickname(user.getName());
 
         reviewRepository.save(request.toEntity(user));
+        sendNotificationEmailToAdmin(request);
     }
 
     @Transactional
@@ -70,5 +76,14 @@ public class ReviewService {
     public Page<Review> findAllSortByIdDescPaging(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return reviewRepository.findAll(pageable);
+    }
+
+    private void sendNotificationEmailToAdmin(ReviewDto.Request request) {
+        StringBuffer mailContents = new StringBuffer();
+        mailContents.append("<h4>작성자</h4>");
+        mailContents.append("<p>").append(request.getNickname()).append("</p><br/>");
+        mailContents.append("<h4>내용</h4>");
+        mailContents.append("<p>").append(request.getContents().replaceAll("(\r\n|\n)", "<br/>")).append("</p><br/>");
+        mailUtilService.sendMail(new MailTo("리뷰가 등록되었습니다.", mailContents.toString(), Optional.empty()));
     }
 }

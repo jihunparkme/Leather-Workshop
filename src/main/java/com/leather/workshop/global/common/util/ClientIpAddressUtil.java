@@ -1,8 +1,8 @@
-package com.leather.workshop.global.common.util.service;
+package com.leather.workshop.global.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ClientIpAddressService {
+public class ClientIpAddressUtil {
 
     public static String getClientIP(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");

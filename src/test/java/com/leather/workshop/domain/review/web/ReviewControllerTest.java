@@ -10,21 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class ReviewControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     @Autowired
     WebApplicationContext context;
@@ -40,15 +41,15 @@ class ReviewControllerTest {
             .build();
 
     User user = User.builder()
-            .name("user")
-            .email("user@gmail.com")
+            .name("JiHun")
+            .email("bbb@naver.com")
             .picture("")
             .role(Role.USER)
             .build();
 
     @BeforeEach
     void setUp() {
-        mvc = MockMvcBuilders
+        mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
@@ -68,10 +69,98 @@ class ReviewControllerTest {
 
     @Test
     void 리뷰_리스트() throws Exception {
-        mvc.perform(get("/review")
+        mockMvc.perform(get("/review")
                 .session(user_session))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("reviewListPage"))
                 .andExpect(model().attributeExists("page"));
     }
+
+    @Test
+    @WithMockUser(roles={"USER","ADMIN"})
+    void 리뷰_추가_페이지_이동() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/review/add")
+                .session(user_session));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(view().name("review/review-add"));
+    }
+
+    @Test
+    void 리뷰_추가_페이지_이동_권한_부족() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/review/add")
+                .session(user_session));
+
+        perform
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login/user"));
+    }
+
+    @Test
+    @WithMockUser(roles={"USER","ADMIN"})
+    void 리뷰_추가() throws Exception {
+        ResultActions perform = mockMvc.perform(post("/review/add")
+                .param("userId", "3")
+                .param("nickname", "Park")
+                .param("contents", "내용"));
+
+        perform
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/review"))
+                .andExpect(redirectedUrl("/review"));
+    }
+
+    @Test
+    void 리뷰_추가_권한_부족() throws Exception {
+        ResultActions perform = mockMvc.perform(post("/review/add")
+                .param("userId", "3")
+                .param("nickname", "Park")
+                .param("contents", "내용"));
+
+        perform
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login/user"));
+    }
+
+    @Test
+    @WithMockUser(roles={"USER","ADMIN"})
+    void 리뷰_수정_페이지_이동() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/review/1/edit")
+                .session(admin_session));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(view().name("/review/review-edit"));
+    }
+
+    @Test
+    void 리뷰_수정_페이지_이동_권한_부족() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/review/3/edit")
+                .session(user_session));
+
+        perform
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(roles={"USER","ADMIN"})
+    void 리뷰_삭제() throws Exception {
+        ResultActions perform = mockMvc.perform(delete("/review/3")
+                .session(admin_session));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("후기가 삭제되었습니다."));
+    }
+
+    @Test
+    void 리뷰_삭제_권한_부족() throws Exception {
+        ResultActions perform = mockMvc.perform(delete("/review/3")
+                .session(admin_session));
+
+        perform
+                .andExpect(status().is3xxRedirection());
+    }
+
 }

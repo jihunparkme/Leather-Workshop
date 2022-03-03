@@ -5,7 +5,7 @@ import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
-import com.leather.workshop.global.common.util.service.ClientIpAddressService;
+import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import com.leather.workshop.global.config.session.SessionConst;
@@ -50,7 +50,7 @@ public class NoticeController {
                        @SessionAttribute(name = SessionConst.VIEW_NOTICE, required = false) String viewNotice,
                        HttpServletRequest request) throws UnknownHostException {
 
-        String sessionValue = id + "/" + ClientIpAddressService.getClientIP(request);
+        String sessionValue = id + "/" + ClientIpAddressUtil.getClientIP(request);
         if (viewNotice == null || !sessionValue.equals(viewNotice)) {
             Notice notice = noticeService.getNoticeRepository().findById(id).get();
             notice.countHits();

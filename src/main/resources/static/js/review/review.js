@@ -30,9 +30,14 @@ function fnDelete(id) {
             url: "/review/" + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
-        }).done(function() {
-            alert('후기가 삭제되었습니다.');
-            window.location.href = '/review';
+        }).done(function(result) {
+            if (result.code == '200') {
+                alert(result.message);
+                window.location.href = '/review';
+            } else {
+                alert(result.message);
+                return;
+            }
         }).fail(function (error) {
             alert('후기 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
         });
