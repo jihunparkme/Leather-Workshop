@@ -7,6 +7,6 @@ spring:
   profiles:
     active: test
     group:
-      test: test,oauth
-      develop: develop,oauth,devdb
-      production: production,oauth,proddb
+      test: test,oauth,mail
+      develop: develop,oauth,mail,devdb
+      production: production,oauth,mail,proddb
