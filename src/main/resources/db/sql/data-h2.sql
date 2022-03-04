@@ -56,3 +56,17 @@ values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내�
 
 insert into review (created_date_time, modified_date_time, contents, user_Id)
 values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내용입니다.33333', 3L);
+
+
+
+insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
+values ('APP', 1, 'Y');
+
+insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
+values ('CARD', 2, 'Y');
+
+insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
+values ('WEB', 3, 'Y');
+
+insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
+values ('WALLET', 4, 'Y');

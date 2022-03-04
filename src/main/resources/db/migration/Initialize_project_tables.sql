@@ -143,7 +143,7 @@ CREATE TABLE `PRODUCT_UPLOAD_FILE` (
                                        `product_id`         BIGINT       NOT NULL, -- 상품 ID
                                        `upload_file_name`   VARCHAR(100) NOT NULL, -- 업로드 파일명
                                        `store_file_name`    VARCHAR(100) NOT NULL, -- 저장 파일명
-                                       `thumbnail_yn`       char(1)      NOT NULL DEFAULT N, -- 썸네일 여부
+                                       `thumbnail_yn`       char(1)      NOT NULL DEFAULT 'N', -- 썸네일 여부
                                        `created_date_time`  DATETIME     NOT NULL, -- 등록일
                                        `modified_date_time` DATETIME     NULL      -- 수정일
 );
@@ -184,7 +184,7 @@ CREATE TABLE `PRODUCT_CATEGORY` (
                                     `id`              BIGINT      NOT NULL, -- 카테고리 ID
                                     `title`           VARCHAR(20) NOT NULL, -- 카테고리명
                                     `order_no`        INT         NULL,     -- 우선순위
-                                    `category_use_yn` CHAR(1)     NULL     DEFAULT Y -- 사용여부
+                                    `category_use_yn` CHAR(1)     NULL     DEFAULT 'Y' -- 사용여부
 );
 
 -- 상품 카테고리
@@ -222,7 +222,7 @@ CREATE TABLE `PRODUCT` (
                            `name`                VARCHAR(100)   NOT NULL, -- 상품명
                            `contents`            VARCHAR(20000) NULL,     -- 상품설명
                            `hits`                INT            NOT NULL DEFAULT 0, -- 조회수
-                           `delete_yn`           CHAR(1)        NOT NULL DEFAULT N, -- 삭제여부
+                           `delete_yn`           CHAR(1)        NOT NULL DEFAULT 'N', -- 삭제여부
                            `deleted_date_time`   DATETIME       NULL,     -- 삭제일
                            `created_date_time`   DATETIME       NOT NULL, -- 등록일
                            `user_id`             BIGINT         NOT NULL, -- 사용자 ID
