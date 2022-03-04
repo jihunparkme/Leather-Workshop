@@ -206,17 +206,6 @@ ALTER TABLE `PRODUCT`
                 )
             ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- 상품
-ALTER TABLE `PRODUCT`
-    ADD CONSTRAINT `FK_USER_TO_PRODUCT` -- 사용자 -> 상품
-        FOREIGN KEY (
-                     `user_id` -- 사용자 ID
-            )
-            REFERENCES `USER` ( -- 사용자
-                               `id` -- 사용자 ID
-                )
-            ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 
 -- 상품 첨부 파일
 ALTER TABLE `PRODUCT_UPLOAD_FILE`

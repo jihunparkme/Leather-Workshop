@@ -35,6 +35,8 @@ insert into notice (created_date_time, modified_date_time, contents, hits, user_
 values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내용이요12', 55, 1L, '제목이요12');
 
 
+
+
 insert into user (name, email, picture, role, created_date_time)
 values ('Cristoval', 'ccc@naver.com', '', 'ADMIN', PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
@@ -46,6 +48,9 @@ values ('JiHun', 'bbb@naver.com', '', 'USER', PARSEDATETIME('2022-01-01 12:00:00
 
 insert into user (name, email, picture, role, created_date_time)
 values ('Aaron', 'plk4623@naver.com', 'https://ssl.pstatic.net/static/pwe/address/img_profile.png', 'ADMIN', PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+
+
+
 
 
 insert into review (created_date_time, modified_date_time, contents, user_Id)
@@ -70,3 +75,9 @@ values ('WEB', 3, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
 values ('WALLET', 4, 'Y');
+
+
+
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time, modified_user_name)
+values (4, '멋진 가방', '멋진 가방입니다.', 10, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL, NULL);
