@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Getter
 @Service
-public class ProductCategoryService {
+public class ProductService {
 
-    private final ProductCategoryRepository productCategoryRepository;
-
-
+    private final ProductCategoryRepository categoryRepository;
 }
