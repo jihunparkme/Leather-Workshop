@@ -1,11 +1,14 @@
 package com.leather.workshop.domain.product.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
+import com.leather.workshop.global.common.dto.BooleanFormatType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -29,11 +32,16 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long hits;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false, columnDefinition = "BIGINT default N")
-    private String deleteYn;
+    private BooleanFormatType deleteYn;
 
     @Column(nullable = false)
     private Long userId;
 
     private LocalDateTime deletedDateTime;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ProductUploadFile> productUploadFileList = new ArrayList<>();
+
 }
