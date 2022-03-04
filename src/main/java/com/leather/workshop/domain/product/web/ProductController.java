@@ -1,7 +1,9 @@
 package com.leather.workshop.domain.product.web;
 
+import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,11 @@ public class ProductController {
             @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
             Model model) {
 
+        Page<Product> productListPage = categoryService.findAllSortByIdDescPaging(page, size);
+
+        model.addAttribute("productListPage", productListPage);
         model.addAttribute("categoryList", categoryService.getCategoryRepository().findAllOrderByTitle());
+
         return "product/product-list";
     }
 
