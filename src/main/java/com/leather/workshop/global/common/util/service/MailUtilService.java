@@ -1,6 +1,7 @@
 package com.leather.workshop.global.common.util.service;
 
 import com.leather.workshop.global.common.domain.MailTo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.joining;
 
+@RequiredArgsConstructor
 @Service
 public class MailUtilService {
 
@@ -24,10 +26,6 @@ public class MailUtilService {
     private String adminAddress;
 
     private final JavaMailSender mailSender;
-
-    public MailUtilService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
 
     public void sendMail(MailTo mailTo) {
 
