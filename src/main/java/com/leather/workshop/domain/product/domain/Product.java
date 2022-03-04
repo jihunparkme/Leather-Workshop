@@ -43,5 +43,4 @@ public class Product extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ProductUploadFile> productUploadFileList = new ArrayList<>();
-
 }

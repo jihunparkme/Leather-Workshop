@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum BooleanFormatType {
 
-    YES(1, "Y", true),
-    NO(0, "N", false);
+    Y(1, true),
+    N(0, false);
 
     private final Integer num;
-    private final String alpha;
     private final Boolean bool;
 }
