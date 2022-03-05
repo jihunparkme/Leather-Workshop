@@ -21,3 +21,6 @@ spring:
       enabled: 'true'
   messages:
     basename: messages,errors
+
+file:
+  directory: /Users/aaron/files/

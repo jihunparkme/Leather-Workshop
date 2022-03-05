@@ -42,3 +42,6 @@ logging:
             sql:
               BasicBinder: TRACE
         SQL: DEBUG
+
+file:
+  directory: /Users/aaron/files/
