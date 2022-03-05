@@ -30,20 +30,15 @@
             </div>
 
             <div class="row portfolio-container">
-
-                <div class="col-lg-4 col-md-6 portfolio-item APP" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}">
+                <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}">
                     <div class="portfolio-wrap">
                         <th:block th:each="file : ${product.productUploadFiles}">
                             <img th:if="${#strings.equals(file.thumbnail_yn, 'Y')}" th:src="@{/img/product/{filename}(filename=${file.storeFileName})}" class="img-fluid" alt=""/>
                         </th:block>
-                        <div class="portfolio-info">
+                        <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info portfolio-details-lightbox">
                             <h4>[(${product.name})]</h4>
                             <p>[(${product.productCategory.title})]</p>
-                            <div class="portfolio-links">
-                                <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-details-lightbox"
-                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
