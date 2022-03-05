@@ -31,7 +31,7 @@ public class ProductController {
         return "product/product-list";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public String detail() {
         return "product/product-details";
     }
