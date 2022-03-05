@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -21,4 +23,7 @@ public class ProductCategory {
 
     @Column(length = 1)
     private String categoryUseYn;
+
+    @OneToMany(mappedBy = "productCategory", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Product> products = new LinkedHashSet<>();
 }

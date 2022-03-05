@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 
 @Getter
 @NoArgsConstructor
@@ -42,5 +43,5 @@ public class Product extends BaseTimeEntity {
     private LocalDateTime deletedDateTime;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<ProductUploadFile> productUploadFileList = new ArrayList<>();
+    private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
 }
