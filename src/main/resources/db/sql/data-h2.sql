@@ -65,16 +65,16 @@ values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, 'ë‚´ìš
 
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('APP', 1, 'Y');
+values ('BAG', 3, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
 values ('CARD', 2, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('WEB', 3, 'Y');
+values ('ETC', 4, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('WALLET', 4, 'Y');
+values ('WALLET', 1, 'Y');
 
 
 
