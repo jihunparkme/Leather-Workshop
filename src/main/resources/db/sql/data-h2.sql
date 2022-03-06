@@ -80,4 +80,17 @@ values ('WALLET', 4, 'Y');
 
 
 insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
-values (4, '멋진 가방', '멋진 가방입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+values (4, '멋진 지갑', '멋진 지갑입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+
+
+
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abc2aa4c.jpg', 'portfolio-2.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abc2cc4c.jpg', 'portfolio-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abcavsd.jpg', 'portfolio-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
