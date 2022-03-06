@@ -20,7 +20,7 @@ public class ProductController {
     @GetMapping("")
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
             Model model) {
 
         Page<Product> productListPage = categoryService.findAllSortByIdDescPaging(page, size);
