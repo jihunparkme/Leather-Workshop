@@ -1,4 +1,6 @@
 $(function() {
+    addPage(page++); // init page
+
     $("#portfolio-flters li").click(function (e) {
         if (category == $(this).text()) {
             return;
@@ -20,8 +22,6 @@ let category = 'ALL';
 let page = 0;
 let totalPage = 0;
 const articlesPerPageSize = 10;
-
-addPage(page++); // init page
 
 function changedCategory(ctg) {
     category = ctg;
@@ -45,15 +45,23 @@ function getScrollTop() {
     return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
 }
 
-function getArticle(data) {
+function getItem(data) {
+    let item = document.createElement('a');
+    item.href = '/product/' + data.id;
+    item.className = 'portfolio-info portfolio-details-lightbox';
 
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'col-lg-4 col-md-6 portfolio-item ' + data.productCategory.title;
+    let infoName = document.createElement('h4');
+    infoName.innerText = data.name;
+    item.appendChild(infoName)
 
-    const wrapDiv = document.createElement('div');
-    wrapDiv.className = 'portfolio-wrap child-center';
+    let infoCtgy = document.createElement('p');
+    infoCtgy.innerText = data.productCategory.title;
+    item.appendChild(infoCtgy)
+    return item;
+}
 
-    const image = new Image();
+function getThumbnail(data) {
+    let image = new Image();
     image.className = 'thumbnail article-list__item__image--loading';
     image.alt = '';
 
@@ -70,19 +78,19 @@ function getArticle(data) {
     image.onload = function () {
         image.classList.remove('article-list__item__image--loading');
     };
+    return image;
+}
 
-    const item = document.createElement('a');
-    item.href = '/product/' + data.id;
-    item.className = 'portfolio-info portfolio-details-lightbox';
+function getArticle(data) {
 
-    const infoName = document.createElement('h4');
-    infoName.innerText = data.name;
-    item.appendChild(infoName)
+    let itemDiv = document.createElement('div');
+    itemDiv.className = 'col-lg-4 col-md-6 portfolio-item ' + data.productCategory.title;
 
-    const infoCtgy = document.createElement('p');
-    infoCtgy.innerText = data.productCategory.title;
-    item.appendChild(infoCtgy)
+    let wrapDiv = document.createElement('div');
+    wrapDiv.className = 'portfolio-wrap child-center';
 
+    let image = getThumbnail(data);
+    let item = getItem(data);
     wrapDiv.appendChild(image);
     wrapDiv.appendChild(item);
 
