@@ -1,6 +1,5 @@
 package com.leather.workshop.domain.product.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +25,5 @@ public class ProductCategory {
     private String categoryUseYn;
 
     @OneToMany(mappedBy = "productCategory", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonManagedReference
     private Set<Product> products = new LinkedHashSet<>();
 }

@@ -1,7 +1,5 @@
 package com.leather.workshop.domain.product.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
 import lombok.Getter;
@@ -24,7 +22,6 @@ public class Product extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category_id", nullable = false)
-    @JsonBackReference
     private ProductCategory productCategory;
 
     @Column(length = 100, nullable = false)
@@ -46,6 +43,5 @@ public class Product extends BaseTimeEntity {
     private LocalDateTime deletedDateTime;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonManagedReference
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
 }
