@@ -494,8 +494,8 @@ h1, h2, h3, h4, h5, h6 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
   overflow: hidden;
+  padding: 60px 0 200px;
 }
 
 .section-bg, .services .icon-box {
@@ -699,6 +699,7 @@ section {
 --------------------------------------------------------------*/
 .portfolio .portfolio-item {
   margin-bottom: 30px;
+  border: none;
 }
 
 .portfolio #portfolio-flters {
@@ -736,7 +737,6 @@ section {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  background: rgba(85, 98, 112, 0.6);
 }
 
 .portfolio .portfolio-wrap::before {
@@ -1564,7 +1564,7 @@ section {
 }
 
 .notice .entry-single {
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 
 .notice .notice-author {
@@ -1710,6 +1710,8 @@ section {
 
 .notice .notice-pagination {
   color: #8795a4;
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .notice .notice-pagination ul {
@@ -2311,18 +2313,22 @@ section {
 --------------------------------------------------------------*/
 #footer {
   background: #4a5562;
-  padding: 0 0 30px 0;
+  padding: 0 0 5px 0;
   color: #fff;
   font-size: 14px;
+  width: 100%;
+  height: 200px;
+  bottom: 0px;
+  position: absolute;
 }
 
 #footer .footer-top {
   background: #515d6a;
-  padding: 20px 0 0px 0;
+  padding: 15px 0 0px 0;
 }
 
 #footer .footer-top .footer-info {
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 #footer .footer-top .footer-info h3 {
@@ -2443,11 +2449,11 @@ section {
 
 #footer .copyright {
   text-align: center;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 #footer .credits {
-  padding-top: 10px;
+  padding-top: 5px;
   text-align: center;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
@@ -2522,4 +2528,21 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.child-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main {
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }
