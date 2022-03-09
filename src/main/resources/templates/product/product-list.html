@@ -29,9 +29,9 @@
                 </div>
             </div>
 
-            <div class="row portfolio-container">
+            <div class="row portfolio-container" id="article-list">
 
-                <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}" style="border: none;">
+                <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}">
                     <div class="portfolio-wrap">
                         <th:block th:each="file : ${product.productUploadFiles}">
                             <img th:if="${#strings.equals(file.thumbnailYn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="img-fluid" alt=""/>
@@ -42,8 +42,10 @@
                         </a>
                     </div>
                 </div>
-                
+
             </div>
+
+<!--            <div class="row portfolio-container" id="article-list"></div>-->
         </div>
     </section>
 </main>
