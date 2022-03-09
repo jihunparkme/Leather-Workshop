@@ -25,15 +25,14 @@
 
 **공통 기능**
 
-- [x] Thymleaf
+- [x] Thymlea가f
   - [x] 템플릿 레이아웃 적용
 - [x] Controller
   - [x] API 용과 View Resolver 용 분리. (accept 로 구분)
 - [ ] Exception
   - [ ] 서블릿 예외 처리
-  - [ ] 스프링 부트 오류 페이지
-    - [ ] org.springframework.security.access.AccessDeniedException: 접근이 거부되었습니다.
-    - [ ] 기본 오류 페이지
+  - [x] 스프링 부트 오류 페이지
+    - [x] 기본 오류 페이지
   - [ ] API 예외 처리
 - [ ] 로그인
   - [ ] 스프링 인터셉터 (로그인 세션 체크)
@@ -49,6 +48,8 @@
   - [ ] 인증. 스프링 인터셉터 활용? [참고](https://github.com/jihunparkme/Inflearn_Spring_MVC_Part-2/blob/7fc7ecec6ae9167352f2d14894216037d96c8c7e/login/src/main/java/hello/login/WebConfig.java)
 - [ ] 반영 시 SecuriyConfig configure 에서 h2-console 관련 설정 해제
 
+---
+
 ## Notice
 
 - List/View/Add/Edit
@@ -57,94 +58,135 @@
   - [x] View
     - [x] 세션을 활용한 조회수 중복 방지 noticeId/ip
     - [x] 수정 버튼은 관리자에게만 표시
+    - [x] div 눌러도 View page 이동
   - [x] Add
-    - [ ] 등록 시 사용자 key id 도 함께 저장되도록
+    - [x] 등록 시 사용자 key id 도 함께 저장되도록
     - [x] 저장 버튼은 관리자에게만 표시
+    - [x] 권한이 없을 시 권한 없음 팝업
   - [x] Edit
     - [x] 수정/삭제 버튼은 관리자에게만 표시
+    - [x] 수정/삭제 권한이 없을 시 권한 없음 팝업
+  - [ ] API resonse 구조 만들기 및 테스트 코드 수정
 - [x] 관리자만 등록/수정/삭제 할 수 있도록 Controller 로그인 및 권한 설정
-- [ ] 로그인 완료 후 이전 페이지로
+- [x] 로그인 완료 후 이전 페이지로
+
+---
 
 ## Member
 
-- [ ] OAuth2
+- [x] OAuth2
   - [x] [구글](https://console.developers.google.com/)로 로그인
     - [API Docs]
   - [x] [네이버](https://developers.naver.com/apps/)로 로그인
     - [API Docs](https://developers.naver.com/docs/login/api/api.md)
   - [x] [카카오](https://developers.kakao.com/)로 로그인
     - [API Docs](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
-  - [ ] View (개인정보 확인) `POST`
-    - [ ] 접근 시 로그인 세션 체크
-    - [ ] 정보 표시를 아이디와 이미지로
-  - [ ] 관리자 회원 관리
-    - [ ] 회원 관리(권한 수정/삭제)
-  - [ ] 접근 거부 페이지
-  - [ ] 메뉴 이동 시 로그인 유지 확인
-  - [ ] 배포 시 (구글, 네이버, 카카오)
-    - [ ] open api 서비스 URL 환경 수정
-    - [ ] application-aouth.yml redirect-uri 수정
-    - [ ] 사업자 정보 등록
-
-```text
-Pending
-
-- [ ] Login `POST`
-  - [ ] 아이디 저장 기능(쿠키)
-  - [ ] setMaxInactiveInterval > 세션 설정(24시간)
-  - [ ] 아이디 찾기(가입 시 작성한 이메일 입력 시 아이디 앞부분 보여주기)
-  - [ ] 비밀번호 찾기 (가입 시 입력 이메일로 임시 PW 전송 및 DB는 임시 PW 로 수정)
-  - [ ] admin 로그인 및 권한 관련 (Spring Security)
-
-- [ ] Sign in `POST`
-  - [ ] 비밀번호 숫자/영문 포함 10자 이상
-
-- [ ] Edit (개인정보 변경) `POST`
-  - [ ] 접근 시 로그인 세션 체크
-  - [ ] 저장 시 현재 비밀번호 확인 (본인 확인 목적)
-```
-
-## Product
-
-- List
-  - Infinite Scrolling
-- View `GET`
-  - 이미지 클릭 시 view layout 띄우기
-  - admin 권한일 경우 수정 버튼 활성화
-- New & Edit `POST`
-  - CKeditor Library
-  - 이미지 업로드
-  - 사진 수정 시, 기존 첨부 리스트와 삭제된 첨부 리스트 체크
-  - 접근 시 ADMIN 권한 체크 (서버단에서 ROLE 확인)
-  - 수정 시 삭제 버튼 활성
+- [ ] 회원가입의 경우 이메일과 이름 정보 보여주고 가입하기 페이지로 이동
+- [x] View (개인정보 확인) `POST`
+  - [x] 접근 시 로그인 세션 체크
+  - [x] 정보 표시를 아이디와 이미지로
+  - [x] 탈퇴하기 기능
+  - [ ] 이름 수정
+    - [ ] 수정 완료 후 세션 정보 갱신
+    - [ ] 방명록 작성자명 수정
+- [ ] 관리자 회원 관리
+  - [ ] 회원 관리(권한 수정/삭제)
+- [x] 접근 거부 페이지
+- [ ] 메뉴 이동 시 로그인 유지 확인
+- [ ] 배포 시 (구글, 네이버, 카카오)
+  - [ ] open api 서비스 URL 환경 수정
+  - [ ] application-aouth.yml redirect-uri 수정
+  - [ ] 사업자 정보 등록
 
 ---
 
-## Guest book
+## Review
 
-- 후기
+- List
+  - [x] 등록 버튼은 로그인 세션이 있는 사람만 보이도록
+  - [x] 탈퇴한 사용자일 경우 nickname 표시
+  - [x] 수정 버튼은 작성자 혹은 관리자에게만 표시
+  - [ ] queryDSL 로 N+1 해결
+- Add
+  - [x] 등록 페이지 이동 / 등록 시 세션 확인
+  - [x] 등록 시 사용자 정보도 함께 저장되도록
+  - [x] nickname 을 함께 저장
+- Edit
+  - [x] 로그인이 되어 있고, 리뷰 작성자 닉네임과 세션 이름이 같거나 관리자일 경우 수정 버튼 활성화
+  - [x] 수정 페이지 이동 / 수정 / 삭제 시 세션 확인
+  - [x] 저장 시 등록 사용자 ID 와 동일한지 확인해서 아니면 alert
+- Delete
+  - [x] 삭제 시 등록 사용자 ID 와 동일한지 확인해서 아니면 alert
+- [x] 테스트 코드 작성
+- [x] 방명록 남기면 관리자에게 메일 알림
 
-- New
-  - layout 으로
-- Edit 버튼
-  - 접근 시 작성한 비밀번호 입력
-  - admin 권한의 경우 바로 접근
-- test code
-  ```java
-  @WebMvcTest(controllers = HelloController.class,
-        excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
-        }
-)
-  ```
+---
 
-방명록 남기면 관리자에게 메일/카카오톡 알림
+## Product
 
+- [x] 이미지를 로컬 디렉토리에서 가져오도록 설정
+- List
+  - [x] 테스트 데이터 생성
+  - [x] 이미지 클릭 시 detail layout 띄우기
+  - [x] 카테고리 선택 시 리스트 동적 변환
+    - [x] Infinite Scrolling
+    - [x] 카테고리가 변경되면 list 초기화
+  - [ ] 등록 버튼은 관리자에게만 표시
+- Detail
+  - [ ] 세션을 활용한 조회수 중복 방지 productId/ip
+  - [ ] 수정 버튼은 관리자에게만 표시
+- Add
+  - [ ] 등록 시 사용자 key id 도 함께 저장되도록
+  - [ ] 저장 버튼은 관리자에게만 표시
+  - [ ] 권한이 없을 시 권한 없음 팝업
+  - [ ] 저장 시 이미지를 특정 디렉토리에 저장
+- Edit
+  - [ ] 수정/삭제 버튼은 관리자에게만 표시
+  - [ ] 수정/삭제 권한이 없을 시 권한 없음 팝업
+- New & Edit `POST`
+  - [ ] CKeditor Library
+  - [ ] 이미지 업로드
+  - [ ] 사진 수정 시, 기존 첨부 리스트와 삭제된 첨부 리스트 체크
+  - [ ] 접근 시 ADMIN 권한 체크 (서버단에서 ROLE 확인)
+  - [ ] 수정 시 삭제 버튼 활성
+- [ ] 관리자만 등록/수정/삭제 할 수 있도록 Controller 로그인 및 권한 설정
+
+---
 
 ## Contact Us
 
 문의하기
 문의가 접수되면 메일/카카오톡으로 안내.
+
+## Index
+
+- Product
+  - [ ] New product
+  - [ ] 카테고리별 최신 상품 5가지 보여주기
+  - [ ] 더 많은 상품 보기 버튼 클릭 시 Product page 이동
+
+## 문의, 후기 알림 관련
+
+- 카카오 메시지 REST API
+
+  - https://developers.kakao.com/docs/latest/ko/message/rest-api#before-you-begin
+	
+- 메일 발송
+  - https://data-make.tistory.com/666
+
+- 네이버 Simple & Easy Notification Service
+  - https://www.ncloud.com/product/applicationService/sens
+
+  - API Doc 
+    - https://guide.ncloud-docs.com/docs/sens-sens-1-5
+    - https://guide-fin.ncloud-docs.com/docs/application-sens-sensalimtalk
+
+- 참고
+  - https://honeystorage.tistory.com/188?category=748845
+
+- 예약기능 만들어서 사용자에게 모일 보낼 경우
+  - [비즈엠](https://www.bizmsg.kr/)
+  - [네이버 Simple & Easy Notification Service](https://www.ncloud.com/product/applicationService/sens)
 
 ## About
 
@@ -314,3 +356,22 @@ https://freehoon.tistory.com/121?category=735500
 - New & Edit
   - 이름, 비밀번호, Comment 입력
   - 비밀글 체크박스
+
+
+```text
+Pending
+
+- [ ] Login `POST`
+  - [ ] 아이디 저장 기능(쿠키)
+  - [ ] setMaxInactiveInterval > 세션 설정(24시간)
+  - [ ] 아이디 찾기(가입 시 작성한 이메일 입력 시 아이디 앞부분 보여주기)
+  - [ ] 비밀번호 찾기 (가입 시 입력 이메일로 임시 PW 전송 및 DB는 임시 PW 로 수정)
+  - [ ] admin 로그인 및 권한 관련 (Spring Security)
+
+- [ ] Sign in `POST`
+  - [ ] 비밀번호 숫자/영문 포함 10자 이상
+
+- [ ] Edit (개인정보 변경) `POST`
+  - [ ] 접근 시 로그인 세션 체크
+  - [ ] 저장 시 현재 비밀번호 확인 (본인 확인 목적)
+```
