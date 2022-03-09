@@ -2,6 +2,7 @@
 <div th:replace="/common/head :: head"></div>
 <body>
 <div th:replace="/common/header :: header('product')"></div>
+<link th:href="@{/css/product/product.css}" rel="stylesheet"/>
 <main id="main">
 
     <section id="breadcrumbs" class="breadcrumbs">
@@ -21,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">All</li>
+                        <li data-filter="*" class="filter-active">ALL</li>
                         <th:block th:each="category : ${categoryList}">
                             <li th:attr="data-filter=|.${category.title}|">[[${category.title}]]</li>
                         </th:block>
@@ -29,23 +30,7 @@
                 </div>
             </div>
 
-            <div class="row portfolio-container" id="article-list">
-
-                <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}">
-                    <div class="portfolio-wrap">
-                        <th:block th:each="file : ${product.productUploadFiles}">
-                            <img th:if="${#strings.equals(file.thumbnailYn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="img-fluid" alt=""/>
-                        </th:block>
-                        <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info portfolio-details-lightbox">
-                            <h4>[(${product.name})]</h4>
-                            <p>[(${product.productCategory.title})]</p>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-<!--            <div class="row portfolio-container" id="article-list"></div>-->
+            <div class="row" id="article-list"></div>
         </div>
     </section>
 </main>
