@@ -71,13 +71,13 @@ insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
 values ('CARD', 2, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('ETC', 4, 'Y');
+values ('ETC', 100, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
 values ('WALLET', 1, 'Y');
 
-
-
+insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
+values ('ACCESSORY', 4, 'Y');
 
 
 
