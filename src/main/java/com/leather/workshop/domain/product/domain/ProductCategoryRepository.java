@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
 
-    @Query("SELECT DISTINCT pc FROM ProductCategory pc ORDER BY pc.title")
+    @Query("SELECT DISTINCT pc FROM ProductCategory pc ORDER BY pc.orderNo")
     List<ProductCategory> findAllOrderByTitle();
 }

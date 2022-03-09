@@ -23,4 +23,4 @@ spring:
     basename: messages,errors
 
 file:
-  directory: /Users/aaron/files/
+  directory: /Users/aaron/uploadFiles/

@@ -65,19 +65,172 @@ values (PARSEDATETIME('2022-01-01 12:00:00','yyyy-MM-dd hh:mm:ss'), null, '내�
 
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('APP', 1, 'Y');
+values ('BAG', 3, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
 values ('CARD', 2, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('WEB', 3, 'Y');
+values ('ETC', 4, 'Y');
 
 insert into PRODUCT_CATEGORY (title, order_no, category_use_yn)
-values ('WALLET', 4, 'Y');
+values ('WALLET', 1, 'Y');
+
+
 
 
 
 
 insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
-values (4, '멋진 가방', '멋진 가방입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+values (1, '화분', '화분입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (1, '의자', '의자입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (2, '썬글라스', '썬글라스입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (4, '멋진 지갑', '멋진 지갑입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (1, '화장품', '화장품 같은 물건입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (3, '쿠키와 커피', '아침에 커피에 쿠키 어때요?.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (3, '스탠드', '스탠드입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (3, '손목시계', '손목시계입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (2, '렌즈', '카메라 렌즈입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
+values (2, '맥주잔', '맥주가 떙기죠?.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+
+
+
+
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abcdefghijk1.jpg', 'portfolio-2.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abcdefghijk2.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abcdefghijk3.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (1L, 'abcdefghijk4.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (2L, 'abcdefghijk5.jpg', 'portfolio-1.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (2L, 'abcdefghijk6.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (2L, 'abcdefghijk7.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (2L, 'abcdefghijk8.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (3L, 'abcdefghijk9.jpg', 'portfolio-3.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (3L, 'abcdefghijk10.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (3L, 'abcdefghijk11.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (3L, 'abcdefghijk12.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (4L, 'abcdefghijk13.jpg', 'portfolio-6.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (4L, 'abcdefghijk14.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (4L, 'abcdefghijk15.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (4L, 'abcdefghijk16.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (5L, 'abcdefghijk17.jpg', 'portfolio-4.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (5L, 'abcdefghijk18.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (5L, 'abcdefghijk19.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (5L, 'abcdefghijk20.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (6L, 'abcdefghijk21.jpg', 'portfolio-7.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (6L, 'abcdefghijk22.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (6L, 'abcdefghijk23.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (6L, 'abcdefghijk24.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (7L, 'abcdefghijk25.jpg', 'portfolio-8.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (7L, 'abcdefghijk26.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (7L, 'abcdefghijk27.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (7L, 'abcdefghijk28.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (8L, 'abcdefghijk29.jpg', 'portfolio-2.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (8L, 'abcdefghijk30.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (8L, 'abcdefghijk31.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (8L, 'abcdefghijk32.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (9L, 'abcdefghijk33.jpg', 'portfolio-5.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (9L, 'abcdefghijk34.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (9L, 'abcdefghijk35.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (9L, 'abcdefghijk36.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (10L, 'abcdefghijk37.jpg', 'portfolio-9.jpg', 'Y', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (10L, 'abcdefghijk38.jpg', 'portfolio-details-1.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (10L, 'abcdefghijk39.jpg', 'portfolio-details-2.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);
+
+insert into PRODUCT_UPLOAD_FILE (product_id, upload_file_name, store_file_name, thumbnail_yn, created_date_time, modified_date_time)
+values (10L, 'abcdefghijk40.jpg', 'portfolio-details-3.jpg', 'N', PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), NULL);

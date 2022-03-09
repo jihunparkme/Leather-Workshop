@@ -28,5 +28,5 @@ public class ProductUploadFile extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "BIGINT default N")
-    private BooleanFormatType thumbnail_yn;
+    private BooleanFormatType thumbnailYn;
 }

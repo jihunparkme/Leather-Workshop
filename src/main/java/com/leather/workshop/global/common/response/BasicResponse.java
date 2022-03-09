@@ -1,17 +1,13 @@
 package com.leather.workshop.global.common.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@SuperBuilder
 public class BasicResponse {
 
     private Integer code;
