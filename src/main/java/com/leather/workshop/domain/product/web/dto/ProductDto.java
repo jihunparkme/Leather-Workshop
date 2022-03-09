@@ -60,13 +60,13 @@ public class ProductDto {
         private Long id;
         private String uploadFileName;
         private String storeFileName;
-        private BooleanFormatType thumbnail_yn;
+        private BooleanFormatType thumbnailYn;
 
         public ProductUploadFileDto(ProductUploadFile entity) {
             this.id = entity.getId();
             this.uploadFileName = entity.getUploadFileName();
             this.storeFileName = entity.getStoreFileName();
-            this.thumbnail_yn = entity.getThumbnail_yn();
+            this.thumbnailYn = entity.getThumbnailYn();
         }
     }
 }

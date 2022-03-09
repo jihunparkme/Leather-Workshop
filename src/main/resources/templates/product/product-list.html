@@ -34,7 +34,7 @@
                 <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}" style="border: none;">
                     <div class="portfolio-wrap">
                         <th:block th:each="file : ${product.productUploadFiles}">
-                            <img th:if="${#strings.equals(file.thumbnail_yn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="img-fluid" alt=""/>
+                            <img th:if="${#strings.equals(file.thumbnailYn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="img-fluid" alt=""/>
                         </th:block>
                         <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info portfolio-details-lightbox">
                             <h4>[(${product.name})]</h4>
@@ -53,5 +53,6 @@
     <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
+<script type="text/javascript" th:src="@{/js/product/product.js}"></script>
 </body>
 </html>
