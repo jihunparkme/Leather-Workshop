@@ -35,6 +35,11 @@ function btnPageNumber(_this) {
 }
 
 function searchProductList(ctgy, page) {
+
+    if (ctgy == undefined) {
+        ctgy = "ALL";
+    }
+
     if (page == undefined) {
         page = 0;
     }

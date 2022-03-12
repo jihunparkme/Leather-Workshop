@@ -49,14 +49,8 @@
                 </div>
             </div>
 
-            <div class="portfolio-pagination">
-                <ul class="justify-content-center">
-                    <th:block th:if="${productListPage.getTotalPages() > 0}">
-                        <div th:each="num : ${#numbers.sequence(0, productListPage.getTotalPages() - 1)}">
-                            <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
-                        </div>
-                    </th:block>
-                </ul>
+            <div class="paging-div">
+                <ul class="pagination" id="pagination"></ul>
             </div>
 
         </div>
@@ -69,5 +63,23 @@
 </a>
 <div th:replace="/common/commonjs"></div>
 <script type="text/javascript" th:src="@{/js/product/product.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+window.pagObj = $('#pagination').twbsPagination({
+    totalPages: [[${productListPage.totalPages}]],
+    startPage: [[${productListPage.number}]] + 1,
+    visiblePages: 10,
+    prev: "‹",
+    next: "›",
+    first: '«',
+    last: '»',
+    onPageClick: function (event, page) {
+        console.info("current page : " + page - 1);
+    }
+}).on('page', function (event, page) {
+    searchProductList($("#category").val(), page - 1);
+});
+/*]]>*/
+</script>
 </body>
 </html>
