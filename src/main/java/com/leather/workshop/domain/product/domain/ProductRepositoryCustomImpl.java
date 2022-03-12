@@ -1,5 +1,6 @@
 package com.leather.workshop.domain.product.domain;
 
+import com.leather.workshop.global.common.dto.BooleanFormatType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
@@ -40,6 +41,7 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> query = from(product);
         BooleanBuilder bb = new BooleanBuilder();
+        bb.and(product.deleteYn.eq(BooleanFormatType.N));
 
         if (!"ALL".equals(category)) {
             bb.and(product.productCategory.title.eq(category));

@@ -1946,6 +1946,9 @@ section {
   display: inline-block;
   line-height: 1;
 }
+.blog .entry .entry-content {
+  margin-bottom: 20px;
+}
 .blog .entry .entry-content p {
   line-height: 24px;
 }

@@ -32,6 +32,7 @@ public class ProductDto {
         private LocalDateTime deletedDateTime;
         private LocalDateTime createdDateTime;
         private LocalDateTime modifiedDateTime;
+        private ProductUploadFileDto thumbnailFile;
         private List<ProductUploadFileDto> productUploadFiles = new ArrayList<>();
 
         public Response(Product entity) {
@@ -45,6 +46,13 @@ public class ProductDto {
             this.deletedDateTime = entity.getDeletedDateTime();
             this.createdDateTime = entity.getCreatedDateTime();
             this.modifiedDateTime = entity.getModifiedDateTime();
+            this.thumbnailFile = entity.getProductUploadFiles().stream()
+                                        .filter(productUploadFile -> BooleanFormatType.Y.equals(productUploadFile.getThumbnailYn()))
+                                        .findAny()
+                                        .map(productUploadFile -> {
+                                            return new ProductUploadFileDto(productUploadFile);
+                                        })
+                                        .orElse(null);
             this.productUploadFiles = entity.getProductUploadFiles().stream()
                                             .map(productUploadFile -> new ProductUploadFileDto(productUploadFile))
                                             .collect(Collectors.toList());
