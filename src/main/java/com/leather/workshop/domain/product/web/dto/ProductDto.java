@@ -4,12 +4,17 @@ import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.domain.ProductCategory;
 import com.leather.workshop.domain.product.domain.ProductUploadFile;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductDto {
@@ -69,6 +74,55 @@ public class ProductDto {
             this.uploadFileName = entity.getUploadFileName();
             this.storeFileName = entity.getStoreFileName();
             this.thumbnailYn = entity.getThumbnailYn();
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SaveRequest {
+        @NotBlank
+        private ProductCategory productCategory;
+        @NotBlank
+        private String name;
+        private String contents;
+        @NotBlank
+        private Long userId;
+        private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+
+        public Product toEntity() {
+            return Product.builder()
+                    .productCategory(productCategory)
+                    .name(name)
+                    .contents(contents)
+                    .hits(0L)
+                    .deleteYn(BooleanFormatType.N)
+                    .userId(userId)
+                    .productUploadFiles(productUploadFiles)
+                    .build();
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UpdateRequest {
+        @NotBlank
+        private ProductCategory productCategory;
+        @NotBlank
+        private String name;
+        private String contents;
+        private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+
+        public Product toEntity() {
+            return Product.builder()
+                    .productCategory(productCategory)
+                    .name(name)
+                    .contents(contents)
+                    .productUploadFiles(productUploadFiles)
+                    .build();
         }
     }
 }

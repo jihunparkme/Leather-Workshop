@@ -30,9 +30,38 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDto.Response findById(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("해당 상품이 없습니다. id=" + id));
+        Product product = getProduct(id);
 
         return new ProductDto.Response(product);
+    }
+
+    @Transactional
+    public Long save(ProductDto.SaveRequest productRequest) {
+        return productRepository.save(productRequest.toEntity()).getId();
+    }
+
+    @Transactional
+    public Long update(Long id, ProductDto.SaveRequest productRequest) {
+        Product product = getProduct(id);
+
+        product.update(productRequest.getProductCategory(), productRequest.getName(),
+                productRequest.getContents(), productRequest.getProductUploadFiles());
+
+        return id;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Product product = getProduct(id);
+
+        product.delete();
+        productRepository.save(product);
+    }
+
+    private Product getProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 상품이이 존재하지 않습니다. id=" + id));
+
+        return product;
     }
 }
