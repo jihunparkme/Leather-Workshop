@@ -2,6 +2,7 @@ package com.leather.workshop.domain.product.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,4 +45,34 @@ public class Product extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+
+    private LocalDateTime modifiedDateTime;
+
+    @Builder
+    public Product(ProductCategory productCategory, String name, String contents, Long hits, BooleanFormatType deleteYn, Long userId, Set<ProductUploadFile> productUploadFiles) {
+        this.productCategory = productCategory;
+        this.name = name;
+        this.contents = contents;
+        this.hits = hits;
+        this.deleteYn = deleteYn;
+        this.userId = userId;
+        this.productUploadFiles = productUploadFiles;
+    }
+
+    public void update(ProductCategory productCategory, String name, String contents, Set<ProductUploadFile> productUploadFiles) {
+        this.productCategory = productCategory;
+        this.name = name;
+        this.contents = contents;
+        this.productUploadFiles = productUploadFiles;
+        this.modifiedDateTime = LocalDateTime.now();
+    }
+
+    public void delete() {
+        this.deleteYn = BooleanFormatType.Y;
+        this.deletedDateTime = LocalDateTime.now();
+    }
+
+    public void countHits() {
+        this.hits += 1;
+    }
 }

@@ -37,12 +37,12 @@
     color: #5D432C;
 }
 
-.review .entry .entry-meta {
+.review .entry-meta {
     margin-bottom: 15px;
     color: #c1c8d0;
 }
 
-.review .entry .entry-meta ul {
+.review .entry-meta ul {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
@@ -51,17 +51,17 @@
     margin: 0;
 }
 
-.review .entry .entry-meta ul li + li {
+.review .entry-meta ul li + li {
     padding-left: 20px;
 }
 
-.review .entry .entry-meta i {
+.review .entry-meta i {
     font-size: 16px;
     margin-right: 8px;
     line-height: 0;
 }
 
-.review .entry .entry-meta a {
+.review .entry-meta a {
     color: #777777;
     font-size: 14px;
     display: inline-block;

@@ -1895,7 +1895,7 @@ section {
 # Blog
 --------------------------------------------------------------*/
 .blog {
-  padding: 40px 0 20px 0;
+  padding: 40px 0 200px 0;
 }
 .blog .entry {
   padding: 30px;
@@ -1945,6 +1945,9 @@ section {
   font-size: 14px;
   display: inline-block;
   line-height: 1;
+}
+.blog .entry .entry-content {
+  margin-bottom: 20px;
 }
 .blog .entry .entry-content p {
   line-height: 24px;
@@ -2042,7 +2045,7 @@ section {
   padding-left: 5px;
 }
 .blog .entry-single {
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 .blog .blog-author {
   padding: 20px;
@@ -2545,4 +2548,26 @@ section {
 html, body {
   margin: 0;
   padding: 0;
+}
+
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
+
+.paging-div {
+  display: table;
+  text-align: center;
+  margin: 60px auto;
+  justify-content: center !important;
+}
+
+.page-item.active .page-link {
+  z-index: 3 !important;
+  color: #fff !important;
+  background-color: #5D432C !important;
+  border-color: #5D432C !important;
+}
+
+.page-link {
+  color: #5D432C !important;
 }

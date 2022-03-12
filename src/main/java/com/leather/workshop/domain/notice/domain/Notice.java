@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -27,6 +28,8 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long hits;
 
+    private LocalDateTime modifiedDateTime;
+
     @Builder
     public Notice(Long userId, String title, String contents, Long hits) {
         this.userId = userId;
@@ -38,6 +41,7 @@ public class Notice extends BaseTimeEntity {
     public void update(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        this.modifiedDateTime = LocalDateTime.now();
     }
 
     public void countHits() {

@@ -45,18 +45,17 @@
                 <div class="entry-meta">
                   <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i>[(${#temporals.format(notice.createdDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                    <th:block th:if="${not #strings.isEmpty(notice.modifiedDateTime)}">
+                      <li class="d-flex align-items-center"><i class="bi bi-pencil"></i>[(${#temporals.format(notice.modifiedDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                    </th:block>
                     <li class="d-flex align-items-center"><i class="bi bi-eye"></i>[(${notice.hits})]</li>
                   </ul>
                 </div>
               </article>
             </tr>
 
-            <div class="notice-pagination">
-              <ul class="justify-content-center">
-                <div th:each="num : ${#numbers.sequence(0, noticeListPage.getTotalPages() - 1)}">
-                  <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
-                </div>
-              </ul>
+            <div class="paging-div">
+              <ul class="pagination" id="pagination"></ul>
             </div>
 
           </div>
@@ -65,9 +64,25 @@
     </section>
   <div th:replace="/common/footer :: footer"></div>
 </main>
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <div th:replace="/common/commonjs"></div>
-  <script type="text/javascript" th:src="@{/js/notice/notice.js}"></script>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="/common/commonjs"></div>
+<script type="text/javascript" th:src="@{/js/notice/notice.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+  /*<![CDATA[*/
+  window.pagObj = $('#pagination').twbsPagination({
+    totalPages: [[${noticeListPage.totalPages}]],
+    startPage: [[${noticeListPage.number}]] + 1,
+    visiblePages: 10,
+    prev: "‹",
+    next: "›",
+    first: '«',
+    last: '»',
+    onPageClick: function (event, page) {
+    }
+  }).on('page', function (event, page) {
+    searchNoticeList(page - 1);
+  });
+  /*]]>*/
+</script>
 </body>
 </html>
