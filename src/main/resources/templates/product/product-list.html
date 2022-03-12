@@ -74,7 +74,6 @@ window.pagObj = $('#pagination').twbsPagination({
     first: '«',
     last: '»',
     onPageClick: function (event, page) {
-        console.info("current page : " + page - 1);
     }
 }).on('page', function (event, page) {
     searchProductList($("#category").val(), page - 1);

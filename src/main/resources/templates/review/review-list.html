@@ -56,15 +56,12 @@
                         </p>
                     </div>
                 </div>
-
-                <div style="margin-top: 60px;" class="review-pagination">
-                    <ul class="justify-content-center">
-                        <div th:each="num : ${#numbers.sequence(0, reviewListPage.getTotalPages() - 1)}">
-                            <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
-                        </div>
-                    </ul>
-                </div>
             </div>
+
+            <div class="paging-div">
+                <ul class="pagination" id="pagination"></ul>
+            </div>
+
         </div>
     </section>
     <div th:replace="/common/footer :: footer"></div>
@@ -75,5 +72,22 @@
 </a>
 <div th:replace="/common/commonjs"></div>
 <script type="text/javascript" th:src="@{/js/review/review.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    window.pagObj = $('#pagination').twbsPagination({
+        totalPages: [[${reviewListPage.totalPages}]],
+        startPage: [[${reviewListPage.number}]] + 1,
+        visiblePages: 10,
+        prev: "‹",
+        next: "›",
+        first: '«',
+        last: '»',
+        onPageClick: function (event, page) {
+        }
+    }).on('page', function (event, page) {
+        searchReviewList(page - 1);
+    });
+    /*]]>*/
+</script>
 </body>
 </html>
