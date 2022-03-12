@@ -42,16 +42,23 @@
                 <div class="col-lg-6" th:each="review, status : ${reviewListPage.content}" th:unless="${#lists.isEmpty(reviewListPage.content)}">
                     <div class="review-item mt-4">
                         <div style="display: inline">
-                            <h3 th:text="${review?.user?.name} ?: ${review.nickname}" style="display: inline;"></h3>
-                        </div>
-                        <div sec:authorize="isAuthenticated()" style="display: inline; float: right">
-                            <div th:if="${review.nickname eq session.user.name} or ${#strings.equals(session.user.role, 'ADMIN')}" class="entry-button">
-                                <button type="submit" th:onclick="'btnEdit(' + ${review.id} + ')'" class="btn btn-outline-primary">수정</button>
+                            <div>
+                                <h3 th:text="${review?.user?.name} ?: ${review.nickname}" style="display: inline;"></h3>
+                                <div class="entry-meta" style="display: inline;">
+                                    <ul style="display: inline;">
+                                        <li class="d-flex align-items-center" style="margin-top: 10px;"><i class="bi bi-clock"></i>[(${#temporals.format(review.createdDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div sec:authorize="isAuthenticated()" style="display: inline; float: right">
+                                <div th:if="${review.nickname eq session.user.name} or ${#strings.equals(session.user.role, 'ADMIN')}" class="entry-button">
+                                    <button type="submit" th:onclick="'btnEdit(' + ${review.id} + ')'" class="btn btn-outline-primary">수정</button>
+                                </div>
                             </div>
                         </div>
                         <p>
                             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            <span style="white-space:pre;">[[${review.contents}]]</span>
+                            <span style="white-space:pre-wrap;">[[${review.contents}]]</span>
                             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                         </p>
                     </div>
