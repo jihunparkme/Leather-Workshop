@@ -41,7 +41,7 @@
                         <th:block th:each="file : ${product.productUploadFiles}">
                             <img th:if="${#strings.equals(file.thumbnailYn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="thumbnail" alt=""/>
                         </th:block>
-                        <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info portfolio-details-lightbox">
+                        <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info">
                             <h4>[(${product.name})]</h4>
                             <p>[(${product.productCategory.title})]</p>
                         </a>

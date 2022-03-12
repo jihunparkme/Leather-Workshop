@@ -44,4 +44,8 @@ public class Product extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+
+    public void countHits() {
+        this.hits += 1;
+    }
 }
