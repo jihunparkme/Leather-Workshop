@@ -27,13 +27,16 @@ public class ProductController {
     @GetMapping("")
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
+            @RequestParam(value = "size", required = false, defaultValue = "12") Integer size,
+            @RequestParam(value = "category", required = false, defaultValue = "ALL") String category,
             Model model) {
 
-        Page<Product> productListPage = categoryService.findAllSortByIdDescPaging("ALL", page, size);
+        Page<Product> productListPage = categoryService.findAllSortByIdDescPaging(category, page, size);
 
         model.addAttribute("productListPage", productListPage);
         model.addAttribute("categoryList", categoryService.getCategoryRepository().findAllOrderByTitle());
+        model.addAttribute("page", page);
+        model.addAttribute("category", category);
 
         return "product/product-list";
     }

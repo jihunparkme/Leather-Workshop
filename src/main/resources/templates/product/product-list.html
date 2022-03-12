@@ -17,12 +17,17 @@
         </div>
     </section>
 
+    <form name="form" id="form" th:action="@{/product}" method="get">
+        <input type="hidden" id="page" name="page" th:value="${page}"/>
+        <input type="hidden" id="category" name="category" th:value="${category}"/>
+    </form>
+
     <section id="portfolio" class="portfolio">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">ALL</li>
+                        <li data-filter="*">ALL</li>
                         <th:block th:each="category : ${categoryList}">
                             <li th:attr="data-filter=|.${category.title}|">[[${category.title}]]</li>
                         </th:block>
@@ -30,7 +35,30 @@
                 </div>
             </div>
 
-            <div class="row" id="article-list"></div>
+            <div class="row" id="article-list">
+                <div class="col-lg-4 col-md-6 portfolio-item" th:classappend="${product.productCategory.title}" th:each="product, status : ${productListPage.content}" th:unless="${#lists.isEmpty(productListPage.content)}">
+                    <div class="portfolio-wrap child-center">
+                        <th:block th:each="file : ${product.productUploadFiles}">
+                            <img th:if="${#strings.equals(file.thumbnailYn, 'Y')}" th:src="@{'/file/img/product/' + ${file.storeFileName}}" class="thumbnail" alt=""/>
+                        </th:block>
+                        <a th:href="@{/product/{id}(id=${product.id})}" class="portfolio-info portfolio-details-lightbox">
+                            <h4>[(${product.name})]</h4>
+                            <p>[(${product.productCategory.title})]</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-pagination">
+                <ul class="justify-content-center">
+                    <th:block th:if="${productListPage.getTotalPages() > 0}">
+                        <div th:each="num : ${#numbers.sequence(0, productListPage.getTotalPages() - 1)}">
+                            <li th:classappend="${page == num ? 'active' : ''}"><a href="javascript:void(0);" onclick="btnPageNumber(this);">[(${num + 1})]</a></li>
+                        </div>
+                    </th:block>
+                </ul>
+            </div>
+
         </div>
     </section>
     <div th:replace="/common/footer :: footer"></div>
