@@ -45,6 +45,9 @@
                 <div class="entry-meta">
                   <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i>[(${#temporals.format(notice.createdDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                    <th:block th:if="${not #strings.isEmpty(notice.modifiedDateTime)}">
+                      <li class="d-flex align-items-center"><i class="bi bi-pencil"></i>[(${#temporals.format(notice.modifiedDateTime, 'yyyy-MM-dd HH:mm')})]</li>
+                    </th:block>
                     <li class="d-flex align-items-center"><i class="bi bi-eye"></i>[(${notice.hits})]</li>
                   </ul>
                 </div>

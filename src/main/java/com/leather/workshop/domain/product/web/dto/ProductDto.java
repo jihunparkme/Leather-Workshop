@@ -30,6 +30,8 @@ public class ProductDto {
         private BooleanFormatType deleteYn;
         private Long userId;
         private LocalDateTime deletedDateTime;
+        private LocalDateTime createdDateTime;
+        private LocalDateTime modifiedDateTime;
         private List<ProductUploadFileDto> productUploadFiles = new ArrayList<>();
 
         public Response(Product entity) {
@@ -41,6 +43,8 @@ public class ProductDto {
             this.deleteYn = entity.getDeleteYn();
             this.userId = entity.getUserId();
             this.deletedDateTime = entity.getDeletedDateTime();
+            this.createdDateTime = entity.getCreatedDateTime();
+            this.modifiedDateTime = entity.getModifiedDateTime();
             this.productUploadFiles = entity.getProductUploadFiles().stream()
                                             .map(productUploadFile -> new ProductUploadFileDto(productUploadFile))
                                             .collect(Collectors.toList());

@@ -46,6 +46,8 @@ public class Product extends BaseTimeEntity {
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
 
+    private LocalDateTime modifiedDateTime;
+
     @Builder
     public Product(ProductCategory productCategory, String name, String contents, Long hits, BooleanFormatType deleteYn, Long userId, Set<ProductUploadFile> productUploadFiles) {
         this.productCategory = productCategory;
@@ -62,6 +64,7 @@ public class Product extends BaseTimeEntity {
         this.name = name;
         this.contents = contents;
         this.productUploadFiles = productUploadFiles;
+        this.modifiedDateTime = LocalDateTime.now();
     }
 
     public void delete() {
