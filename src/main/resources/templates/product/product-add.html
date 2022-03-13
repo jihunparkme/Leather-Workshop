@@ -53,7 +53,7 @@
 
                             <div class="entry-button">
                                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <button type="submit" class="btn btn-outline-primary">등록</button>
+                                    <button type="button" id="btnSave" class="btn btn-outline-primary">등록</button>
                                     <button type="button" th:onclick="|location.href='@{/product}'|" class="btn btn-outline-secondary">취소</button>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
     <i class="bi bi-arrow-up-short"></i>
 </a>
 <div th:replace="/common/commonjs"></div>
-<script type="text/javascript" th:src="@{/js/product/product.js}"></script>
+<script type="text/javascript" th:src="@{/js/product/product-form.js}"></script>
 <script type="text/javascript" th:src="@{/js/ckeditor/ckeditor.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
@@ -82,7 +82,8 @@
             font_defaultLabel : "맑은 고딕/Malgun Gothic",
             fontSize_defaultLabel : "12",
             skin : "office2013",
-            language : "ko"
+            language : "ko",
+            removePlugins : 'exportpdf'
         });
     });
     /*]]>*/
