@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class FileUtils {
+public class FileUtilities {
 
     @Value("${file.directory}")
     private String fileDir;
@@ -66,7 +66,7 @@ public class FileUtils {
         return originalFilename.substring(pos + 1);
     }
 
-    public static String fileNameGenerator(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String createStoreFileNameMd5(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         MessageDigest mdMD5 = MessageDigest.getInstance("MD5");
         mdMD5.update(input.getBytes("UTF-8"));
@@ -80,6 +80,10 @@ public class FileUtils {
         }
 
         return hexMD5hash.toString();
+    }
+
+    public File downloadFile(String filaName) {
+        return new File(getFullPath(filaName));
     }
 
     public static MediaType getMediaType(String filename) {

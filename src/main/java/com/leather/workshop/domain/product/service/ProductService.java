@@ -4,7 +4,7 @@ import com.leather.workshop.domain.product.domain.*;
 import com.leather.workshop.domain.product.web.dto.ProductDto;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
-import com.leather.workshop.global.common.util.file.FileUtils;
+import com.leather.workshop.global.common.util.file.FileUtilities;
 import com.leather.workshop.global.common.util.web.dto.UploadFile;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    private final FileUtils fileUtils;
+    private final FileUtilities fileUtilities;
 
     @Transactional(readOnly = true)
     public Page<Product> findAllSortByIdDescPaging(String category, Integer page, Integer size) {
@@ -49,12 +49,12 @@ public class ProductService {
     @Transactional
     public Long save(ProductDto.Request form, SessionUser user) throws IOException {
 
-        ProductCategory category = categoryRepository.findById(form.getProductCategoryId()).get();
+        ProductCategory category = categoryRepository.findById(form.getProductCategory()).get();
 
         List<ProductUploadFile> productUploadFileList = new ArrayList<>();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
-        UploadFile uploadFile = fileUtils.storeFile(formThumbnailFile);
+        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile);
         ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
                 .uploadFileName(uploadFile.getUploadFileName())
                 .storeFileName(uploadFile.getStoreFileName())
@@ -63,7 +63,7 @@ public class ProductService {
 
         List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
         if (!formUploadFiles.isEmpty()) {
-            List<UploadFile> uploadFiles = fileUtils.storeFiles(formUploadFiles);
+            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles);
             productUploadFileList = uploadFiles.stream()
                     .map(up -> {
                         return ProductUploadFile.builder()

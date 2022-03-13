@@ -1,24 +1,29 @@
 package com.leather.workshop.global.common.util.file;
 
+import com.leather.workshop.global.common.util.web.dto.UploadFile;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/file")
 public class FileUtilController {
 
-    private final FileUtils fileUtils;
+    private final FileUtilities fileUtilities;
 
     @GetMapping(value = "/img/{part}/{fileName}")
     public ResponseEntity<byte[]> displayImgFile(@PathVariable String part,
@@ -29,8 +34,8 @@ public class FileUtilController {
 
         try {
             HttpHeaders headers = new HttpHeaders();
-            in = new FileInputStream(fileUtils.getFullPath(part, fileName));
-            headers.setContentType(FileUtils.getMediaType(fileName));
+            in = new FileInputStream(fileUtilities.getFullPath(part, fileName));
+            headers.setContentType(FileUtilities.getMediaType(fileName));
             headers.add("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
             entity = new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
         } catch(Exception e) {
@@ -41,5 +46,49 @@ public class FileUtilController {
         }
 
         return entity;
+    }
+
+    @PostMapping("/ckeditor/fileUpload")
+    public String fileUploadFromCKEditor(HttpServletResponse response,
+                                         MultipartHttpServletRequest multipartRequest) throws Exception {
+        PrintWriter printWriter = null;
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+
+        try {
+            UploadFile uploadFile = fileUtilities.storeFile(multipartRequest.getFile("upload"));
+            String fileUrl = "/file/ckeditor/fileDownload?fileName=" + uploadFile.getStoreFileName();
+            printWriter = response.getWriter();
+            printWriter.println("{\"filename\" : \"" + uploadFile.getStoreFileName() + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+            printWriter.flush();
+        } catch (IOException e) {
+            log.info(e.toString());
+        } finally {
+            if (printWriter != null) {
+                printWriter.close();
+            }
+        } return null;
+    }
+
+    @RequestMapping("/ckeditor/fileDownload")
+    public void filePrintFromCKEditor(@RequestParam(value = "fileName") String fileName,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) {
+
+        File file = fileUtilities.downloadFile(fileName);
+        try {
+            byte[] data = FileUtils.readFileToByteArray(file);
+            response.setContentType(FileUtilities.getMediaType(fileName).toString());
+            response.setContentLength(data.length);
+            response.setHeader("Content-Transfer-Encoding", "binary");
+            response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
+            response.getOutputStream().write(data);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+        } catch (IOException e) {
+            throw new RuntimeException("파일 다운로드에 실패하였습니다.");
+        } catch (Exception e) {
+            throw new RuntimeException("시스템에 문제가 발생하였습니다.");
+        }
     }
 }
