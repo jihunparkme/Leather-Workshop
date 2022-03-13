@@ -2,6 +2,7 @@ package com.leather.workshop.domain.product.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,12 @@ public class ProductUploadFile extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "BIGINT default N")
     private BooleanFormatType thumbnailYn;
+
+    @Builder
+    public ProductUploadFile(Product product, String uploadFileName, String storeFileName, BooleanFormatType thumbnailYn) {
+        this.product = product;
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
+        this.thumbnailYn = thumbnailYn;
+    }
 }
