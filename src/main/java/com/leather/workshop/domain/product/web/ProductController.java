@@ -80,6 +80,8 @@ public class ProductController {
     public String add(Model model) {
 
         model.addAttribute("product", new ProductDto.Response());
+        model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+
         return "product/product-add";
     }
     

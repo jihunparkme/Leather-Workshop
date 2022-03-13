@@ -61,7 +61,7 @@ public class ProductDto {
     @Builder
     public static class Request {
         @NotBlank
-        private Long productCategoryId;
+        private Long productCategory;
         @NotBlank
         private String name;
         private String contents;

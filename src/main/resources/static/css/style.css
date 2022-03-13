@@ -2044,6 +2044,13 @@ section {
 .blog .entry .entry-footer .share i {
   padding-left: 5px;
 }
+.blog .entry .entry-button {
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+.blog .entry .entry-button div {
+  float: right;
+}
 .blog .entry-single {
   margin-bottom: 60px;
 }

@@ -54,7 +54,7 @@ public class ProductService {
         List<ProductUploadFile> productUploadFileList = new ArrayList<>();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
-        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile);
+        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, "product");
         ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
                 .uploadFileName(uploadFile.getUploadFileName())
                 .storeFileName(uploadFile.getStoreFileName())
@@ -63,7 +63,7 @@ public class ProductService {
 
         List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
         if (!formUploadFiles.isEmpty()) {
-            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles);
+            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, "product");
             productUploadFileList = uploadFiles.stream()
                     .map(up -> {
                         return ProductUploadFile.builder()
