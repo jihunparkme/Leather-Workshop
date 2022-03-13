@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
@@ -29,6 +26,8 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductCategoryRepository categoryRepository;
+
+    private final ProductUploadFileRepository uploadFileRepository;
 
     private final ProductRepository productRepository;
 
@@ -52,32 +51,6 @@ public class ProductService {
 
         ProductCategory category = categoryRepository.findById(form.getProductCategory()).get();
 
-        List<ProductUploadFile> productUploadFileList = new ArrayList<>();
-
-        MultipartFile formThumbnailFile = form.getThumbnailFile();
-        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
-        ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
-                .uploadFileName(uploadFile.getUploadFileName())
-                .storeFileName(uploadFile.getStoreFileName())
-                .thumbnailYn(BooleanFormatType.Y)
-                .build();
-
-        List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
-        if (!formUploadFiles.isEmpty()) {
-            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, PathConst.PRODUCT);
-            productUploadFileList = uploadFiles.stream()
-                    .map(up -> {
-                        return ProductUploadFile.builder()
-                                .uploadFileName(up.getUploadFileName())
-                                .storeFileName(up.getStoreFileName())
-                                .thumbnailYn(BooleanFormatType.N)
-                                .build();
-                    })
-                    .collect(Collectors.toList());
-        }
-
-        productUploadFileList.add(productThumbnailFile);
-
         Product product = Product.builder()
                 .productCategory(category)
                 .name(form.getName())
@@ -85,10 +58,38 @@ public class ProductService {
                 .hits(0L)
                 .deleteYn(BooleanFormatType.N)
                 .userId(user.getId())
-                .productUploadFiles(new HashSet<>(productUploadFileList))
                 .build();
 
-        return productRepository.save(product).getId();
+        Product entityProudct = productRepository.save(product);
+
+        MultipartFile formThumbnailFile = form.getThumbnailFile();
+        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
+        ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
+                .product(entityProudct)
+                .uploadFileName(uploadFile.getUploadFileName())
+                .storeFileName(uploadFile.getStoreFileName())
+                .thumbnailYn(BooleanFormatType.Y)
+                .build();
+        uploadFileRepository.save(productThumbnailFile);
+
+        List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
+        if (formUploadFiles != null && !formUploadFiles.isEmpty()) {
+            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, PathConst.PRODUCT);
+            uploadFiles.stream()
+                    .map(up -> {
+                        ProductUploadFile file = ProductUploadFile.builder()
+                                .product(entityProudct)
+                                .uploadFileName(up.getUploadFileName())
+                                .storeFileName(up.getStoreFileName())
+                                .thumbnailYn(BooleanFormatType.N)
+                                .build();
+
+                        uploadFileRepository.save(file);
+                        return null;
+                    });
+        }
+
+        return entityProudct.getId();
     }
 
 //    @Transactional

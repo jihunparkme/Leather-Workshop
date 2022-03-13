@@ -1947,10 +1947,11 @@ section {
   line-height: 1;
 }
 .blog .entry .entry-content {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 .blog .entry .entry-content p {
-  line-height: 24px;
+  line-height: 10px;
 }
 .blog .entry .entry-content .read-more {
   -moz-text-align-last: right;

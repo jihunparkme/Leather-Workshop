@@ -2,13 +2,11 @@ package com.leather.workshop.domain.product.web.dto;
 
 import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,17 +53,14 @@ public class ProductDto {
         }
     }
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
+    @Data
     public static class Request {
-        @NotBlank
+        @NotNull
         private Long productCategory;
         @NotBlank
         private String name;
         private String contents;
-        @NotBlank
+        @NotNull
         private MultipartFile thumbnailFile;
         private List<MultipartFile> productUploadFiles;
     }

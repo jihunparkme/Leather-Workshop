@@ -10,6 +10,7 @@ import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/product")
@@ -94,6 +96,7 @@ public class ProductController {
                       Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
             return "product/product-add";
         }
 

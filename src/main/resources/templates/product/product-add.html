@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single">
-                        <form id="form" enctype="multipart/form-data" th:object="${product}" onsubmit="return false">
+                        <form id="form" enctype="multipart/form-data" th:object="${product}" th:action="add" method="post">
                             <h2 class="entry-view-title">상품 등록</h2>
 
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -42,7 +42,7 @@
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="thumbnailFile" th:text="Thumbnail">대표 이미지</label>
                             </div>
-                            <input type="file" id="thumbnailFile" name="thumbnailFile" th:errorclass="field-error" class="form-control" accept="image/gif, image/jpeg, image/png">
+                            <input type="file" id="thumbnailFile" th:field="*{thumbnailFile}" th:errorclass="field-error" class="form-control" accept="image/gif, image/jpeg, image/png">
                             <div class="field-error" th:errors="*{thumbnailFile}">thumbnail error</div>
 
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">

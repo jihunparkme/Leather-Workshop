@@ -22,6 +22,11 @@
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single">
+
+                        <div th:if="${param.status}" class="save-success">
+                            저장이 완료되었습니다.
+                        </div>
+
                         <div class="entry-img child-center">
                             <img th:src="@{'/file/img/product/' + ${product.thumbnailFile?.storeFileName}}" alt="" class="img-fluid">
                         </div>
@@ -48,6 +53,13 @@
                             <ul class="cats">
                                 <li><a th:href="@{/product(category=${product.productCategory.title})}"}>[(${product.productCategory.title})]</a></li>
                             </ul>
+                        </div>
+
+                        <div class="entry-button">
+                            <div>
+                                <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="'goEdit(' + ${product.id} + ')'" class="btn btn-outline-success">수정</button>
+                                <button th:onclick="|location.href='@{/product}'|" class="btn btn-outline-dark">목록</button>
+                            </div>
                         </div>
 
                     </article>
