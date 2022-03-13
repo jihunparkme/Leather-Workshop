@@ -48,16 +48,17 @@ public class FileUtilController {
         return entity;
     }
 
-    @PostMapping("/ckeditor/fileUpload")
-    public String fileUploadFromCKEditor(HttpServletResponse response,
-                                         MultipartHttpServletRequest multipartRequest) throws Exception {
+    @PostMapping("/ckeditor/fileUpload/{part}")
+    public String fileUploadFromCKEditor(@PathVariable String part,
+                                         HttpServletResponse response,
+                                         MultipartHttpServletRequest multipartRequest) {
         PrintWriter printWriter = null;
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
         try {
-            UploadFile uploadFile = fileUtilities.storeFile(multipartRequest.getFile("upload"));
-            String fileUrl = "/file/ckeditor/fileDownload?fileName=" + uploadFile.getStoreFileName();
+            UploadFile uploadFile = fileUtilities.storeFile(multipartRequest.getFile("upload"), part + PathConst.CONTENTS);
+            String fileUrl = "/file/ckeditor/fileDownload/" + part + "?fileName=" + uploadFile.getStoreFileName();
             printWriter = response.getWriter();
             printWriter.println("{\"filename\" : \"" + uploadFile.getStoreFileName() + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
             printWriter.flush();
@@ -70,12 +71,13 @@ public class FileUtilController {
         } return null;
     }
 
-    @RequestMapping("/ckeditor/fileDownload")
-    public void filePrintFromCKEditor(@RequestParam(value = "fileName") String fileName,
+    @RequestMapping("/ckeditor/fileDownload/{part}")
+    public void filePrintFromCKEditor(@PathVariable String part,
+                                      @RequestParam(value = "fileName") String fileName,
                                       HttpServletRequest request,
                                       HttpServletResponse response) {
 
-        File file = fileUtilities.downloadFile(fileName);
+        File file = fileUtilities.downloadFile(fileName, part + PathConst.CONTENTS);
         try {
             byte[] data = FileUtils.readFileToByteArray(file);
             response.setContentType(FileUtilities.getMediaType(fileName).toString());

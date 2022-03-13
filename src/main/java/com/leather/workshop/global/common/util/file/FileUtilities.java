@@ -31,18 +31,22 @@ public class FileUtilities {
         return fileDir + Paths.get(part, fileName);
     }
 
-    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+    private String getUploadPath(String part) {
+        return fileDir + part;
+    }
+
+    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String part) throws IOException {
         List<UploadFile> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFiles.isEmpty()) {
-                storeFileResult.add(storeFile(multipartFile));
+                storeFileResult.add(storeFile(multipartFile, part));
             }
         }
 
         return storeFileResult;
     }
 
-    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
+    public UploadFile storeFile(MultipartFile multipartFile, String part) throws IOException {
 
         if (multipartFile.isEmpty()) {
             return null;
@@ -50,7 +54,8 @@ public class FileUtilities {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+        verifyUploadPath(getUploadPath(part));
+        multipartFile.transferTo(new File(getFullPath(part, storeFileName)));
 
         return new UploadFile(originalFilename, storeFileName);
     }
@@ -61,10 +66,12 @@ public class FileUtilities {
         return uuid + "." + ext;
     }
 
+
     private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
+
 
     public String createStoreFileNameMd5(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
@@ -82,8 +89,18 @@ public class FileUtilities {
         return hexMD5hash.toString();
     }
 
-    public File downloadFile(String filaName) {
-        return new File(getFullPath(filaName));
+    private void verifyUploadPath(String path) {
+        if (!new File(path).exists()) {
+            try {
+                new File(path).mkdir();
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+        }
+    }
+
+    public File downloadFile(String filaName, String part) {
+        return new File(getFullPath(part, filaName));
     }
 
     public static MediaType getMediaType(String filename) {
