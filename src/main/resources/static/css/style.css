@@ -1947,10 +1947,11 @@ section {
   line-height: 1;
 }
 .blog .entry .entry-content {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 .blog .entry .entry-content p {
-  line-height: 24px;
+  line-height: 10px;
 }
 .blog .entry .entry-content .read-more {
   -moz-text-align-last: right;
@@ -2043,6 +2044,13 @@ section {
 }
 .blog .entry .entry-footer .share i {
   padding-left: 5px;
+}
+.blog .entry .entry-button {
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+.blog .entry .entry-button div {
+  float: right;
 }
 .blog .entry-single {
   margin-bottom: 60px;

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class FileUtils {
+public class FileUtilities {
 
     @Value("${file.directory}")
     private String fileDir;
@@ -31,18 +31,22 @@ public class FileUtils {
         return fileDir + Paths.get(part, fileName);
     }
 
-    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+    private String getUploadPath(String part) {
+        return fileDir + part;
+    }
+
+    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String part) throws IOException {
         List<UploadFile> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFiles.isEmpty()) {
-                storeFileResult.add(storeFile(multipartFile));
+                storeFileResult.add(storeFile(multipartFile, part));
             }
         }
 
         return storeFileResult;
     }
 
-    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
+    public UploadFile storeFile(MultipartFile multipartFile, String part) throws IOException {
 
         if (multipartFile.isEmpty()) {
             return null;
@@ -50,7 +54,8 @@ public class FileUtils {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+        verifyUploadPath(getUploadPath(part));
+        multipartFile.transferTo(new File(getFullPath(part, storeFileName)));
 
         return new UploadFile(originalFilename, storeFileName);
     }
@@ -61,12 +66,14 @@ public class FileUtils {
         return uuid + "." + ext;
     }
 
+
     private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
 
-    public static String fileNameGenerator(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+    public String createStoreFileNameMd5(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         MessageDigest mdMD5 = MessageDigest.getInstance("MD5");
         mdMD5.update(input.getBytes("UTF-8"));
@@ -80,6 +87,20 @@ public class FileUtils {
         }
 
         return hexMD5hash.toString();
+    }
+
+    private void verifyUploadPath(String path) {
+        if (!new File(path).exists()) {
+            try {
+                new File(path).mkdir();
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+        }
+    }
+
+    public File downloadFile(String filaName, String part) {
+        return new File(getFullPath(part, filaName));
     }
 
     public static MediaType getMediaType(String filename) {

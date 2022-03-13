@@ -4,6 +4,10 @@ spring:
       on-profile: develop
   session:
     store-type: jdbc
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
   jpa:
     properties:
       hibernate:

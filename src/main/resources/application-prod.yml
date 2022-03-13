@@ -4,6 +4,10 @@ spring:
       on-profile: production
   session:
     store-type: jdbc
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
   jpa:
     properties:
       hibernate:

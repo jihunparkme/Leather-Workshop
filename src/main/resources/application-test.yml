@@ -4,6 +4,10 @@ spring:
       on-profile: test
   session:
     store-type: jdbc
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
   sql:
     init:
       schema-locations: classpath:db/sql/schema-h2.sql
