@@ -5,6 +5,7 @@ import com.leather.workshop.domain.product.web.dto.ProductDto;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import com.leather.workshop.global.common.util.file.FileUtilities;
+import com.leather.workshop.global.common.util.file.PathConst;
 import com.leather.workshop.global.common.util.web.dto.UploadFile;
 import com.leather.workshop.global.config.security.dto.SessionUser;
 import lombok.Getter;
@@ -54,7 +55,7 @@ public class ProductService {
         List<ProductUploadFile> productUploadFileList = new ArrayList<>();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
-        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, "product");
+        UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
         ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
                 .uploadFileName(uploadFile.getUploadFileName())
                 .storeFileName(uploadFile.getStoreFileName())
@@ -63,7 +64,7 @@ public class ProductService {
 
         List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
         if (!formUploadFiles.isEmpty()) {
-            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, "product");
+            List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, PathConst.PRODUCT);
             productUploadFileList = uploadFiles.stream()
                     .map(up -> {
                         return ProductUploadFile.builder()
