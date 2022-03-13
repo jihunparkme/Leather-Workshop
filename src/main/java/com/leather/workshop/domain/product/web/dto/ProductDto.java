@@ -101,7 +101,7 @@ public class ProductDto {
         private String contents;
         @NotBlank
         private Long userId;
-        private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+        private Set<ProductUploadFile> productUploadFiles;
 
         public Product toEntity() {
             return Product.builder()
@@ -126,7 +126,7 @@ public class ProductDto {
         @NotBlank
         private String name;
         private String contents;
-        private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
+        private Set<ProductUploadFile> productUploadFiles;
 
         public Product toEntity() {
             return Product.builder()
