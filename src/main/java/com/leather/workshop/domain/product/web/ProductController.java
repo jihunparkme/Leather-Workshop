@@ -100,6 +100,12 @@ public class ProductController {
             return "product/product-add";
         }
 
+        if (form.getThumbnailFile().isEmpty()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            model.addAttribute("thumbnailFileError", "썸네일로 사용하실 파일을 첨부해주세요.");
+            return "product/product-add";
+        }
+
         Long id = null;
         try {
             id = productService.save(form, user);

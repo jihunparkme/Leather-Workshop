@@ -44,6 +44,9 @@
                             </div>
                             <input type="file" id="thumbnailFile" th:field="*{thumbnailFile}" th:errorclass="field-error" class="form-control" accept="image/gif, image/jpeg, image/png">
                             <div class="field-error" th:errors="*{thumbnailFile}">thumbnail error</div>
+                            <th:block th:if="${thumbnailFileError}">
+                                <div class="field-error" th:text="${thumbnailFileError}">thumbnail error</div>
+                            </th:block>
 
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="contents" th:text="Contents">contents</label>
