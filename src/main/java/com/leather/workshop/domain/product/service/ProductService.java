@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -60,36 +62,38 @@ public class ProductService {
                 .userId(user.getId())
                 .build();
 
-        Product entityProudct = productRepository.save(product);
+        List<ProductUploadFile> productUploadFiles = new ArrayList<>();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
         UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
         ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
-                .product(entityProudct)
+                .product(product)
                 .uploadFileName(uploadFile.getUploadFileName())
                 .storeFileName(uploadFile.getStoreFileName())
                 .thumbnailYn(BooleanFormatType.Y)
                 .build();
-        uploadFileRepository.save(productThumbnailFile);
+        productUploadFiles.add(productThumbnailFile);
 
         List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
         if (formUploadFiles != null && !formUploadFiles.isEmpty()) {
             List<UploadFile> uploadFiles = fileUtilities.storeFiles(formUploadFiles, PathConst.PRODUCT);
             uploadFiles.stream()
                     .map(up -> {
-                        ProductUploadFile file = ProductUploadFile.builder()
-                                .product(entityProudct)
+                        ProductUploadFile puf = ProductUploadFile.builder()
+                                .product(product)
                                 .uploadFileName(up.getUploadFileName())
                                 .storeFileName(up.getStoreFileName())
                                 .thumbnailYn(BooleanFormatType.N)
                                 .build();
 
-                        uploadFileRepository.save(file);
+                        productUploadFiles.add(puf);
                         return null;
                     });
         }
 
-        return entityProudct.getId();
+        product.setProductUploadFiles(new HashSet<>(productUploadFiles));
+
+        return productRepository.save(product).getId();
     }
 
 //    @Transactional

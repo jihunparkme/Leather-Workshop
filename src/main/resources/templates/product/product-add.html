@@ -28,7 +28,7 @@
                                 <label for="productCategory" th:text="Category">카테고리</label>
                             </div>
                             <select id="productCategory" th:field="*{productCategory}" class="form-select" style="width:200px;">
-                                <option value="">=== 카테고리 선택 ===</option>
+                                <option value="">== 카테고리 선택 ==</option>
                                 <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
                             <div class="field-error" th:errors="*{productCategory}">product category error</div>
