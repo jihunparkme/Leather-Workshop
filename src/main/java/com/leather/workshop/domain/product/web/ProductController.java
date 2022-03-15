@@ -119,6 +119,16 @@ public class ProductController {
         return "redirect:/product/{id}";
     }
 
+    @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String edit(@PathVariable Long id, Model model) {
+
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+
+        return "product/product-edit";
+    }
+
     @ResponseBody
     @GetMapping("/scroll/{category}")
     public ResponseEntity<PageResponse> scrollList(
