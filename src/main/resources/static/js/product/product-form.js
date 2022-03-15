@@ -24,7 +24,7 @@ function fnDelete(id) {
         }).done(function() {
             alert('공지사항이 삭제되었습니다.');
             window.location.href = '/product';
-        }).fail(function (error) {
+        }).fail(function () {
             alert('공지사항 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
         });
     }
