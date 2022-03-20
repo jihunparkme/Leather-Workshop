@@ -2,9 +2,7 @@ $(function () {
 
     activeCategory();
 
-    //Click category
     $("#portfolio-flters li").click(function (e) {
-
         if ($("#category").val() == $(this).text()) {
             return;
         }
@@ -47,4 +45,8 @@ function searchProductList(ctgy, page) {
     $("#category").val(ctgy);
     $("#page").val(page);
     $("#form").submit();
+}
+
+function goEdit(id) {
+    location.href = "/product/" + id + "/edit";
 }

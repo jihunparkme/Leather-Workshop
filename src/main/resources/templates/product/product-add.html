@@ -28,7 +28,7 @@
                                 <label for="productCategory" th:text="Category">카테고리</label>
                             </div>
                             <select id="productCategory" th:field="*{productCategory}" class="form-select" style="width:200px;">
-                                <option value="">=== 카테고리 선택 ===</option>
+                                <option value="">== 카테고리 선택 ==</option>
                                 <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
                             <div class="field-error" th:errors="*{productCategory}">product category error</div>
@@ -44,6 +44,9 @@
                             </div>
                             <input type="file" id="thumbnailFile" th:field="*{thumbnailFile}" th:errorclass="field-error" class="form-control" accept="image/gif, image/jpeg, image/png">
                             <div class="field-error" th:errors="*{thumbnailFile}">thumbnail error</div>
+                            <th:block th:if="${thumbnailFileError}">
+                                <div class="field-error" th:text="${thumbnailFileError}">thumbnail error</div>
+                            </th:block>
 
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="contents" th:text="Contents">contents</label>
@@ -80,7 +83,7 @@
             filebrowserUploadUrl: '/file/ckeditor/fileUpload/product',
             font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
             font_defaultLabel : "맑은 고딕/Malgun Gothic",
-            fontSize_defaultLabel : "12",
+            fontSize_defaultLabel : "16",
             skin : "office2013",
             language : "ko",
             removePlugins : 'exportpdf'

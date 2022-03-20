@@ -48,6 +48,10 @@ public class Product extends BaseTimeEntity {
 
     private LocalDateTime modifiedDateTime;
 
+    public void setProductUploadFiles(Set<ProductUploadFile> productUploadFiles) {
+        this.productUploadFiles = productUploadFiles;
+    }
+
     @Builder
     public Product(ProductCategory productCategory, String name, String contents, Long hits, BooleanFormatType deleteYn, Long userId, Set<ProductUploadFile> productUploadFiles) {
         this.productCategory = productCategory;

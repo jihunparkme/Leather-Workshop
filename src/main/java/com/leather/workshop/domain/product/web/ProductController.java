@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -100,6 +101,12 @@ public class ProductController {
             return "product/product-add";
         }
 
+        if (form.getThumbnailFile().isEmpty()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            model.addAttribute("thumbnailFileError", "썸네일로 사용하실 파일을 첨부해주세요.");
+            return "product/product-add";
+        }
+
         Long id = null;
         try {
             id = productService.save(form, user);
@@ -111,6 +118,24 @@ public class ProductController {
         redirectAttributes.addAttribute("status", true);
 
         return "redirect:/product/{id}";
+    }
+
+    @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String edit(@PathVariable Long id, Model model) {
+
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+
+        return "product/product-edit";
+    }
+
+    @ResponseBody
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public Long delete(@PathVariable Long id) {
+        productService.delete(id);
+        return id;
     }
 
     @ResponseBody

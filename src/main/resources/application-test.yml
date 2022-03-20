@@ -21,20 +21,20 @@ spring:
     username: sa
     password: ''
   jpa:
-    show-sql: 'true'
+    show-sql: true
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: 'true'
+        format_sql: true
   h2:
     console:
-      enabled: 'true'
+      enabled: true
   devtools:
     restart:
       enabled: true
     livereload:
-      enabled: 'true'
+      enabled: true
   messages:
     basename: messages,errors
 logging:
@@ -43,8 +43,7 @@ logging:
       hibernate:
         type:
           descriptor:
-            sql:
-              BasicBinder: TRACE
+            sql: TRACE
         SQL: DEBUG
 
 file:

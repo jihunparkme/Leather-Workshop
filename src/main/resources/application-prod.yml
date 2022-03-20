@@ -12,17 +12,17 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        format_sql: 'true'
-    show-sql: 'true'
+        format_sql: true
+    show-sql: true
     hibernate:
       ddl-auto: none
   thymeleaf:
-    cache: 'false'
+    cache: false
   devtools:
     restart:
       enabled: true
     livereload:
-      enabled: 'true'
+      enabled: true
   messages:
     basename: messages,errors
 
