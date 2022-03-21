@@ -1,13 +1,26 @@
 function saveProduct() {
 
-    if (!confirm("저장하시겠습니까?")) {
+    if (!confirm("등록하시겠습니까?")) {
         return;
     }
 
-    let formData = new FormData($("#form")[0]);
+    submit("form");
+}
+
+function editProduct() {
+
+    if (!confirm("수정하시겠습니까?")) {
+        return;
+    }
+
+    submit("product");
+}
+
+function submit(id) {
+    let formData = new FormData($("#" + id)[0]);
 
     formData.append("contents", CKEDITOR.instances.contents.getData());
-    $("#form").submit();
+    $("#" + id).submit();
 }
 
 function fnCancel(id) {
@@ -30,9 +43,17 @@ function fnDelete(id) {
     }
 }
 
+function deleteThumbnail() {
+    $("#thumbnailDiv").empty();
+    $("#isDeleteThumbnail").val("true");
+}
+
 $(function () {
     $("#btnSave").click(function () {
        saveProduct();
     });
 
+    $("#btnEdit").click(function () {
+        editProduct();
+    });
 });

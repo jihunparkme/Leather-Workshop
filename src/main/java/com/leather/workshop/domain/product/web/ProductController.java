@@ -90,7 +90,7 @@ public class ProductController {
     
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public String add(@Validated @ModelAttribute("product") ProductDto.Request form,
+    public String add(@Validated @ModelAttribute("product") ProductDto.SaveRequest form,
                       BindingResult bindingResult,
                       @LoginUser SessionUser user,
                       RedirectAttributes redirectAttributes,
@@ -128,6 +128,38 @@ public class ProductController {
         model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
 
         return "product/product-edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String edit(@PathVariable Long id,
+                       @Validated @ModelAttribute("product") ProductDto.UpdateRequest product,
+                       BindingResult bindingResult,
+                       @LoginUser SessionUser user,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            return "product/product-edit";
+        }
+
+        if (product.getIsDeleteThumbnail() && product.getThumbnailFile().isEmpty()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            model.addAttribute("thumbnailFileError", "썸네일로 사용하실 파일을 첨부해주세요.");
+            return "product/product-edit";
+        }
+
+        try {
+            productService.edit(id, product, user);
+        } catch (IOException e) {
+            model.addAttribute("error", new AlertMessage("상품 등록에 실패하였습니다.\n관리자에게 문의해 주세요."));
+            return "/common/util/message-redirect";
+        }
+
+        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/product/{id}";
     }
 
     @ResponseBody
