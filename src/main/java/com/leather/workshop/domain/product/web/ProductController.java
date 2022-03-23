@@ -3,7 +3,6 @@ package com.leather.workshop.domain.product.web;
 import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.service.ProductService;
 import com.leather.workshop.domain.product.web.dto.ProductDto;
-import com.leather.workshop.global.common.response.PageResponse;
 import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.common.util.web.dto.AlertMessage;
 import com.leather.workshop.global.config.security.LoginUser;
@@ -12,11 +11,7 @@ import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor

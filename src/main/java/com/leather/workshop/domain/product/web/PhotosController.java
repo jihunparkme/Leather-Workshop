@@ -38,7 +38,7 @@ public class PhotosController {
     }
 
     @ResponseBody
-    @GetMapping("/scroll/{category}")
+    @GetMapping("/list/{category}")
     public ResponseEntity<PageResponse> scrollList(
             @PathVariable String category,
             @PageableDefault(page = 0, size = 10) Pageable pageable,
