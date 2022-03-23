@@ -169,29 +169,4 @@ public class ProductController {
         productService.delete(id);
         return id;
     }
-
-    @ResponseBody
-    @GetMapping("/scroll/{category}")
-    public ResponseEntity<PageResponse> scrollList(
-            @PathVariable String category,
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
-            Model model) {
-
-        Page<Product> productListPage = productService.findAllSortByIdDescPaging(category.toUpperCase(), pageable.getPageNumber(), pageable.getPageSize());
-        List<Object> resultList = productListPage.getContent().stream()
-                                                            .map(product -> new ProductDto.Response(product))
-                                                            .collect(Collectors.toList());
-
-        PageResponse pageResponse = PageResponse.builder()
-                .code(HttpStatus.OK.value())
-                .httpStatus(HttpStatus.OK)
-                .message("성공적으로 조회되었습니다.")
-                .count(resultList.size())
-                .totalElements(productListPage.getTotalElements())
-                .totalPages(productListPage.getTotalPages())
-                .result(resultList)
-                .build();
-
-        return new ResponseEntity<>(pageResponse, pageResponse.getHttpStatus());
-    }
 }
