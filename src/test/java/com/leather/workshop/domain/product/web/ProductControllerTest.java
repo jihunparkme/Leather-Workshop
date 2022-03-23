@@ -139,15 +139,45 @@ class ProductControllerTest {
     @WithMockUser(roles = "ADMIN")
     void 상품_수정() throws Exception {
 
+        String fileName = "portfolio-7";
+        String contentType = "jpg";
+        MockMultipartFile mockMultipartFile = getMockMultipartFile(fileName, contentType);
+
+        ResultActions perform = mockMvc.perform(multipart("/product/1/edit")
+                .file("thumbnailFile", mockMultipartFile.getBytes())
+                .session(session)
+                .param("id", "1")
+                .param("isDeleteThumbnail", "false")
+                .param("productCategory", "1")
+                .param("name", "상품 수정")
+                .param("contents", "내용 수정"));
+
+        perform
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/product/{id}"))
+                .andExpect(redirectedUrl("/product/1?status=true"));
     }
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void 상품_삭제() {
+    void 상품_삭제() throws Exception {
+        ResultActions perform = mockMvc.perform(delete("/product/1"));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(content().string("1"));
     }
 
     @Test
-    void 무한_스크롤링() {
+    void 무한_스크롤링() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/product/scroll/card"));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("성공적으로 조회되었습니다."))
+                .andExpect(jsonPath("$.count").value("4"))
+                .andExpect(jsonPath("$.totalElements").value("4"))
+                .andExpect(jsonPath("$.totalPages").value("1"));
     }
 
     private MockMultipartFile getMockMultipartFile(String fileName, String contentType) throws IOException {

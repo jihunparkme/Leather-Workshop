@@ -177,7 +177,7 @@ public class ProductController {
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
 
-        Page<Product> productListPage = productService.findAllSortByIdDescPaging(category, pageable.getPageNumber(), pageable.getPageSize());
+        Page<Product> productListPage = productService.findAllSortByIdDescPaging(category.toUpperCase(), pageable.getPageNumber(), pageable.getPageSize());
         List<Object> resultList = productListPage.getContent().stream()
                                                             .map(product -> new ProductDto.Response(product))
                                                             .collect(Collectors.toList());
@@ -186,7 +186,7 @@ public class ProductController {
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
                 .message("성공적으로 조회되었습니다.")
-                .count(productListPage.getSize())
+                .count(resultList.size())
                 .totalElements(productListPage.getTotalElements())
                 .totalPages(productListPage.getTotalPages())
                 .result(resultList)
