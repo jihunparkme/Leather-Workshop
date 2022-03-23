@@ -168,18 +168,6 @@ class ProductControllerTest {
                 .andExpect(content().string("1"));
     }
 
-    @Test
-    void 무한_스크롤링() throws Exception {
-        ResultActions perform = mockMvc.perform(get("/product/scroll/card"));
-
-        perform
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("성공적으로 조회되었습니다."))
-                .andExpect(jsonPath("$.count").value("4"))
-                .andExpect(jsonPath("$.totalElements").value("4"))
-                .andExpect(jsonPath("$.totalPages").value("1"));
-    }
-
     private MockMultipartFile getMockMultipartFile(String fileName, String contentType) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(new File(String.valueOf(Paths.get(fileDir, PathConst.PRODUCT, fileName +  "." + contentType))));
         return new MockMultipartFile(fileName, fileName + "." + contentType, contentType, fileInputStream);
