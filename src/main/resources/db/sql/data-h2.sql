@@ -133,7 +133,18 @@ insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, delet
 values (3, '스탠드', '스탠드입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
 
 insert into PRODUCT (product_category_id, name, contents, hits, delete_yn, deleted_date_time, created_date_time, user_id, modified_date_time)
-values (3, '손목시계', '손목시계입니다.', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+values (3, '손목시계', '<p>ㅇㅇㅇ</p>
+
+<p>ㅇㅇ</p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=15573399-24c1-4faa-98d8-8d83b73f7042.png" style="height:128px; width:438px" /></p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=e0f460f6-d20f-4678-8e8a-f99155d861f5.png" style="height:128px; width:438px" /></p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=eacfe317-6958-457c-b4b9-76f3ab9f8f0c.png" style="height:128px; width:438px" /></p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=15573399-24c1-4faa-98d8-8d83b73f7042.png" style="height:128px; width:438px" /></p>
+', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
 
 
 
