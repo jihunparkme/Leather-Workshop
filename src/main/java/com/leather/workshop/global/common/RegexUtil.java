@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class RegexUtil {
 
-    public static final String FILE_NAME_EXPRESSION = "(?<=fileName=)(.*?)(?=\" style=)";
+    public static final String IMG_SRC_EXPRESSION = "(?<=src=\")(.*?)(?=\" style=)";
 
     public static List<String> findAllRegEx(String contents, String regEx){
 

@@ -30,7 +30,7 @@ public class PhotosDto {
                     .map(productUploadFile -> {
                         return productUploadFile.getStoreFileName();
                     }).orElse(null);
-            this.contentsFileNames = RegexUtil.findAllRegEx(entity.getContents(), RegexUtil.FILE_NAME_EXPRESSION);
+            this.contentsFileNames = RegexUtil.findAllRegEx(entity.getContents(), RegexUtil.IMG_SRC_EXPRESSION);
         }
     }
 }

@@ -60,25 +60,44 @@ function getItem(data) {
     return item;
 }
 
-function getThumbnail(data) {
+function getContentsImage(thumbnailFileName) {
     let image = new Image();
     image.className = 'thumbnail article-list__item__image--loading';
     image.alt = '';
-
-    let uploadFiles = data.productUploadFiles;
-    let thumbnail;
-    for (let i = 0; i < uploadFiles.length; i++) {
-        if (uploadFiles[i].thumbnailYn == "Y") {
-            thumbnail = uploadFiles[i];
-            break;
-        }
-    }
-
-    image.src = '/file/img/product/' + thumbnail.storeFileName;
+    image.src = thumbnailFileName;
     image.onload = function () {
         image.classList.remove('article-list__item__image--loading');
     };
     return image;
+}
+
+function getThumbnail(thumbnailFileName) {
+    let image = new Image();
+    image.className = 'thumbnail article-list__item__image--loading';
+    image.alt = '';
+    image.src = '/file/img/product/' + thumbnailFileName;
+    image.onload = function () {
+        image.classList.remove('article-list__item__image--loading');
+    };
+    return image;
+}
+
+function getArticleContents(data, contentsFileName) {
+
+    let itemDiv = document.createElement('div');
+    itemDiv.className = 'col-lg-4 col-md-6 portfolio-item ' + data.productCategory.title;
+
+    let wrapDiv = document.createElement('div');
+    wrapDiv.className = 'portfolio-wrap child-center';
+
+    let image = getContentsImage(contentsFileName);
+    let item = getItem(data);
+    wrapDiv.appendChild(image);
+    wrapDiv.appendChild(item);
+
+    itemDiv.appendChild(wrapDiv);
+
+    return itemDiv;
 }
 
 function getArticle(data) {
@@ -89,7 +108,7 @@ function getArticle(data) {
     let wrapDiv = document.createElement('div');
     wrapDiv.className = 'portfolio-wrap child-center';
 
-    let image = getThumbnail(data);
+    let image = getThumbnail(data.thumbnailFileName);
     let item = getItem(data);
     wrapDiv.appendChild(image);
     wrapDiv.appendChild(item);
@@ -117,8 +136,14 @@ function addPage(page) {
 
         let articleList = document.getElementById('article-list');
         for (let i = 0; i < productList.length; i++) {
-            let article = getArticle(productList[i]);
+            let product = productList[i];
+            let article = getArticle(product);
             articleList.appendChild(article);
+
+            for (let j = 0; j < product.contentsFileNames.length; j++) {
+                let article = getArticleContents(product, product.contentsFileNames[j]);
+                articleList.appendChild(article);
+            }
         }
     });
 }
@@ -127,9 +152,8 @@ window.onscroll = function () {
     if ((getScrollTop() + 300) < getDocumentHeight() - window.innerHeight) return;
     // 스크롤이 페이지 하단에 도달할 경우 새 페이지 로드
     if (totalPage == page) {
-        console.log("stop");
         return;
     }
-    console.log("gogo");
+
     addPage(page++);
 };
