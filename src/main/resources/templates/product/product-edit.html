@@ -21,15 +21,18 @@
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single">
-                        <form id="form" enctype="multipart/form-data" th:object="${product}" th:action="add" method="post">
-                            <h2 class="entry-view-title">상품 등록</h2>
+                        <form id="product" enctype="multipart/form-data" th:object="${product}" th:action="edit" method="post">
+                            <input type="hidden" id="isDeleteThumbnail" name="isDeleteThumbnail" value="false">
+                            <input type="hidden" name="id" th:value="*{id}">
+
+                            <h2 class="entry-view-title">상품 수정</h2>
 
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="productCategory" th:text="Category">카테고리</label>
                             </div>
-                            <select id="productCategory" th:field="*{productCategory}" class="form-select" style="width:200px;">
+                            <select id="productCategory" name="productCategory" class="form-select" style="width:200px;">
                                 <option value="">== 카테고리 선택 ==</option>
-                                <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.title}"></option>
+                                <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.title}" th:selected="${#strings.equals(category.title, product.productCategory.title)}"></option>
                             </select>
                             <div class="field-error" th:errors="*{productCategory}">product category error</div>
 
@@ -48,6 +51,13 @@
                                 <div class="field-error" th:text="${thumbnailFileError}">thumbnail error</div>
                             </th:block>
 
+                            <th:block th:if="${#strings.isEmpty(thumbnailFileError)}">
+                                <div id="thumbnailDiv" style="margin-top: 25px; position : relative;">
+                                    <img th:src="@{'/file/img/product/' + *{thumbnailFile?.storeFileName}}" width="200">
+                                    <button style="position:absolute; bottom:0; margin-left: 10px;" onclick="deleteThumbnail()" type="button" class="btn btn-danger btn-xs">X</button>
+                                </div>
+                            </th:block>
+
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="contents" th:text="Contents">contents</label>
                             </div>
@@ -56,7 +66,7 @@
 
                             <div sec:authorize="hasRole('ROLE_ADMIN')" class="entry-button">
                                 <div>
-                                    <button type="submit" class="btn btn-outline-primary">수정</button>
+                                    <button type="button" id="btnEdit" class="btn btn-outline-primary">수정</button>
                                     <button type="button" th:onclick="'fnDelete(' + *{id} + ')'" class="btn btn-outline-danger">삭제</button>
                                     <button type="button" th:onclick="'fnCancel(' + *{id} + ')'" class="btn btn-outline-secondary">취소</button>
                                 </div>

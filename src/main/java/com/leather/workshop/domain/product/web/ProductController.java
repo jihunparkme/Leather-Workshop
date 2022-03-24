@@ -3,7 +3,6 @@ package com.leather.workshop.domain.product.web;
 import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.service.ProductService;
 import com.leather.workshop.domain.product.web.dto.ProductDto;
-import com.leather.workshop.global.common.response.PageResponse;
 import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.common.util.web.dto.AlertMessage;
 import com.leather.workshop.global.config.security.LoginUser;
@@ -12,11 +11,7 @@ import com.leather.workshop.global.config.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -90,7 +83,7 @@ public class ProductController {
     
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public String add(@Validated @ModelAttribute("product") ProductDto.Request form,
+    public String add(@Validated @ModelAttribute("product") ProductDto.SaveRequest form,
                       BindingResult bindingResult,
                       @LoginUser SessionUser user,
                       RedirectAttributes redirectAttributes,
@@ -130,36 +123,43 @@ public class ProductController {
         return "product/product-edit";
     }
 
+    @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String edit(@PathVariable Long id,
+                       @Validated @ModelAttribute("product") ProductDto.UpdateRequest product,
+                       BindingResult bindingResult,
+                       @LoginUser SessionUser user,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            return "product/product-edit";
+        }
+
+        if (product.getIsDeleteThumbnail() && product.getThumbnailFile().isEmpty()) {
+            model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
+            model.addAttribute("thumbnailFileError", "썸네일로 사용하실 파일을 첨부해주세요.");
+            return "product/product-edit";
+        }
+
+        try {
+            productService.edit(id, product, user);
+        } catch (IOException e) {
+            model.addAttribute("error", new AlertMessage("상품 등록에 실패하였습니다.\n관리자에게 문의해 주세요."));
+            return "/common/util/message-redirect";
+        }
+
+        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/product/{id}";
+    }
+
     @ResponseBody
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public Long delete(@PathVariable Long id) {
         productService.delete(id);
         return id;
-    }
-
-    @ResponseBody
-    @GetMapping("/scroll/{category}")
-    public ResponseEntity<PageResponse> scrollList(
-            @PathVariable String category,
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
-            Model model) {
-
-        Page<Product> productListPage = productService.findAllSortByIdDescPaging(category, pageable.getPageNumber(), pageable.getPageSize());
-        List<Object> resultList = productListPage.getContent().stream()
-                                                            .map(product -> new ProductDto.Response(product))
-                                                            .collect(Collectors.toList());
-
-        PageResponse pageResponse = PageResponse.builder()
-                .code(HttpStatus.OK.value())
-                .httpStatus(HttpStatus.OK)
-                .message("성공적으로 조회되었습니다.")
-                .count(productListPage.getSize())
-                .totalElements(productListPage.getTotalElements())
-                .totalPages(productListPage.getTotalPages())
-                .result(resultList)
-                .build();
-
-        return new ResponseEntity<>(pageResponse, pageResponse.getHttpStatus());
     }
 }

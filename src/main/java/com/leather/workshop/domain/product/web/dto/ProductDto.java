@@ -1,6 +1,7 @@
 package com.leather.workshop.domain.product.web.dto;
 
 import com.leather.workshop.domain.product.domain.Product;
+import com.leather.workshop.domain.product.domain.ProductCategory;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,7 +55,7 @@ public class ProductDto {
     }
 
     @Data
-    public static class Request {
+    public static class SaveRequest {
         @NotNull
         private Long productCategory;
         @NotBlank
@@ -62,6 +63,20 @@ public class ProductDto {
         private String contents;
         @NotNull
         private MultipartFile thumbnailFile;
+        private List<MultipartFile> productUploadFiles;
+    }
+
+    @Data
+    public class UpdateRequest {
+        @NotNull
+        private Long id;
+        @NotNull
+        private ProductCategory productCategory;
+        @NotBlank
+        private String name;
+        private String contents;
+        private MultipartFile thumbnailFile;
+        private Boolean isDeleteThumbnail;
         private List<MultipartFile> productUploadFiles;
     }
 }

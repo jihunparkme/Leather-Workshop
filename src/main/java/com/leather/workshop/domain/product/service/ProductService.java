@@ -49,7 +49,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long save(ProductDto.Request form, SessionUser user) throws IOException {
+    public Long save(ProductDto.SaveRequest form, SessionUser user) throws IOException {
 
         ProductCategory category = categoryRepository.findById(form.getProductCategory()).get();
 
@@ -96,15 +96,18 @@ public class ProductService {
         return productRepository.save(product).getId();
     }
 
-//    @Transactional
-//    public Long update(Long id, ProductDto.SaveRequest productRequest) {
-//        Product product = getProduct(id);
-//
-//        product.update(productRequest.getProductCategory(), productRequest.getName(),
-//                productRequest.getContents(), productRequest.getProductUploadFiles());
-//
-//        return id;
-//    }
+    @Transactional
+    public void edit(Long id, ProductDto.UpdateRequest form, SessionUser user) throws IOException {
+
+        Product product = productRepository.findById(id).get();
+
+        checkNewThumbnail(id, form, product);
+
+        List<ProductUploadFile> productUploadFiles = new ArrayList<>();
+        product.update(form.getProductCategory(), form.getName(), form.getContents(), new HashSet<>(productUploadFiles));
+
+        productRepository.save(product).getId();
+    }
 
     @Transactional
     public void delete(Long id) {
@@ -112,6 +115,25 @@ public class ProductService {
         product.delete();
 
         productRepository.save(product);
+    }
+
+    private void checkNewThumbnail(Long id, ProductDto.UpdateRequest form, Product product) throws IOException {
+        if (!form.getThumbnailFile().getOriginalFilename().isEmpty()) {
+            ProductUploadFile productUploadFile = uploadFileRepository.findProductThumbnail(id).get().get(0);
+
+            if (form.getThumbnailFile().getOriginalFilename() != productUploadFile.getUploadFileName()) {
+                uploadFileRepository.delete(productUploadFile);
+
+                UploadFile uploadFile = fileUtilities.storeFile(form.getThumbnailFile(), PathConst.PRODUCT);
+                ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
+                        .product(product)
+                        .uploadFileName(uploadFile.getUploadFileName())
+                        .storeFileName(uploadFile.getStoreFileName())
+                        .thumbnailYn(BooleanFormatType.Y)
+                        .build();
+                uploadFileRepository.save(productThumbnailFile);
+            }
+        }
     }
 
     private Product getProduct(Long id) {
