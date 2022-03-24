@@ -2,7 +2,7 @@ package com.leather.workshop.domain.product.web;
 
 import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.service.ProductService;
-import com.leather.workshop.domain.product.web.dto.ProductDto;
+import com.leather.workshop.domain.product.web.dto.PhotosDto;
 import com.leather.workshop.global.common.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +27,7 @@ public class PhotosController {
     private final ProductService productService;
 
     @GetMapping("")
-    public String list(
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
-            Model model) {
+    public String list(Model model) {
 
         model.addAttribute("categoryList", productService.getCategoryRepository().findAllOrderByTitle());
 
@@ -41,12 +38,11 @@ public class PhotosController {
     @GetMapping("/list/{category}")
     public ResponseEntity<PageResponse> scrollList(
             @PathVariable String category,
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
-            Model model) {
+            @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
         Page<Product> productListPage = productService.findAllSortByIdDescPaging(category.toUpperCase(), pageable.getPageNumber(), pageable.getPageSize());
         List<Object> resultList = productListPage.getContent().stream()
-                .map(product -> new ProductDto.Response(product))
+                .map(product -> new PhotosDto.Response(product))
                 .collect(Collectors.toList());
 
         PageResponse pageResponse = PageResponse.builder()
