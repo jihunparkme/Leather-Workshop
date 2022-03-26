@@ -22,7 +22,7 @@ class RegexUtilTest {
                 "\n" +
                 "<p><img alt=\"\" src=\"/file/ckeditor/fileDownload/product?fileName=15573399-24c1-4faa-98d8-8d83b73f7042.png\" style=\"height:128px; width:438px\" /></p>";
 
-        List<String> result = RegexUtil.findAllRegEx(contents, RegexUtil.FILE_NAME_EXPRESSION);
+        List<String> result = RegexUtil.findAllRegEx(contents, RegexUtil.IMG_SRC_EXPRESSION);
         assertThat(result.size()).isEqualTo(4);
     }
 }
