@@ -10,14 +10,19 @@ public class ContactDto {
 
     @Data
     @NoArgsConstructor
-    public class ContactRequest {
+    public class Request {
+
         @NotBlank
         private String name;
+
         private String email;
+
         @NotBlank
         private String phoneNumber;
+
         @NotBlank
         private String title;
+
         @NotBlank
         private String contents;
 
