@@ -218,3 +218,39 @@ ALTER TABLE `PRODUCT_UPLOAD_FILE`
                                   `id` -- 상품 ID
                 )
             ON DELETE SET NULL ON UPDATE NO ACTION;
+
+
+
+
+
+
+
+
+
+-- 문의하기
+DROP TABLE IF EXISTS `CONTACT` RESTRICT;
+
+-- 문의하기
+CREATE TABLE `CONTACT` (
+                              `id`                 BIGINT         NOT NULL, -- 문의하기 ID
+                              `name`               VARCHAR(30)    NOT NULL, -- 이름
+                              `email`              VARCHAR(50)    NULL,     -- 이메일
+                              `phone_number`       VARCHAR(20)    NOT NULL, -- 전화번호
+                              `title`              VARCHAR(100)   NOT NULL, -- 제목
+                              `contents`           VARCHAR(20000) NOT NULL, -- 내용
+                              `created_date_time`  DATETIME       NOT NULL, -- 등록일
+                              `modified_date_time` DATETIME       NULL      -- 수정일
+);
+
+-- 문의하기
+ALTER TABLE `CONTACT`
+    ADD CONSTRAINT `PK_CONTACT` -- 문의하기 기본키
+        PRIMARY KEY (
+                     `id` -- 문의하기 ID
+            );
+
+ALTER TABLE `CONTACT`
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `CONTACT`
+    AUTO_INCREMENT = 1;

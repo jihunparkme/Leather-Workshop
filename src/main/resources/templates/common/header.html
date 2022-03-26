@@ -15,7 +15,7 @@
                 <li><a href="/photos" th:classappend="${title eq 'photos' ? 'active' : ''}">Photos</a></li>
                 <li><a href="/notice" th:classappend="${title eq 'notice' ? 'active' : ''}">Notice</a></li>
                 <li><a href="/review" th:classappend="${title eq 'review' ? 'active' : ''}">Review</a></li>
-                <li><a href="/contact-us" th:classappend="${title eq 'contact-us' ? 'active' : ''}">Contact Us</a></li>
+                <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>
                 <div sec:authorize="isAnonymous()">
                     <li><a th:href="@{/login/user}" class="getstarted">로그인</a></li>
                 </div>

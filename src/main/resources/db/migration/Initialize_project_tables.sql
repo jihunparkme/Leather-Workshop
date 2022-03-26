@@ -266,14 +266,14 @@ ALTER TABLE `PRODUCT`
 
 -----------------------------------------------------------------------
 -- 문의하기
-ALTER TABLE `CONTACT_US`
+ALTER TABLE `CONTACT`
 DROP PRIMARY KEY; -- 문의하기 기본키
 
 -- 문의하기
-DROP TABLE IF EXISTS `CONTACT_US` RESTRICT;
+DROP TABLE IF EXISTS `CONTACT` RESTRICT;
 
 -- 문의하기
-CREATE TABLE `CONTACT_US` (
+CREATE TABLE `CONTACT` (
                               `id`                 BIGINT         NOT NULL, -- 문의하기 ID
                               `name`               VARCHAR(30)    NOT NULL, -- 이름
                               `email`              VARCHAR(50)    NULL,     -- 이메일
@@ -285,15 +285,15 @@ CREATE TABLE `CONTACT_US` (
 );
 
 -- 문의하기
-ALTER TABLE `CONTACT_US`
-    ADD CONSTRAINT `PK_CONTACT_US` -- 문의하기 기본키
+ALTER TABLE `CONTACT`
+    ADD CONSTRAINT `PK_CONTACT` -- 문의하기 기본키
         PRIMARY KEY (
                      `id` -- 문의하기 ID
             );
 
-ALTER TABLE `CONTACT_US`
+ALTER TABLE `CONTACT`
     MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `CONTACT_US`
+ALTER TABLE `CONTACT`
     AUTO_INCREMENT = 1;
 -----------------------------------------------------------------------
