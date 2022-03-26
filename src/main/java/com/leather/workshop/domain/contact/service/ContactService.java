@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,20 +24,23 @@ public class ContactService {
 
     @Transactional
     public Long save(ContactDto.Request contact) {
+
         sendNotificationEmailToAdmin(contact);
+
         return contactRepository.save(contact.toEntity()).getId();
     }
 
     private void sendNotificationEmailToAdmin(ContactDto.Request request) {
-        StringBuffer mailContents = new StringBuffer();
-        mailContents.append("<h4>이름</h4>");
-        mailContents.append("<p>").append(request.getName()).append("</p><br/>");
-        mailContents.append("<h4>휴대폰 번호</h4>");
-        mailContents.append("<p>").append(request.getPhoneNumber()).append("</p><br/>");
-        mailContents.append("<h4>제목</h4>");
-        mailContents.append("<p>").append(request.getTitle()).append("</p><br/>");
-        mailContents.append("<h4>내용</h4>");
-        mailContents.append("<p>").append(request.getContents().replaceAll("(\r\n|\n)", "<br/>")).append("</p><br/>");
-        mailUtilService.sendMail(new MailTo("문의가 등록되었습니다.", mailContents.toString(), Optional.empty()));
+
+        String title = "문의가 등록되었습니다.";
+
+        Map<String, String> contentsMap = new LinkedHashMap<>();
+        contentsMap.put("이름", request.getName());
+        contentsMap.put("휴대폰 번호", request.getPhoneNumber());
+        contentsMap.put("이메일", request.getEmail());
+        contentsMap.put("제목", request.getTitle());
+        contentsMap.put("내용", request.getContents().replaceAll("(\r\n|\n)", "<br/>"));
+
+        mailUtilService.sendMail(new MailTo(title, mailUtilService.getContents(title, contentsMap), Optional.empty()));
     }
 }
