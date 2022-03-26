@@ -5,6 +5,7 @@ import com.leather.workshop.domain.notice.service.NoticeService;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
 import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
 import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.config.security.LoginUser;
 import com.leather.workshop.global.config.security.dto.SessionUser;
@@ -52,7 +53,8 @@ public class NoticeController {
 
         String sessionValue = id + "/" + ClientIpAddressUtil.getClientIP(request);
         if (viewNotice == null || !sessionValue.equals(viewNotice)) {
-            Notice notice = noticeService.getNoticeRepository().findById(id).get();
+            Notice notice = noticeService.getNoticeRepository().findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
             notice.countHits();
             noticeService.getNoticeRepository().save(notice);
         }

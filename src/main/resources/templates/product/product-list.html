@@ -56,6 +56,14 @@
                 </div>
             </div>
 
+            <th:block th:if="${productListPage.totalElements} == 0">
+                <article class="entry" style="margin-top: 30px; text-align: center;">
+                    <p class="entry-title" style="margin-bottom: 10px; font-weight: normal;">
+                        등록된 상품이 없습니다.
+                    </p>
+                </article>
+            </th:block>
+
             <div class="paging-div">
                 <ul class="pagination" id="pagination"></ul>
             </div>

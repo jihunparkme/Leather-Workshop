@@ -17,7 +17,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -79,11 +81,13 @@ public class ReviewService {
     }
 
     private void sendNotificationEmailToAdmin(ReviewDto.Request request) {
-        StringBuffer mailContents = new StringBuffer();
-        mailContents.append("<h4>작성자</h4>");
-        mailContents.append("<p>").append(request.getNickname()).append("</p><br/>");
-        mailContents.append("<h4>내용</h4>");
-        mailContents.append("<p>").append(request.getContents().replaceAll("(\r\n|\n)", "<br/>")).append("</p><br/>");
-        mailUtilService.sendMail(new MailTo("리뷰가 등록되었습니다.", mailContents.toString(), Optional.empty()));
+
+        String title = "리뷰가 등록되었습니다.";
+
+        Map<String, String> contentsMap = new LinkedHashMap<>();
+        contentsMap.put("작성자", request.getNickname());
+        contentsMap.put("내용", request.getContents().replaceAll("(\r\n|\n)", "<br/>"));
+
+        mailUtilService.sendMail(new MailTo(title, mailUtilService.getContents(title, contentsMap), Optional.empty()));
     }
 }

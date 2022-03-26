@@ -130,7 +130,9 @@ function addPage(page) {
     }).done(function (result) {
         totalPage = result.totalPages;
         let productList = result.result;
+        $('#noData').css('display', 'none');
         if (productList.length == 0) {
+            $('#noData').css('display', 'block');
             return;
         }
 

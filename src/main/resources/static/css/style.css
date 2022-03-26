@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
   background: white;
   transition: all 0.5s;
   z-index: 997;
-  padding: 7px 0;
+  padding: 15px 0;
 }
 
 #header.header-scrolled {
@@ -1288,14 +1288,14 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.loading {
   display: none;
   background: #fff;
   text-align: center;
   padding: 15px;
 }
 
-.contact .php-email-form .loading:before {
+.loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1327,7 +1327,7 @@ section {
   padding: 10px 12px;
 }
 
-.contact .php-email-form button[type="submit"] {
+.contact .php-email-form button {
   background: #5D432C;
   border: 0;
   padding: 10px 24px;
@@ -1336,7 +1336,7 @@ section {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type="submit"]:hover {
+.contact .php-email-form button:hover {
   background: #e24d55;
 }
 
@@ -1564,7 +1564,7 @@ section {
 }
 
 .notice .entry-single {
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 }
 
 .notice .notice-author {
@@ -2053,7 +2053,7 @@ section {
   float: right;
 }
 .blog .entry-single {
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 }
 .blog .blog-author {
   padding: 20px;
@@ -2335,7 +2335,7 @@ section {
 
 #footer .footer-top {
   background: #515d6a;
-  padding: 15px 0 0px 0;
+  padding: 20px 0 20px 0;
 }
 
 #footer .footer-top .footer-info {
@@ -2478,6 +2478,11 @@ section {
 
 #footer .credits a:hover {
   color: white;
+}
+
+#footer .footer-bottom {
+  background: #4a5562;
+  padding: 0px 0 10px 0;
 }
 
 /*--------------------------------------------------------------
