@@ -3,6 +3,7 @@ package com.leather.workshop.domain.product.web;
 import com.leather.workshop.domain.product.domain.Product;
 import com.leather.workshop.domain.product.service.ProductService;
 import com.leather.workshop.domain.product.web.dto.ProductDto;
+import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.common.util.web.dto.AlertMessage;
 import com.leather.workshop.global.config.security.LoginUser;
@@ -57,7 +58,8 @@ public class ProductController {
 
         String sessionValue = id + "/" + ClientIpAddressUtil.getClientIP(request);
         if (viewProduct == null || !sessionValue.equals(viewProduct)) {
-            Product product = productService.getProductRepository().findById(id).get();
+            Product product = productService.getProductRepository().findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 상품이이 존재하지 않습니다. id=" + id));
             product.countHits();
             productService.getProductRepository().save(product);
         }
