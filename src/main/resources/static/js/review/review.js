@@ -1,4 +1,7 @@
 $(function() {
+    $("#btnSave").click(function () {
+        btnSave();
+    });
 });
 
 function btnPageNumber(_this) {
@@ -12,6 +15,10 @@ function searchReviewList(page) {
 
     $("#page").val(page);
     $("#form").submit();
+}
+
+function btnSave() {
+    $(".loading").addClass('d-block');
 }
 
 function btnEdit(id) {

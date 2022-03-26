@@ -42,9 +42,13 @@
 
                             <div class="entry-button">
                                 <div sec:authorize="isAuthenticated()">
-                                    <button type="submit" class="btn btn-outline-primary">등록</button>
+                                    <button type="submit" id="btnSave" class="btn btn-outline-primary">등록</button>
                                     <button type="button" th:onclick="|location.href='@{/review}'|" class="btn btn-outline-secondary">취소</button>
                                 </div>
+                            </div>
+
+                            <div class="my-3">
+                                <div class="loading">Loading</div>
                             </div>
                         </form>
                     </article>
