@@ -65,7 +65,7 @@ class PhotosControllerTest {
 
     @Test
     void 무한_스크롤링() throws Exception {
-        ResultActions perform = mockMvc.perform(get("/photos/scroll/card"));
+        ResultActions perform = mockMvc.perform(get("/photos/list/card"));
 
         perform
                 .andExpect(status().isOk())
