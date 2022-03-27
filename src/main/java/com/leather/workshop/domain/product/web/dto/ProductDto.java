@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,7 +60,9 @@ public class ProductDto {
         @NotNull
         private Long productCategory;
         @NotBlank
+        @Size(max = 100)
         private String name;
+        @Size(max = 20000)
         private String contents;
         @NotNull
         private MultipartFile thumbnailFile;
@@ -73,7 +76,9 @@ public class ProductDto {
         @NotNull
         private ProductCategory productCategory;
         @NotBlank
+        @Size(max = 100)
         private String name;
+        @Size(max = 20000)
         private String contents;
         private MultipartFile thumbnailFile;
         private Boolean isDeleteThumbnail;
