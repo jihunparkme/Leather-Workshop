@@ -2,10 +2,8 @@ package com.leather.workshop.domain.notice.service;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.domain.NoticeRepository;
-import com.leather.workshop.domain.notice.web.dto.response.NoticeListResponse;
-import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.domain.notice.web.dto.NoticeDto;
+import com.leather.workshop.domain.notice.web.dto.NoticeListResponse;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +25,12 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Transactional
-    public Long save(NoticeSaveRequest noticeSaveRequest) {
+    public Long save(NoticeDto.SaveRequest noticeSaveRequest) {
         return noticeRepository.save(noticeSaveRequest.toEntity()).getId();
     }
 
     @Transactional
-    public Long update(Long id, NoticeUpdateRequest noticeUpdateRequest) {
+    public Long update(Long id, NoticeDto.UpdateRequest noticeUpdateRequest) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
@@ -50,11 +48,11 @@ public class NoticeService {
     }
 
     @Transactional(readOnly = true)
-    public NoticeResponse findById(Long id) {
+    public NoticeDto.Response findById(Long id) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 공지사항이 없습니다. id=" + id));
 
-        return new NoticeResponse(notice);
+        return new NoticeDto.Response(notice);
     }
 
     @Transactional(readOnly = true)

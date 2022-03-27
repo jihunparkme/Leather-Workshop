@@ -3,8 +3,7 @@ package com.leather.workshop.domain.notice.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.domain.NoticeRepository;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.domain.notice.web.dto.NoticeDto;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +63,7 @@ class NoticeApiControllerTest {
     @WithMockUser(roles = "ADMIN")
     void 공지사항_등록_성공() throws Exception {
         //gevin
-        NoticeSaveRequest noticeSaveRequest = NoticeSaveRequest.builder()
+        NoticeDto.SaveRequest noticeSaveRequest = NoticeDto.SaveRequest.builder()
                 .userId(1L)
                 .title(title)
                 .contents(contents)
@@ -100,14 +99,14 @@ class NoticeApiControllerTest {
         String expectedTitle = "제목222";
         String expectedContents = "내용222";
 
-        NoticeUpdateRequest requestUpdateNotice = NoticeUpdateRequest.builder()
+        NoticeDto.UpdateRequest requestUpdateNotice = NoticeDto.UpdateRequest.builder()
                 .title(expectedTitle)
                 .contents(expectedContents)
                 .build();
 
         //when
         String url = "http://localhost:" + port + "/notice/" + updateId;
-        HttpEntity<NoticeUpdateRequest> requestEntity = new HttpEntity<>(requestUpdateNotice);
+        HttpEntity<NoticeDto.UpdateRequest> requestEntity = new HttpEntity<>(requestUpdateNotice);
 
         mvc.perform(put(url)
                         .contentType(MediaType.APPLICATION_JSON)
