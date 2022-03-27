@@ -40,7 +40,6 @@ class ContactControllerTest {
                                         .param("title", "테스트 제목")
                                         .param("contents", "테스트 내용"));
 
-
         perform
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("문의가 등록되었습니다."))
