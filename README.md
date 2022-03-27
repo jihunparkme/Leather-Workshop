@@ -12,7 +12,6 @@
   - Redis
 
 - DevOps
-
   - MySQL
   - Jenkins
   - Nginx
