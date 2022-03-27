@@ -22,7 +22,7 @@ function checkValid() {
         return false;
     }
 
-    if ($("#email").val().length > 50) {
+    if ($("#email").val().length > 30) {
         alert("이메일은 최대 30자 이내로 작성해주세요.")
         $("#email").focus();
         return false;
@@ -36,13 +36,13 @@ function checkValid() {
     }
 
 
-    if ($("#title").val().length > 50) {
+    if ($("#title").val().length > 100) {
         alert("제목은 최대 100자 이내로 작성해주세요.")
         $("#title").focus();
         return false;
     }
 
-    if ($("#contents").val().length > 50) {
+    if ($("#contents").val().length > 20000) {
         alert("내용은 최대 20000자 이내로 작성해주세요.")
         $("#contents").focus();
         return false;

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,7 +38,10 @@ public class ContactService {
         Map<String, String> contentsMap = new LinkedHashMap<>();
         contentsMap.put("이름", request.getName());
         contentsMap.put("휴대폰 번호", request.getPhoneNumber());
-        contentsMap.put("이메일", request.getEmail());
+
+        String email = "";
+        if (!StringUtils.isEmpty(request.getEmail())) email = request.getEmail();
+        contentsMap.put("이메일", email);
         contentsMap.put("제목", request.getTitle());
         contentsMap.put("내용", request.getContents().replaceAll("(\r\n|\n)", "<br/>"));
 

@@ -1,4 +1,4 @@
-package com.leather.workshop.domain.notice.web.dto.response;
+package com.leather.workshop.domain.notice.web.dto;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import lombok.Getter;

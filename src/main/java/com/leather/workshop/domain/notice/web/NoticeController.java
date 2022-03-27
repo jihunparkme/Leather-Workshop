@@ -2,9 +2,7 @@ package com.leather.workshop.domain.notice.web;
 
 import com.leather.workshop.domain.notice.domain.Notice;
 import com.leather.workshop.domain.notice.service.NoticeService;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
-import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
+import com.leather.workshop.domain.notice.web.dto.NoticeDto;
 import com.leather.workshop.global.common.exception.EntityNotFoundException;
 import com.leather.workshop.global.common.util.ClientIpAddressUtil;
 import com.leather.workshop.global.config.security.LoginUser;
@@ -71,13 +69,13 @@ public class NoticeController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String add(Model model) {
 
-        model.addAttribute("notice", new NoticeResponse());
+        model.addAttribute("notice", new NoticeDto.Response());
         return "notice/notice-add";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public String add(@Validated @ModelAttribute("notice") NoticeSaveRequest form,
+    public String add(@Validated @ModelAttribute("notice") NoticeDto.SaveRequest form,
                       BindingResult bindingResult,
                       @LoginUser SessionUser user,
                       RedirectAttributes redirectAttributes) {
@@ -106,7 +104,7 @@ public class NoticeController {
     @PostMapping("/{id}/edit")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String edit(@PathVariable Long id,
-                       @Validated @ModelAttribute("notice") NoticeUpdateRequest form,
+                       @Validated @ModelAttribute("notice") NoticeDto.UpdateRequest form,
                        BindingResult bindingResult,
                        RedirectAttributes redirectAttributes) {
 

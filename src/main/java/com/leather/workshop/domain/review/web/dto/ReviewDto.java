@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class ReviewDto {
@@ -39,6 +40,7 @@ public class ReviewDto {
         private Long userId;
         private String nickname;
         @NotBlank
+        @Size(max = 20000)
         private String contents;
 
         @Builder

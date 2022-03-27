@@ -1,10 +1,8 @@
 package com.leather.workshop.domain.notice.web;
 
 import com.leather.workshop.domain.notice.service.NoticeService;
-import com.leather.workshop.domain.notice.web.dto.response.NoticeListResponse;
-import com.leather.workshop.domain.notice.web.dto.response.NoticeResponse;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeSaveRequest;
-import com.leather.workshop.domain.notice.web.dto.request.NoticeUpdateRequest;
+import com.leather.workshop.domain.notice.web.dto.NoticeDto;
+import com.leather.workshop.domain.notice.web.dto.NoticeListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -23,14 +21,14 @@ public class NoticeApiController {
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public Long save(@RequestBody NoticeSaveRequest noticeSaveRequest) {
+    public Long save(@RequestBody NoticeDto.SaveRequest noticeSaveRequest) {
         log.info("save api notice");
         return noticeService.save(noticeSaveRequest);
     }
 
     @PutMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public Long update(@PathVariable Long id, @RequestBody NoticeUpdateRequest noticeUpdateRequest) {
+    public Long update(@PathVariable Long id, @RequestBody NoticeDto.UpdateRequest noticeUpdateRequest) {
         return noticeService.update(id, noticeUpdateRequest);
     }
 
@@ -42,7 +40,7 @@ public class NoticeApiController {
     }
 
     @GetMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NoticeResponse search(@PathVariable Long id) {
+    public NoticeDto.Response search(@PathVariable Long id) {
         return noticeService.findById(id);
     }
 

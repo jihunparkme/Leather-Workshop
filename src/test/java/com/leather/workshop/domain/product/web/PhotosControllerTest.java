@@ -18,8 +18,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 @SpringBootTest(
         properties = {"spring.config.location=classpath:application.yml"}
@@ -60,12 +60,18 @@ class PhotosControllerTest {
     }
 
     @Test
-    void list() {
+    void list() throws Exception {
+        ResultActions perform = mockMvc.perform(get("/photos"));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(view().name("photos/photo-list"))
+                .andExpect(model().attributeExists("categoryList"));
     }
 
     @Test
     void 무한_스크롤링() throws Exception {
-        ResultActions perform = mockMvc.perform(get("/photos/scroll/card"));
+        ResultActions perform = mockMvc.perform(get("/photos/list/card"));
 
         perform
                 .andExpect(status().isOk())
