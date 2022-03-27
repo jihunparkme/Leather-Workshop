@@ -122,6 +122,7 @@ function addPage(page) {
     $.ajax({
         type: 'GET',
         url: '/photos/list/' + category + '/',
+        async: false,
         data: {
             page: page,
             size: articlesPerPageSize,
