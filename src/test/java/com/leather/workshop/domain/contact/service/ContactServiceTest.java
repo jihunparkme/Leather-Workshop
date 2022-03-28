@@ -7,6 +7,7 @@ import com.leather.workshop.global.common.util.service.MailUtilService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -15,18 +16,18 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ContactServiceTest {
 
     @Mock
-    Contact contact;
+    private ContactRepository contactRepository;
 
+    @Mock
+    private MailUtilService mailUtilService;
 
-    private ContactRepository contactRepository = mock(ContactRepository.class);
-    private MailUtilService mailUtilService = mock(MailUtilService.class);
-    private ContactService contactService = new ContactService(contactRepository, mailUtilService);
+    @InjectMocks
+    private ContactService contactService;
 
     Long id = 1L;
     String name = "이름";
