@@ -1,6 +1,8 @@
 package com.leather.workshop.domain.contact.web.dto;
 
 import com.leather.workshop.domain.contact.domain.Contact;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +12,10 @@ import javax.validation.constraints.Size;
 public class ContactDto {
 
     @Data
+    @Builder
     @NoArgsConstructor
-    public class Request {
+    @AllArgsConstructor
+    public static class Request {
 
         @NotBlank
         @Size(max = 30)
