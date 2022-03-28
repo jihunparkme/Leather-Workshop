@@ -10,6 +10,7 @@ import com.leather.workshop.global.common.dto.BooleanFormatType;
 import com.leather.workshop.global.common.util.file.FileUtilities;
 import com.leather.workshop.global.common.util.web.dto.UploadFile;
 import com.leather.workshop.global.config.security.dto.SessionUser;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -94,7 +96,9 @@ class ProductServiceTest {
             .build();
 
     @Test
+    @DisplayName("상품 조회 성공")
     void findById() {
+
         lenient().when(productRepository.findById(any())).thenReturn(Optional.of(product));
 
         ProductDto.Response response = productService.findById(id);
@@ -109,10 +113,13 @@ class ProductServiceTest {
         assertThat(response.getProductUploadFiles().get(0).getStoreFileName())
                 .isEqualTo(new ProductUploadFileDto.Response(productUploadFiles).getStoreFileName());
 
+        verify(productRepository).findById(any());
     }
 
     @Test
+    @DisplayName("상품 저장 성공")
     void save() throws IOException {
+
         ProductDto.SaveRequest saveRequest = ProductDto.SaveRequest.builder()
                 .productCategory(1L)
                 .name(name)
@@ -124,11 +131,17 @@ class ProductServiceTest {
         lenient().when(categoryRepository.findById(any())).thenReturn(Optional.of(productCategory));
         lenient().when(fileUtilities.storeFile(any(), any())).thenReturn(new UploadFile("portfolio-9.jpg", "portfolio-9.jpg"));
 
-        Long save = productService.save(saveRequest, new SessionUser(admin));
+        productService.save(saveRequest, new SessionUser(admin));
+
+        verify(productRepository).save(any());
+        verify(categoryRepository).findById(any());
+        verify(fileUtilities).storeFile(any(), any());
     }
 
     @Test
+    @DisplayName("상품 수정 성공")
     void edit() throws IOException {
+
         ProductDto.UpdateRequest updateRequest = ProductDto.UpdateRequest.builder()
                 .id(1L)
                 .productCategory(productCategory)
@@ -141,14 +154,21 @@ class ProductServiceTest {
         lenient().when(productRepository.save(any())).thenReturn(Optional.of(product).get());
 
         productService.edit(id, updateRequest, new SessionUser(admin));
+
+        verify(productRepository).findById(any());
+        verify(productRepository).save(any());
     }
 
     @Test
+    @DisplayName("상품 삭제 성공")
     void delete() {
 
         lenient().when(productRepository.findById(any())).thenReturn(Optional.of(product));
         lenient().when(productRepository.save(any())).thenReturn(Optional.of(product).get());
 
         productService.delete(id);
+
+        verify(productRepository).findById(any());
+        verify(productRepository).save(any());
     }
 }
