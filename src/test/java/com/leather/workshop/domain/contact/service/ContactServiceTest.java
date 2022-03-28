@@ -37,17 +37,22 @@ class ContactServiceTest {
     String contents = "테스트 내용";
 
     @Test
-    @DisplayName("문의 저장")
+    @DisplayName("문의 저장 성공")
     void save() {
         ContactDto.Request request = ContactDto.Request.builder()
                 .name(name)
                 .email(email)
                 .phoneNumber(phoneNumber)
                 .title(title)
-                .contents(contents)
-                .build();
+                .contents(contents).build();
 
-        Contact contact = new Contact(id, name, email, phoneNumber, title, contents);
+        Contact contact = Contact.builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .title(title)
+                .contents(contents).build();
 
         given(contactRepository.save(any())).willReturn(Optional.of(contact).get());
 
