@@ -13,9 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ContactServiceTest {
@@ -56,8 +56,9 @@ class ContactServiceTest {
 
         given(contactRepository.save(any())).willReturn(Optional.of(contact).get());
 
-        Long save = contactService.save(request);
+        contactService.save(request);
 
-        assertThat(save).isEqualTo(1L);
+        verify(mailUtilService).sendMail(any());
+        verify(contactRepository).save(any());
     }
 }
