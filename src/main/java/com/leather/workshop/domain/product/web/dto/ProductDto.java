@@ -56,6 +56,8 @@ public class ProductDto {
     }
 
     @Data
+    @Builder
+    @AllArgsConstructor
     public static class SaveRequest {
         @NotNull
         private Long productCategory;
@@ -70,7 +72,9 @@ public class ProductDto {
     }
 
     @Data
-    public class UpdateRequest {
+    @Builder
+    @AllArgsConstructor
+    public static class UpdateRequest {
         @NotNull
         private Long id;
         @NotNull

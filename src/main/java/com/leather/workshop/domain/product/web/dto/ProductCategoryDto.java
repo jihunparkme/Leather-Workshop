@@ -1,6 +1,7 @@
 package com.leather.workshop.domain.product.web.dto;
 
 import com.leather.workshop.domain.product.domain.ProductCategory;
+import com.leather.workshop.global.common.dto.BooleanFormatType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ public class ProductCategoryDto {
         private Long id;
         private String title;
         private Integer orderNo;
-        private String categoryUseYn;
+        private BooleanFormatType categoryUseYn;
 
         public Response(ProductCategory entity) {
             this.id = entity.getId();

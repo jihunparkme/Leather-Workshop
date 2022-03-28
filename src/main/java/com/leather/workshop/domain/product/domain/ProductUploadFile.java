@@ -2,6 +2,7 @@ package com.leather.workshop.domain.product.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
 import com.leather.workshop.global.common.dto.BooleanFormatType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class ProductUploadFile extends BaseTimeEntity {
 

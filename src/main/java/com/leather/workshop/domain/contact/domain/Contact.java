@@ -1,6 +1,7 @@
 package com.leather.workshop.domain.contact.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Contact extends BaseTimeEntity {
 

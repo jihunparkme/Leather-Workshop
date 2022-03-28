@@ -2,10 +2,7 @@ package com.leather.workshop.domain.review.web.dto;
 
 import com.leather.workshop.domain.login.domain.User;
 import com.leather.workshop.domain.review.domain.Review;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -34,7 +31,9 @@ public class ReviewDto {
     }
 
     @Data
+    @Builder
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class Request {
 
         private Long userId;
