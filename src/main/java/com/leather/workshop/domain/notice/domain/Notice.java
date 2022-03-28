@@ -1,6 +1,7 @@
 package com.leather.workshop.domain.notice.domain;
 
 import com.leather.workshop.global.common.domain.BaseTimeEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Notice extends BaseTimeEntity {
 

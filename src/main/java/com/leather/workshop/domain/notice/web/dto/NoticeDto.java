@@ -41,7 +41,9 @@ public class NoticeDto {
     }
 
     @Data
+    @Builder
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class UpdateRequest {
 
         @NotNull
