@@ -137,14 +137,21 @@ values (3, '손목시계', '<p>ㅇㅇㅇ</p>
 
 <p>ㅇㅇ</p>
 
-<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=15573399-24c1-4faa-98d8-8d83b73f7042.png" style="height:128px; width:438px" /></p>
+<p>&nbsp;</p>
 
-<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=e0f460f6-d20f-4678-8e8a-f99155d861f5.png" style="height:128px; width:438px" /></p>
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=aeb554b7-1e69-4570-8346-89428b0ffa75.jpeg" style="height:367px; width:612px" /></p>
 
-<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=eacfe317-6958-457c-b4b9-76f3ab9f8f0c.png" style="height:128px; width:438px" /></p>
+<p>&nbsp;</p>
 
-<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=15573399-24c1-4faa-98d8-8d83b73f7042.png" style="height:128px; width:438px" /></p>
-', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
+<p>&nbsp;</p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=968af6f8-01a4-4c39-a47a-72f28d528712.jpeg" style="height:526px; width:800px" /></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><img alt="" src="/file/ckeditor/fileDownload/product?fileName=2e1b6ceb-fd9a-4927-a073-d372594175a3.jpeg" style="height:667px; width:1000px" /></p>', 10L, 'N', NULL, PARSEDATETIME('2022-01-03 12:00:00','yyyy-MM-dd hh:mm:ss'), 1L, NULL);
 
 
 

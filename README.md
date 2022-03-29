@@ -7,7 +7,7 @@
   - Java to Kotlin
   - Spring Boot / Spring MVC / Spring Data JPA
   - JPA / Querydsl / ~~JOOQ~~
-  - Mockito, Spock
+  - Mockito, Spock, mockMvc
   - Gradle
   - Redis
 
@@ -23,7 +23,6 @@
 ---
 
 - [ ] Index
-- [ ] service, repository 테스트 코드
 - [ ] Member 추가 기능
 
 **공통 기능**
@@ -93,10 +92,12 @@
   - [ ] 이름 수정
     - [ ] 수정 완료 후 세션 정보 갱신
     - [ ] 방명록 작성자명 수정
-- [ ] 관리자 회원 관리
+- [ ] 관리자 페이지
   - [ ] 회원 관리(권한 수정/삭제)
+  - [ ] 상품 카테고리 관리
+  - [ ] 문의하기 관리
+  - [ ] 메인 페이지 관리?
 - [x] 접근 거부 페이지
-- [ ] 메뉴 이동 시 로그인 유지 확인
 - [ ] 배포 시 (구글, 네이버, 카카오)
   - [ ] open api 서비스 URL 환경 수정
   - [ ] application-aouth.yml redirect-uri 수정
@@ -104,7 +105,7 @@
 
 ---
 
-## Review
+## (finish) Review
 
 - List
   - [x] 등록 버튼은 로그인 세션이 있는 사람만 보이도록
@@ -178,7 +179,7 @@
 
 - Product
   - [ ] NEW ARRIVAL
-  - [ ] 최신 상품 10가지 보여주기
+    - [ ] 최신 상품 10가지 보여주기
     - [ ] 클릭 시 상품 설명 페이지로 이동
   - [ ] 더보기 하단에 더보기 링크
 

@@ -1,23 +1,21 @@
 package com.leather.workshop.domain.Index.web;
 
-import com.leather.workshop.global.config.security.LoginUser;
-import com.leather.workshop.global.config.security.dto.SessionUser;
+import com.leather.workshop.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpSession;
-
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class IndexController {
 
-    private final HttpSession httpSession;
+    private final ProductService productService;
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
-        model.addAttribute("user", user);
+    public String index(Model model) {
+
+        model.addAttribute("productListPage", productService.findTop12OrderByIdDesc());
 
         return "index";
     }
