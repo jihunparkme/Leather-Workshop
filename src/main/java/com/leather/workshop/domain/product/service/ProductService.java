@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -67,9 +68,8 @@ public class ProductService {
                 .hits(0L)
                 .deleteYn(BooleanFormatType.N)
                 .userId(user.getId())
+                .productUploadFiles(new LinkedHashSet<>())
                 .build();
-
-        List<ProductUploadFile> productUploadFiles = new ArrayList<>();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
         UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
@@ -79,7 +79,7 @@ public class ProductService {
                 .storeFileName(uploadFile.getStoreFileName())
                 .thumbnailYn(BooleanFormatType.Y)
                 .build();
-        productUploadFiles.add(productThumbnailFile);
+        product.addProductUploadFiles(productThumbnailFile);
 
         List<MultipartFile> formUploadFiles = form.getProductUploadFiles();
         if (formUploadFiles != null && !formUploadFiles.isEmpty()) {
@@ -93,12 +93,10 @@ public class ProductService {
                                 .thumbnailYn(BooleanFormatType.N)
                                 .build();
 
-                        productUploadFiles.add(puf);
+                        product.addProductUploadFiles(productThumbnailFile);
                         return null;
                     });
         }
-
-        product.setProductUploadFiles(new HashSet<>(productUploadFiles));
 
         return productRepository.save(product).getId();
     }

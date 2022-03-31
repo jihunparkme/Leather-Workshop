@@ -29,7 +29,4 @@ public class ProductCategory {
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false, columnDefinition = "BIGINT default N")
     private BooleanFormatType categoryUseYn;
-
-    @OneToMany(mappedBy = "productCategory", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Product> products = new LinkedHashSet<>();
 }
