@@ -41,4 +41,8 @@ public class ProductUploadFile extends BaseTimeEntity {
         this.storeFileName = storeFileName;
         this.thumbnailYn = thumbnailYn;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

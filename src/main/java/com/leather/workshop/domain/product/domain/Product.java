@@ -46,13 +46,15 @@ public class Product extends BaseTimeEntity {
 
     private LocalDateTime deletedDateTime;
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
 
     private LocalDateTime modifiedDateTime;
 
-    public void setProductUploadFiles(Set<ProductUploadFile> productUploadFiles) {
-        this.productUploadFiles = productUploadFiles;
+    public void addProductUploadFiles(ProductUploadFile productUploadFile) {
+        productUploadFiles.add(productUploadFile);
+        productUploadFile.setProduct(this);
     }
 
     @Builder
