@@ -22,7 +22,6 @@
 
 ---
 
-- [ ] Index
 - [ ] Member 추가 기능
 
 **공통 기능**
@@ -54,7 +53,7 @@
 
 ---
 
-## (finish) Notice
+## (complete) Notice
 
 - [x] List/View/Add/Edit
   - [x] List
@@ -105,7 +104,7 @@
 
 ---
 
-## (finish) Review
+## (complete) Review
 
 - List
   - [x] 등록 버튼은 로그인 세션이 있는 사람만 보이도록
@@ -126,7 +125,7 @@
 
 ---
 
-## (finish) Product
+## (complete) Product
 
 - [x] 이미지를 로컬 디렉토리에서 가져오도록 설정
 - List
@@ -161,7 +160,7 @@
 
 ---
 
-## (finish) Photos
+## (complete) Photos
 
 - [x] Product 에 첨부된 모든 이미지 리스트
   - [x] dto 만들어서 상품 썸네일이랑 내용에 포함된 이미지 링크 가져오기
@@ -171,17 +170,17 @@
 
 ---
 
-## (finish) Contact Us
+## (complete) Contact Us
 
 - [x] 문의가 접수되면 메일(or 카카오톡)으로 알림
 
-## Index
+## (complete) Index
 
 - Product
-  - [ ] NEW ARRIVAL
-    - [ ] 최신 상품 10가지 보여주기
-    - [ ] 클릭 시 상품 설명 페이지로 이동
-  - [ ] 더보기 하단에 더보기 링크
+  - [x] NEW ARRIVAL
+    - [x] 최신 상품 10가지 보여주기
+    - [x] 클릭 시 상품 설명 페이지로 이동
+  - [x] 더보기 하단에 더보기 링크
 
 ## 문의, 후기 알림 관련
 
