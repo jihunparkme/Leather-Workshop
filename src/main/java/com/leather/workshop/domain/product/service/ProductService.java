@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -68,7 +67,6 @@ public class ProductService {
                 .hits(0L)
                 .deleteYn(BooleanFormatType.N)
                 .userId(user.getId())
-                .productUploadFiles(new LinkedHashSet<>())
                 .build();
 
         MultipartFile formThumbnailFile = form.getThumbnailFile();
