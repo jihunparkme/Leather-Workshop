@@ -72,7 +72,6 @@ public class ProductService {
         MultipartFile formThumbnailFile = form.getThumbnailFile();
         UploadFile uploadFile = fileUtilities.storeFile(formThumbnailFile, PathConst.PRODUCT);
         ProductUploadFile productThumbnailFile = ProductUploadFile.builder()
-                .product(product)
                 .uploadFileName(uploadFile.getUploadFileName())
                 .storeFileName(uploadFile.getStoreFileName())
                 .thumbnailYn(BooleanFormatType.Y)
@@ -85,14 +84,13 @@ public class ProductService {
             uploadFiles.stream()
                     .map(up -> {
                         ProductUploadFile puf = ProductUploadFile.builder()
-                                .product(product)
                                 .uploadFileName(up.getUploadFileName())
                                 .storeFileName(up.getStoreFileName())
                                 .thumbnailYn(BooleanFormatType.N)
                                 .build();
 
                         product.addProductUploadFiles(productThumbnailFile);
-                        return null;
+                        return puf;
                     });
         }
 

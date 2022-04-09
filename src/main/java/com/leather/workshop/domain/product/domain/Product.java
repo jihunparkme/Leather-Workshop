@@ -47,7 +47,7 @@ public class Product extends BaseTimeEntity {
     private LocalDateTime deletedDateTime;
 
     @Builder.Default
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductUploadFile> productUploadFiles = new LinkedHashSet<>();
 
     private LocalDateTime modifiedDateTime;
